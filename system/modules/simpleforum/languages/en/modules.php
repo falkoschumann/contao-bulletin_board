@@ -15,7 +15,7 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD'][''] = array('', '');
+$GLOBALS['TL_LANG']['MOD']['simpleforum'] = array('Simple Forum', 'Manage forums and categories.');
 
 
 /**

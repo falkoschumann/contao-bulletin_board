@@ -103,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_simpleforum_forum'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
-		'default'                     => '{title_legend},title;'
+		'default'                     => '{title_legend},title;{description_legend},description;'
 	),
 
 	// Subpalettes
@@ -135,9 +135,19 @@ $GLOBALS['TL_DCA']['tl_simpleforum_forum'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_simpleforum_forum']['title'],
 			'exclude'                 => true,
+			'search'                  => true,
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>255),
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>100),
+			'sql'                     => "varchar(100) NOT NULL default ''"
+		),
+		'description' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_simpleforum_forum']['description'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'textarea',
+			'eval'                    => array('maxlength'=>255),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		)
-	)
+		)
 );

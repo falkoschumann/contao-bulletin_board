@@ -38,7 +38,10 @@
  * have to be set. Take a look at the system/modules/core/config/config.php
  * file to see how back end modules are configured.
  */
-
+$GLOBALS['BE_MOD']['content']['simpleforum'] = array
+(
+	'tables'       => array('tl_simpleforum_forum'),
+);
 
 /**
  * FRONT END MODULES

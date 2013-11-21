@@ -13,9 +13,9 @@
 
 
 /**
- * Table backendtable
+ * Table tl_backendtable
  */
-$GLOBALS['TL_DCA']['backendtable'] = array
+$GLOBALS['TL_DCA']['tl_backendtable'] = array
 (
 
 	// Config
@@ -60,26 +60,26 @@ $GLOBALS['TL_DCA']['backendtable'] = array
 		(
 			'edit' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['backendtable']['edit'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_backendtable']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
 			),
 			'copy' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['backendtable']['copy'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_backendtable']['copy'],
 				'href'                => 'act=copy',
 				'icon'                => 'copy.gif'
 			),
 			'delete' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['backendtable']['delete'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_backendtable']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
 			),
 			'show' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['backendtable']['show'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_backendtable']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
 			)
@@ -124,7 +124,7 @@ $GLOBALS['TL_DCA']['backendtable'] = array
 		),
 		'title' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['backendtable']['title'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_backendtable']['title'],
 			'exclude'                 => true,
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>255),

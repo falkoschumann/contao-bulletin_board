@@ -31,6 +31,6 @@ class FrontendtableModel extends \Model
 	 * Name of the table
 	 * @var string
 	 */
-	protected static $strTable = 'frontendtable';
+	protected static $strTable = 'tl_frontendtable';
 
 }

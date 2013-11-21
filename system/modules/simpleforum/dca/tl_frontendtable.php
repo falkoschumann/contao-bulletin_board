@@ -13,9 +13,9 @@
 
 
 /**
- * Table frontendtable
+ * Table tl_frontendtable
  */
-$GLOBALS['TL_DCA']['frontendtable'] = array
+$GLOBALS['TL_DCA']['tl_frontendtable'] = array
 (
 
 	// Config

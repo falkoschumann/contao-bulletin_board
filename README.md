@@ -1,5 +1,5 @@
-Simple Forum für Contao
-=======================
+Bulletin Board für Contao
+=========================
 
 Ein Forum besteht aus Themen in denen die Nutzer Beiträge schreiben können. Die
 Themen werden können in mehrere (Sub)Foren untergliedert werden. Diese Foren

@@ -63,6 +63,7 @@
 $GLOBALS['BE_MOD']['content']['simpleforum'] = array
 (
 	'tables'       => array('tl_simpleforum_forum'),
+	'icon'         => 'system/modules/simpleforum/assets/icon.png'
 );
 
 /**

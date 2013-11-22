@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Simple Forum for Contao
+ * Bulletin Board for Contao
  *
  * Copyright (c) 2013, Falko Schumann
  * All rights reserved.
@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package   falkoschumann
+ * @package   BulletinBoard
  * @author    Falko Schumann
  * @license   BSD-2-Clause
  * @copyright Falko Schumann 2013
@@ -35,37 +35,33 @@
 
 
 /**
- * Table tl_frontendtable
+ * Namespace
  */
-$GLOBALS['TL_DCA']['tl_frontendtable'] = array
-(
+namespace BulletinBoard;
 
-	// Config
-	'config' => array
-	(
-		'sql' => array
-		(
-			'keys' => array
-			(
-				'id' => 'primary'
-			)
-		)
-	),
 
-	// Fields
-	'fields' => array
-	(
-		'id' => array
-		(
-			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
-		),
-		'tstamp' => array
-		(
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
-		),
-		'title' => array
-		(
-			'sql'                     => "varchar(255) NOT NULL default ''"
-		)
-	)
-);
+/**
+ * Class FrontendClass
+ *
+ * @copyright  Falko Schumann 2013
+ * @author     Falko Schumann
+ * @package    Devtools
+ */
+class FrontendClass extends \Module
+{
+
+	/**
+	 * Template
+	 * @var string
+	 */
+	protected $strTemplate = '';
+
+
+	/**
+	 * Generate the module
+	 */
+	protected function compile()
+	{
+
+	}
+}

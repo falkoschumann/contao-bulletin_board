@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Simple Forum for Contao
+ * Bulletin Board for Contao
  *
  * Copyright (c) 2013, Falko Schumann
  * All rights reserved.
@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package   falkoschumann
+ * @package   BulletinBoard
  * @author    Falko Schumann
  * @license   BSD-2-Clause
  * @copyright Falko Schumann 2013
@@ -35,23 +35,33 @@
 
 
 /**
- * Fields
+ * Namespace
  */
-$GLOBALS['TL_LANG']['tl_frontendtable']['title'] = array('Title', 'Please enter the title.');
+namespace BulletinBoard;
 
 
 /**
- * Legends
+ * Class BackendClass
+ *
+ * @copyright  Falko Schumann 2013
+ * @author     Falko Schumann
+ * @package    Devtools
  */
-$GLOBALS['TL_LANG']['tl_frontendtable']['title_legend'] = 'Title';
+class BackendClass extends \BackendModule
+{
+
+	/**
+	 * Template
+	 * @var string
+	 */
+	protected $strTemplate = '';
 
 
-/**
- * Buttons
- */
-$GLOBALS['TL_LANG']['tl_frontendtable']['new']    = array('New ', 'Create a new ');
-$GLOBALS['TL_LANG']['tl_frontendtable']['show']   = array(' details', 'Show the details of  ID %s');
-$GLOBALS['TL_LANG']['tl_frontendtable']['edit']   = array('Edit ', 'Edit  ID %s');
-$GLOBALS['TL_LANG']['tl_frontendtable']['cut']    = array('Move ', 'Move  ID %s');
-$GLOBALS['TL_LANG']['tl_frontendtable']['copy']   = array('Duplicate ', 'Duplicate  ID %s');
-$GLOBALS['TL_LANG']['tl_frontendtable']['delete'] = array('Delete ', 'Delete  ID %s');
+	/**
+	 * Generate the module
+	 */
+	protected function compile()
+	{
+
+	}
+}

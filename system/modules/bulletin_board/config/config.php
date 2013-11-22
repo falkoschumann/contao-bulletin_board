@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Simple Forum for Contao
+ * Bulletin Board for Contao
  *
  * Copyright (c) 2013, Falko Schumann
  * All rights reserved.
@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package   falkoschumann
+ * @package   BulletinBoard
  * @author    Falko Schumann
  * @license   BSD-2-Clause
  * @copyright Falko Schumann 2013
@@ -60,10 +60,10 @@
  * have to be set. Take a look at the system/modules/core/config/config.php
  * file to see how back end modules are configured.
  */
-$GLOBALS['BE_MOD']['content']['simpleforum'] = array
+$GLOBALS['BE_MOD']['content']['bulletin_board'] = array
 (
-	'tables'       => array('tl_simpleforum_forum'),
-	'icon'         => 'system/modules/simpleforum/assets/icon.png'
+	'tables'       => array('tl_bb_forum'),
+	'icon'         => 'system/modules/bulletin_board/assets/icon.png'
 );
 
 /**

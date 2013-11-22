@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Simple Forum for Contao
+ * Bulletin Board for Contao
  *
  * Copyright (c) 2013, Falko Schumann
  * All rights reserved.
@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package   falkoschumann
+ * @package   BulletinBoard
  * @author    Falko Schumann
  * @license   BSD-2-Clause
  * @copyright Falko Schumann 2013
@@ -35,33 +35,12 @@
 
 
 /**
- * Namespace
+ * Back end modules
  */
-namespace falkoschumann;
+$GLOBALS['TL_LANG']['MOD']['bulletin_board'] = array('Bulletin Board', 'Manage forums and categories of your bulletin board.');
 
 
 /**
- * Class BackendClass
- *
- * @copyright  Falko Schumann 2013
- * @author     Falko Schumann
- * @package    Devtools
+ * Front end modules
  */
-class BackendClass extends \BackendModule
-{
-
-	/**
-	 * Template
-	 * @var string
-	 */
-	protected $strTemplate = '';
-
-
-	/**
-	 * Generate the module
-	 */
-	protected function compile()
-	{
-
-	}
-}
+$GLOBALS['TL_LANG']['FMD'][''] = array('', '');

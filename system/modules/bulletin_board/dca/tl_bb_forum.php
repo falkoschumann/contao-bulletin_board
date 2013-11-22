@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Simple Forum for Contao
+ * Bulletin Board for Contao
  *
  * Copyright (c) 2013, Falko Schumann
  * All rights reserved.
@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package   falkoschumann
+ * @package   BulletinBoard
  * @author    Falko Schumann
  * @license   BSD-2-Clause
  * @copyright Falko Schumann 2013
@@ -35,9 +35,9 @@
 
 
 /**
- * Table tl_simpleforum_forum
+ * Table tl_bb_forum
  */
-$GLOBALS['TL_DCA']['tl_simpleforum_forum'] = array
+$GLOBALS['TL_DCA']['tl_bb_forum'] = array
 (
 
 	// Config
@@ -83,26 +83,26 @@ $GLOBALS['TL_DCA']['tl_simpleforum_forum'] = array
 		(
 			'edit' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_simpleforum_forum']['edit'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
 			),
 			'copy' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_simpleforum_forum']['copy'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['copy'],
 				'href'                => 'act=copy',
 				'icon'                => 'copy.gif'
 			),
 			'delete' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_simpleforum_forum']['delete'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
 			),
 			'show' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_simpleforum_forum']['show'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
 			)
@@ -155,7 +155,7 @@ $GLOBALS['TL_DCA']['tl_simpleforum_forum'] = array
 		),
 		'title' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_simpleforum_forum']['title'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['title'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
@@ -164,7 +164,7 @@ $GLOBALS['TL_DCA']['tl_simpleforum_forum'] = array
 		),
 		'description' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_simpleforum_forum']['description'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['description'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'textarea',

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Simple Forum for Contao
+ * Bulletin Board for Contao
  *
  * Copyright (c) 2013, Falko Schumann
  * All rights reserved.
@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package   falkoschumann
+ * @package   BulletinBoard
  * @author    Falko Schumann
  * @license   BSD-2-Clause
  * @copyright Falko Schumann 2013
@@ -35,24 +35,6 @@
 
 
 /**
- * Namespace
+ * Miscellaneous
  */
-namespace falkoschumann;
-
-/**
- * Class FrontendtableModel
- *
- * @copyright  Falko Schumann 2013
- * @author     Falko Schumann
- * @package    Devtools
- */
-class FrontendtableModel extends \Model
-{
-
-	/**
-	 * Name of the table
-	 * @var string
-	 */
-	protected static $strTable = 'tl_frontendtable';
-
-}
+$GLOBALS['TL_LANG']['MSC'][''] = '';

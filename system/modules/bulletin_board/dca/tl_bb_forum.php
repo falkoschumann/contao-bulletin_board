@@ -122,7 +122,8 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['toggle'],
 				'icon'                => 'visible.gif',
-				'attributes'          => 'onclick="return AjaxRequest.toggleVisibility(this,%s)"',
+				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
+				'button_callback'     => array('tl_bb_forum', 'toggleIcon')
 			),
 			'show' => array
 			(
@@ -149,7 +150,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
-		'default'                     => '{title_legend},title;{description_legend},description;{expert_legend:hide},cssClass;{publish_legend},published'
+		'default'                     => '{title_legend},title;{description_legend},description;{publish_legend},published'
 	),
 
 	// Subpalettes
@@ -195,15 +196,6 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'eval'                    => array('maxlength'=>255),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
-		'cssClass' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['cssClass'],
-			'exclude'                 => true,
-			'inputType'               => 'text',
-			'search'                  => true,
-			'eval'                    => array('maxlength'=>64, 'tl_class'=>'w50'),
-			'sql'                     => "varchar(64) NOT NULL default ''"
-		),
 		'published' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['published'],
@@ -214,3 +206,109 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 		)
 	)
 );
+
+/**
+ * Class tl_bb_forum
+ *
+ * Provide miscellaneous methods that are used by the data configuration array.
+ *
+ * @copyright  Falko Schumann 2013
+ * @author     Falko Schuman
+ * @package    BulletinBoard
+ */
+class tl_bb_forum extends Backend
+{
+
+	/**
+	 * Import the back end user object
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->import('BackendUser', 'User');
+	}
+
+
+	/**
+	 * Return the "toggle visibility" button
+	 *
+	 * @param array $row
+	 * @param string $href
+	 * @param string $label
+	 * @param string $title
+	 * @param string $icon
+	 * @param string $attributes
+	 * @return string
+	 */
+	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
+	{
+		if (strlen(Input::get('tid')))
+		{
+			$this->toggleVisibility(Input::get('tid'), (Input::get('state') == 1));
+			$this->redirect($this->getReferer());
+		}
+
+		// Check permissions AFTER checking the tid, so hacking attempts are logged
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_bb_forum::published', 'alexf'))
+		{
+			return '';
+		}
+
+		$href .= '&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
+
+		if (!$row['published'])
+		{
+			$icon = 'invisible.gif';
+		}
+
+		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+	}
+
+
+	/**
+	 * Disable/enable a forum
+	 *
+	 * @param integer $intId
+	 * @param boolean $blnVisible
+	 */
+	public function toggleVisibility($intId, $blnVisible)
+	{
+		// Check permissions to edit
+		Input::setGet('id', $intId);
+		Input::setGet('act', 'toggle');
+
+		// Check permissions to publish
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_bb_forum::published', 'alexf'))
+		{
+			$this->log('Not enough permissions to publish/unpublish forum item ID "'.$intId.'"', __METHOD__, TL_ERROR);
+			$this->redirect('contao/main.php?act=error');
+		}
+
+		$objVersions = new Versions('tl_bb_forum', $intId);
+		$objVersions->initialize();
+
+		// Trigger the save_callback
+		if (is_array($GLOBALS['TL_DCA']['tl_bb_forum']['fields']['published']['save_callback']))
+		{
+			foreach ($GLOBALS['TL_DCA']['tl_bb_forum']['fields']['published']['save_callback'] as $callback)
+			{
+				if (is_array($callback))
+				{
+					$this->import($callback[0]);
+					$blnVisible = $this->$callback[0]->$callback[1]($blnVisible, $this);
+				}
+				elseif (is_callable($callback))
+				{
+					$blnVisible = $callback($blnVisible, $this);
+				}
+			}
+		}
+
+		// Update the database
+		$this->Database->prepare("UPDATE tl_bb_forum SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
+		->execute($intId);
+
+		$objVersions->create();
+		$this->log('A new version of record "tl_bb_forum.id='.$intId.'" has been created'.$this->getParentEntries('tl_bb_forum', $intId), __METHOD__, TL_GENERAL);
+	}
+}

@@ -35,18 +35,13 @@
 
 
 /**
- * Namespace
- */
-namespace Muspellheim\BulletinBoard;
-
-/**
  * Class FrontendtableModel
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class ForumModel extends \Model
+class BbForumModel extends \Model
 {
 
 	/**
@@ -55,4 +50,29 @@ class ForumModel extends \Model
 	 */
 	protected static $strTable = 'tl_bb_forum';
 
+
+	/**
+	 * Find published forum items
+	 *
+	 * @param array   $arrOptions  An optional options array
+	 *
+	 * @return \Model\Collection|null A collection of models or null if there are no forums
+	 */
+	public static function findPublished(array $arrOptions=array())
+	{
+		$table = static::$strTable;
+		$arrColumns = array();
+
+		if (!BE_USER_LOGGED_IN)
+		{
+			$arrColumns[] = "$table.published=1";
+		}
+
+		if (!isset($arrOptions['order']))
+		{
+			$arrOptions['order'] = "$table.sorting";
+		}
+
+		return static::findBy($arrColumns, null, $arrOptions);
+	}
 }

@@ -35,13 +35,6 @@
 
 
 /**
- * Namespace
- */
-namespace Muspellheim\BulletinBoard;
-
-use Contao\Database;
-
-/**
  * Class ModuleBulletinBoard
  *
  * @copyright  Falko Schumann 2013
@@ -85,8 +78,54 @@ class ModuleBulletinBoard extends \Module
 	 */
 	protected function compile()
 	{
-		$rs = Database::getInstance()->query('SELECT * FROM tl_bb_forum ORDER BY sorting');
+		$this->Template->forums = $this->parseForums(BbForumModel::findPublished());
+	}
 
-		$this->Template->forums = $rs->fetchAllAssoc();
+
+	/**
+	 * Parse collection of forum objects and return them as array of strings
+	 *
+	 * @param \Contao\Model\Collection $objForums
+	 * @return array
+	 */
+	protected function parseForums($objForums)
+	{
+
+		$limit = $objForums != null ? $objForums->count() : 0;
+
+		if ($limit < 1)
+		{
+			return array();
+		}
+
+		$count = 0;
+		$arrForums = array();
+
+		while ($objForums->next())
+		{
+			$arrForums[] = $this->parseForum($objForums, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
+		}
+
+		return $arrForums;
+	}
+
+
+	/**
+	 * Parse a forum object and return it as string
+	 *
+	 * @param object $objForum
+	 * @param string $strClass
+	 * @return string
+	 */
+	protected function parseForum($objForum, $strClass='')
+	{
+		$objTemplate = new FrontendTemplate('bb_board_forum');
+		$objTemplate->setData($objForum->row());
+
+		$objTemplate->class = $strClass;
+		$objTemplate->title = $objForum->title;
+		$objTemplate->description = $objForum->description;
+
+		return $objTemplate->parse();
 	}
 }

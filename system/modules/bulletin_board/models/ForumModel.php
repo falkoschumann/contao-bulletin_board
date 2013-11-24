@@ -35,12 +35,24 @@
 
 
 /**
- * Back end modules
+ * Namespace
  */
-$GLOBALS['TL_LANG']['MOD']['bulletin_board'] = array('Bulletin Board', 'Manage forums and categories of your bulletin board.');
-
+namespace Muspellheim\BulletinBoard;
 
 /**
- * Front end modules
+ * Class FrontendtableModel
+ *
+ * @copyright  Falko Schumann 2013
+ * @author     Falko Schumann
+ * @package    BulletinBoard
  */
-$GLOBALS['TL_LANG']['FMD']['bulletin_board'] = array('Bulletin Board', 'Displays your forums and allows to create topics and reply to it.');
+class ForumModel extends \Model
+{
+
+	/**
+	 * Name of the table
+	 * @var string
+	 */
+	protected static $strTable = 'tl_bb_forum';
+
+}

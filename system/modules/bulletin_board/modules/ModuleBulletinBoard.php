@@ -35,12 +35,58 @@
 
 
 /**
- * Back end modules
+ * Namespace
  */
-$GLOBALS['TL_LANG']['MOD']['bulletin_board'] = array('Bulletin Board', 'Manage forums and categories of your bulletin board.');
+namespace Muspellheim\BulletinBoard;
 
+use Contao\Database;
 
 /**
- * Front end modules
+ * Class ModuleBulletinBoard
+ *
+ * @copyright  Falko Schumann 2013
+ * @author     Falko Schumann
+ * @package    BulletinBoard
  */
-$GLOBALS['TL_LANG']['FMD']['bulletin_board'] = array('Bulletin Board', 'Displays your forums and allows to create topics and reply to it.');
+class ModuleBulletinBoard extends \Module
+{
+
+	/**
+	 * Template
+	 * @var string
+	 */
+	protected $strTemplate = 'mod_bulletin_board';
+
+	/**
+	 * Display a wildcard in the back end
+	 * @return string
+	 */
+	public function generate()
+	{
+		if (TL_MODE == 'BE')
+		{
+			$objTemplate = new \BackendTemplate('be_wildcard');
+
+			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['bulletin_board'][0]) . ' ###';
+			$objTemplate->title = $this->headline;
+			$objTemplate->id = $this->id;
+			$objTemplate->link = $this->name;
+			$objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+
+			return $objTemplate->parse();
+		}
+
+		return parent::generate();
+	}
+
+
+	/**
+	 * Generate the module
+	 */
+	protected function compile()
+	{
+		$rs = Database::getInstance()->query('SELECT * FROM tl_bb_forum ORDER BY sorting');
+
+		$this->Template->forums = $rs->fetchAllAssoc();
+	}
+}

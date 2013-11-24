@@ -45,7 +45,7 @@ namespace BulletinBoard;
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
- * @package    Devtools
+ * @package    BulletinBoard
  */
 class FrontendClass extends \Module
 {

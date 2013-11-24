@@ -39,6 +39,8 @@
  */
 $GLOBALS['TL_LANG']['tl_bb_forum']['title'] = array('Title', 'Please enter the forum title.');
 $GLOBALS['TL_LANG']['tl_bb_forum']['description'] = array('Description', 'Please enter the forum description.');
+$GLOBALS['TL_LANG']['tl_bb_forum']['cssClass'] = array('CSS class', 'The class(es) will be used in the forum list of the board and the topic list of this forum.');
+$GLOBALS['TL_LANG']['tl_bb_forum']['published'] = array('Publish forum', 'Make the forum publicly visible on the website.');
 
 
 /**
@@ -46,6 +48,8 @@ $GLOBALS['TL_LANG']['tl_bb_forum']['description'] = array('Description', 'Please
  */
 $GLOBALS['TL_LANG']['tl_bb_forum']['title_legend'] = 'Title';
 $GLOBALS['TL_LANG']['tl_bb_forum']['description_legend'] = 'Description';
+$GLOBALS['TL_LANG']['tl_bb_forum']['expert_legend'] = 'Title';
+$GLOBALS['TL_LANG']['tl_bb_forum']['publish_legend'] = 'Publish settings';
 
 
 /**

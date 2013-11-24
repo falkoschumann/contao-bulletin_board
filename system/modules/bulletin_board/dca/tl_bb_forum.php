@@ -71,6 +71,12 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 		),
 		'global_operations' => array
 		(
+			'toggleNodes' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['MSC']['toggleAll'],
+				'href'                => 'ptg=all',
+				'class'               => 'header_toggle'
+			),
 			'all' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
@@ -93,12 +99,30 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 				'href'                => 'act=copy',
 				'icon'                => 'copy.gif'
 			),
+			'copyChilds' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['copyChilds'],
+				'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
+				'icon'                => 'copychilds.gif',
+			),
+			'cut' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['cut'],
+				'href'                => 'act=paste&amp;mode=cut',
+				'icon'                => 'cut.gif',
+			),
 			'delete' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
+			),
+			'toggle' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['toggle'],
+				'icon'                => 'visible.gif',
+				'attributes'          => 'onclick="return AjaxRequest.toggleVisibility(this,%s)"',
 			),
 			'show' => array
 			(
@@ -125,7 +149,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
-		'default'                     => '{title_legend},title;{description_legend},description;'
+		'default'                     => '{title_legend},title;{description_legend},description;{expert_legend:hide},cssClass;{publish_legend},published'
 	),
 
 	// Subpalettes
@@ -170,6 +194,23 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'inputType'               => 'textarea',
 			'eval'                    => array('maxlength'=>255),
 			'sql'                     => "varchar(255) NOT NULL default ''"
+		),
+		'cssClass' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['cssClass'],
+			'exclude'                 => true,
+			'inputType'               => 'text',
+			'search'                  => true,
+			'eval'                    => array('maxlength'=>64, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(64) NOT NULL default ''"
+		),
+		'published' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['published'],
+			'exclude'                 => true,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('doNotCopy'=>true),
+			'sql'                     => "char(1) NOT NULL default ''"
 		)
-		)
+	)
 );

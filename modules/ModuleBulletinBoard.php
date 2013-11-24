@@ -41,7 +41,7 @@
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class ModuleBulletinBoard extends \Module
+class ModuleBulletinBoard extends Module
 {
 
 	/**
@@ -58,7 +58,7 @@ class ModuleBulletinBoard extends \Module
 	{
 		if (TL_MODE == 'BE')
 		{
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['bulletin_board'][0]) . ' ###';
 			$objTemplate->title = $this->headline;
@@ -85,7 +85,7 @@ class ModuleBulletinBoard extends \Module
 	/**
 	 * Parse collection of forum objects and return them as array of strings
 	 *
-	 * @param \Contao\Model\Collection $objForums
+	 * @param Collection $objForums
 	 * @return array
 	 */
 	protected function parseForums($objForums)

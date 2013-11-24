@@ -41,7 +41,7 @@
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BbForumModel extends \Model
+class BbForumModel extends Model
 {
 
 	/**
@@ -56,7 +56,7 @@ class BbForumModel extends \Model
 	 *
 	 * @param array   $arrOptions  An optional options array
 	 *
-	 * @return \Model\Collection|null A collection of models or null if there are no forums
+	 * @return Collection|null A collection of models or null if there are no forums
 	 */
 	public static function findPublished(array $arrOptions=array())
 	{

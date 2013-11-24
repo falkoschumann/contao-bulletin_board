@@ -75,4 +75,4 @@ Weitere Funktionen
 ---
 
 Es sind noch nicht alle oben genannten Funktionen implementiert. Diese
-Zusammenstellung ist mehr so etwas wie eine Vison oder ein Plan.
+Zusammenstellung ist mehr so etwas wie eine Vision oder ein Plan.

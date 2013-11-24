@@ -60,14 +60,11 @@
  * have to be set. Take a look at the system/modules/core/config/config.php
  * file to see how back end modules are configured.
  */
-array_insert($GLOBALS['BE_MOD']['content'], 6, array
+$GLOBALS['BE_MOD']['content']['bulletin_board'] = array
 (
-	'bulletin_board' => array
-	(
-		'tables'       => array('tl_bb_forum'),
-		'icon'         => 'system/modules/bulletin_board/assets/icon.png'
-	)
-));
+	'tables'       => array('tl_bb_forum'),
+	'icon'         => 'system/modules/bulletin_board/assets/icon.png',
+);
 
 
 /**

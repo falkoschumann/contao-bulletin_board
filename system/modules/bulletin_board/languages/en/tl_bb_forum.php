@@ -48,7 +48,7 @@ $GLOBALS['TL_LANG']['tl_bb_forum']['published'] = array('Publish forum', 'Make t
  */
 $GLOBALS['TL_LANG']['tl_bb_forum']['title_legend'] = 'Title';
 $GLOBALS['TL_LANG']['tl_bb_forum']['description_legend'] = 'Description';
-$GLOBALS['TL_LANG']['tl_bb_forum']['expert_legend'] = 'Title';
+$GLOBALS['TL_LANG']['tl_bb_forum']['expert_legend'] = 'Expert settings';
 $GLOBALS['TL_LANG']['tl_bb_forum']['publish_legend'] = 'Publish settings';
 
 

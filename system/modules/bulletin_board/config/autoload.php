@@ -12,15 +12,6 @@
 
 
 /**
- * Register the namespaces
- */
-ClassLoader::addNamespaces(array
-(
-	'Muspellheim\BulletinBoard'
-));
-
-
-/**
  * Register the classes
  */
 ClassLoader::addClasses(array
@@ -28,9 +19,10 @@ ClassLoader::addClasses(array
 	// Classes
 
 	// Models
+	'BbForumModel' => 'system/modules/bulletin_board/models/BbForumModel.php',
 
 	// Modules
-	'Muspellheim\BulletinBoard\ModuleBulletinBoard' => 'system/modules/bulletin_board/modules/ModuleBulletinBoard.php'
+	'ModuleBulletinBoard' => 'system/modules/bulletin_board/modules/ModuleBulletinBoard.php',
 ));
 
 
@@ -39,5 +31,6 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-	'mod_bulletin_board' => 'system/modules/bulletin_board/templates/modules'
+	'mod_bulletin_board' => 'system/modules/bulletin_board/templates/modules',
+	'bb_board_forum' => 'system/modules/bulletin_board/templates/board',
 ));

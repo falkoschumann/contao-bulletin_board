@@ -35,12 +35,6 @@
 
 
 /**
- * Namespace
- */
-namespace BulletinBoard;
-
-
-/**
  * Class FrontendClass
  *
  * @copyright  Falko Schumann 2013

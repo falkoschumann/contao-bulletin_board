@@ -50,6 +50,7 @@ class ModuleBulletinBoard extends Module
 	 */
 	protected $strTemplate = 'mod_bulletin_board';
 
+
 	/**
 	 * Display a wildcard in the back end
 	 * @return string

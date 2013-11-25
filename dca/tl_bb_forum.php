@@ -50,8 +50,8 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 		(
 			'keys' => array
 			(
-				'id' => 'primary',
-				'pid' => 'index'
+				'id'                  => 'primary',
+				'pid'                 => 'index',
 			)
 		)
 	),
@@ -150,7 +150,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
-		'default'                     => '{title_legend},title;{description_legend},description;{publish_legend},published'
+		'default'                     => '{title_legend},title,alias;{description_legend},description;{publish_legend},published'
 	),
 
 	// Subpalettes
@@ -177,6 +177,19 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 		'tstamp' => array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
+		'alias' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['alias'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('rgxp'=>'alias', 'unique'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
+			'save_callback' => array
+			(
+				array('tl_bb_forum', 'generateAlias')
+			),
+			'sql'                     => "varchar(128) COLLATE utf8_bin NOT NULL default ''"
 		),
 		'title' => array
 		(
@@ -220,7 +233,7 @@ class tl_bb_forum extends Backend
 {
 
 	/**
-	 * Import the back end user object
+	 * Import the back end user object.
 	 */
 	public function __construct()
 	{
@@ -230,7 +243,44 @@ class tl_bb_forum extends Backend
 
 
 	/**
-	 * Return the "toggle visibility" button
+	 * Auto-generate the forum alias if it has not been set yet.
+	 *
+	 * @param mixed
+	 * @param DataContainer
+	 * @return string
+	 * @throws Exception
+	 */
+	public function generateAlias($varValue, DataContainer $dc)
+	{
+		$autoAlias = false;
+
+		// Generate alias if there is none
+		if ($varValue == '')
+		{
+			$autoAlias = true;
+			$varValue = standardize(String::restoreBasicEntities($dc->activeRecord->headline));
+		}
+
+		$objAlias = $this->Database->prepare("SELECT id FROM tl_bb_forum WHERE alias=?")->execute($varValue);
+
+		// Check whether the forum alias exists
+		if ($objAlias->numRows > 1 && !$autoAlias)
+		{
+			throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
+		}
+
+		// Add ID to alias
+		if ($objAlias->numRows && $autoAlias)
+		{
+			$varValue .= '-' . $dc->id;
+		}
+
+		return $varValue;
+	}
+
+
+	/**
+	 * Return the "toggle visibility" button.
 	 *
 	 * @param array $row
 	 * @param string $href
@@ -266,7 +316,7 @@ class tl_bb_forum extends Backend
 
 
 	/**
-	 * Disable/enable a forum
+	 * Disable/enable a forum.
 	 *
 	 * @param integer $intId
 	 * @param boolean $blnVisible

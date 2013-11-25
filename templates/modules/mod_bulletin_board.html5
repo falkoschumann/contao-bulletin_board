@@ -1,12 +1,10 @@
 
 <!-- indexer::stop -->
 <div class="bulletin_board <?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
-<div class="inside">
   <?php if ($this->headline): ?>
     <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
   <?php endif; ?>
 
   <?php foreach ($this->categories as $category) echo $category; ?>
-</div>
 </div>
 <!-- indexer::continue -->

@@ -32,5 +32,6 @@ ClassLoader::addClasses(array
 TemplateLoader::addFiles(array
 (
 	'mod_bulletin_board' => 'system/modules/bulletin_board/templates/modules',
+	'bb_board_category' => 'system/modules/bulletin_board/templates/board',
 	'bb_board_forum' => 'system/modules/bulletin_board/templates/board',
 ));

@@ -35,7 +35,7 @@
 
 
 /**
- * Class FrontendtableModel
+ * Class BbForumModel manages access to forums and forum categories.
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
@@ -52,16 +52,40 @@ class BbForumModel extends Model
 
 
 	/**
-	 * Find published forum items
+	 * Find published category items.
 	 *
-	 * @param array   $arrOptions  An optional options array
-	 *
+	 * @param array $arrOptions An optional options array
 	 * @return Collection|null A collection of models or null if there are no forums
 	 */
-	public static function findPublished(array $arrOptions=array())
+	public static function findPublishedCategories(array $arrOptions=array())
 	{
 		$table = static::$strTable;
-		$arrColumns = array();
+		$arrColumns = array("$table.pid=0");
+
+		if (!BE_USER_LOGGED_IN)
+		{
+			$arrColumns[] = "$table.published=1";
+		}
+
+		if (!isset($arrOptions['order']))
+		{
+			$arrOptions['order'] = "$table.sorting";
+		}
+
+		return static::findBy($arrColumns, null, $arrOptions);
+	}
+
+	/**
+	 * Find published forum items by given category.
+	 *
+	 * @param object $objCategory A category object
+	 * @param array $arrOptions An optional options array
+	 * @return Collection|null A collection of models or null if there are no forums
+	 */
+	public static function findPublishedForumsByCategory($objCategory, array $arrOptions=array())
+	{
+		$table = static::$strTable;
+		$arrColumns = array("$table.pid=$objCategory->id");
 
 		if (!BE_USER_LOGGED_IN)
 		{

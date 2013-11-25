@@ -6,7 +6,7 @@
     <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
   <?php endif; ?>
 
-  <?php foreach ($this->forums as $forum) echo $forum; ?>
+  <?php foreach ($this->categories as $category) echo $category; ?>
 </div>
 </div>
 <!-- indexer::continue -->

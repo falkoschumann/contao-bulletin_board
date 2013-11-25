@@ -35,7 +35,7 @@
 
 
 /**
- * Class ModuleBulletinBoard
+ * Class ModuleBulletinBoard render the bulletin board as frontend module.
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
@@ -74,16 +74,64 @@ class ModuleBulletinBoard extends Module
 
 
 	/**
-	 * Generate the module
+	 * Generate the module.
 	 */
 	protected function compile()
 	{
-		$this->Template->forums = $this->parseForums(BbForumModel::findPublished());
+		$this->Template->categories = $this->parseCategories(BbForumModel::findPublishedCategories());
 	}
 
 
 	/**
-	 * Parse collection of forum objects and return them as array of strings
+	 * Parse collection of category objects and return them as array of strings.
+	 *
+	 * @param Collection $objCategories
+	 * @return array
+	 */
+	protected function parseCategories($objCategories)
+	{
+
+		$limit = $objCategories != null ? $objCategories->count() : 0;
+
+		if ($limit < 1)
+		{
+			return array();
+		}
+
+		$count = 0;
+		$arrForums = array();
+
+		while ($objCategories->next())
+		{
+			$arrForums[] = $this->parseCategory($objCategories, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
+		}
+
+		return $arrForums;
+	}
+
+
+	/**
+	 * Parse a category object and return it as string.
+	 *
+	 * @param object $objCategory
+	 * @param string $strClass
+	 * @return string
+	 */
+	protected function parseCategory($objCategory, $strClass='')
+	{
+		$objTemplate = new FrontendTemplate('bb_board_category');
+		$objTemplate->setData($objCategory->row());
+
+		$objTemplate->class = $strClass;
+		$objTemplate->title = $objCategory->title;
+		$objTemplate->forums = $this->parseForums(BbForumModel::findPublishedForumsByCategory($objCategory));
+
+		return $objTemplate->parse();
+	}
+
+
+	/**
+	 * Parse collection of forum objects and return them as array of strings.
 	 *
 	 * @param Collection $objForums
 	 * @return array
@@ -111,7 +159,7 @@ class ModuleBulletinBoard extends Module
 
 
 	/**
-	 * Parse a forum object and return it as string
+	 * Parse a forum object and return it as string.
 	 *
 	 * @param object $objForum
 	 * @param string $strClass

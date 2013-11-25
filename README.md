@@ -16,6 +16,9 @@ die Schreibweise "@Beitrag XYZ" oder "@Nutzer ABC" eingebürgert.
 Datenmodell
 -----------
 
+**Kategorie**
+- Name
+
 **Forum**
 - Name
 - Beschreibung

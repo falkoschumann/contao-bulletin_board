@@ -45,29 +45,19 @@ class ModuleBulletinBoard extends Module
 {
 
 	/**
-	 * Template
 	 * @var string
 	 */
 	protected $strTemplate = 'mod_bulletin_board';
 
 
 	/**
-	 * Display a wildcard in the back end
-	 * @return string
+	 * @see Module::generate()
 	 */
 	public function generate()
 	{
 		if (TL_MODE == 'BE')
 		{
-			$objTemplate = new BackendTemplate('be_wildcard');
-
-			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['bulletin_board'][0]) . ' ###';
-			$objTemplate->title = $this->headline;
-			$objTemplate->id = $this->id;
-			$objTemplate->link = $this->name;
-			$objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
-
-			return $objTemplate->parse();
+			return $this->displayWildcard();
 		}
 
 		return parent::generate();
@@ -75,7 +65,22 @@ class ModuleBulletinBoard extends Module
 
 
 	/**
-	 * Generate the module.
+	 * @return string
+	 */
+	private function displayWildcard()
+	{
+		$objTemplate = new BackendTemplate('be_wildcard');
+		$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['bulletin_board'][0]) . ' ###';
+		$objTemplate->title = $this->headline;
+		$objTemplate->id = $this->id;
+		$objTemplate->link = $this->name;
+		$objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+		return $objTemplate->parse();
+	}
+
+
+	/**
+	 * @see Module::compile()
 	 */
 	protected function compile()
 	{
@@ -84,8 +89,6 @@ class ModuleBulletinBoard extends Module
 
 
 	/**
-	 * Parse collection of category objects and return them as array of strings.
-	 *
 	 * @param Collection $objCategories
 	 * @return array
 	 */
@@ -112,8 +115,6 @@ class ModuleBulletinBoard extends Module
 
 
 	/**
-	 * Parse a category object and return it as string.
-	 *
 	 * @param object $objCategory
 	 * @param string $strClass
 	 * @return string
@@ -132,8 +133,6 @@ class ModuleBulletinBoard extends Module
 
 
 	/**
-	 * Parse collection of forum objects and return them as array of strings.
-	 *
 	 * @param Collection $objForums
 	 * @return array
 	 */
@@ -160,8 +159,6 @@ class ModuleBulletinBoard extends Module
 
 
 	/**
-	 * Parse a forum object and return it as string.
-	 *
 	 * @param object $objForum
 	 * @param string $strClass
 	 * @return string
@@ -173,8 +170,31 @@ class ModuleBulletinBoard extends Module
 
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objForum->title;
+		$objTemplate->link = $this->generateForumLink($objForum);
 		$objTemplate->description = $objForum->description;
 
 		return $objTemplate->parse();
+	}
+
+
+	/**
+	 * @param object $objForum
+	 * @return string
+	 */
+	private function generateForumLink($objForum)
+	{
+		$itemPrefix = $GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/' : '/items/';
+		$item = $this->isAliasSetAndEnabled($objForum) ? $objForum->alias : $objForum->id;
+		return $this->generateFrontendUrl($GLOBALS['objPage']->row(), $itemPrefix . $item);
+	}
+
+
+	/**
+	 * @param object $objForum
+	 * @return boolean
+	 */
+	private function isAliasSetAndEnabled($objForum)
+	{
+		return $objForum->alias != '' && !$GLOBALS['TL_CONFIG']['disableAlias'];
 	}
 }

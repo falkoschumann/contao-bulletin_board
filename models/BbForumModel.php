@@ -45,7 +45,8 @@ class BbForumModel extends Model
 {
 
 	/**
-	 * Name of the table
+	 * Name of the table.
+	 *
 	 * @var string
 	 */
 	protected static $strTable = 'tl_bb_forum';

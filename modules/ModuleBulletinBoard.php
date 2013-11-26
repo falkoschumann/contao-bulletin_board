@@ -60,6 +60,19 @@ class ModuleBulletinBoard extends Module
 			return $this->displayWildcard();
 		}
 
+//		global $objPage;
+//		$objPage->noSearch = 1;
+//		$objPage->cache = 0;
+
+		// Set the item from the auto_item parameter
+		if (!isset($_GET['items']) && $GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
+		{
+			Input::setGet('items', Input::get('auto_item'));
+		}
+
+		if (Input::get('items'))
+			return Input::get('items');
+
 		return parent::generate();
 	}
 

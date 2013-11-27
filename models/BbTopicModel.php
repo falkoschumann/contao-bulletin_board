@@ -35,13 +35,13 @@
 
 
 /**
- * Class BbPostModel manages access to posts.
+ * Class BbTopicModel manages access to topics.
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BbPostModel extends Model
+class BbTopicModel extends Model
 {
 
 	/**
@@ -49,6 +49,6 @@ class BbPostModel extends Model
 	 *
 	 * @var string
 	 */
-	protected static $strTable = 'tl_bb_post';
+	protected static $strTable = 'tl_bb_topic';
 
 }

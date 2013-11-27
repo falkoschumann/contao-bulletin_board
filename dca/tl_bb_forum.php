@@ -52,6 +52,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			(
 				'id'                  => 'primary',
 				'pid'                 => 'index',
+				'alias'               => 'index',
 			)
 		)
 	),
@@ -66,8 +67,8 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 		),
 		'label' => array
 		(
-			'fields'                  => array('title'),
-			'format'                  => '%s'
+			'fields'                  => array('title', 'type'),
+			'format'                  => '%s <span style="color:#b3b3b3;padding-left:3px">[%s]</span>',
 		),
 		'global_operations' => array
 		(
@@ -149,8 +150,10 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array(''),
-		'default'                     => '{title_legend},title,alias;{description_legend},description;{publish_legend},published'
+		'__selector__'                => array('type'),
+		'default'                     => '{title_legend},title,type',
+		'category'                    => '{title_legend},title,type,alias;{publish_legend},published',
+		'forum'                       => '{title_legend},title,type,alias;{description_legend},description;{publish_legend},published',
 	),
 
 	// Subpalettes
@@ -178,6 +181,19 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
+		'type'  => array
+		(
+			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['type'],
+			'default'   => 'forum',
+			'inputType' => 'select',
+			'exclude'   => true,
+			'sorting'   => true,
+			'flag'      => 1,
+			'options'   => array('forum', 'category'),
+			'reference' => &$GLOBALS['TL_LANG']['tl_bb_forum'],
+			'eval'      => array('includeBlankOption' => false, 'submitOnChange' => true, 'mandatory' => true, 'tl_class' => 'w50'),
+			'sql'       => "varchar(10) NOT NULL default ''"
+		),
 		'alias' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['alias'],
@@ -197,7 +213,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>100),
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>100, 'tl_class'=>'w50'),
 			'sql'                     => "varchar(100) NOT NULL default ''"
 		),
 		'description' => array
@@ -206,8 +222,8 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'textarea',
-			'eval'                    => array('maxlength'=>255),
-			'sql'                     => "varchar(255) NOT NULL default ''"
+			'eval'                    => array('maxlength'=>300),
+			'sql'                     => "varchar(300) NOT NULL default ''"
 		),
 		'published' => array
 		(

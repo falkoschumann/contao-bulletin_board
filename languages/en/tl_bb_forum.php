@@ -39,8 +39,16 @@
  */
 $GLOBALS['TL_LANG']['tl_bb_forum']['title'] = array('Title', 'Please enter the forum title.');
 $GLOBALS['TL_LANG']['tl_bb_forum']['alias'] = array('Forum alias', 'The forum alias is a unique reference to the forum which can be called instead of its numeric ID.');
+$GLOBALS['TL_LANG']['tl_bb_forum']['type'] = array('Type', 'Please select if you will create a category or a forum.');
 $GLOBALS['TL_LANG']['tl_bb_forum']['description'] = array('Description', 'Please enter the forum description.');
 $GLOBALS['TL_LANG']['tl_bb_forum']['published'] = array('Publish forum', 'Make the forum publicly visible on the website.');
+
+
+/**
+ * Types
+ */
+$GLOBALS['TL_LANG']['tl_bb_forum']['category'] = 'Category';
+$GLOBALS['TL_LANG']['tl_bb_forum']['forum'] = 'Forum';
 
 
 /**
@@ -61,3 +69,9 @@ $GLOBALS['TL_LANG']['tl_bb_forum']['edit'] = array('Edit Forum', 'Edit Forum ID 
 $GLOBALS['TL_LANG']['tl_bb_forum']['cut'] = array('Move Forum', 'Move Forum ID %s');
 $GLOBALS['TL_LANG']['tl_bb_forum']['copy'] = array('Duplicate Forum', 'Duplicate Forum ID %s');
 $GLOBALS['TL_LANG']['tl_bb_forum']['delete'] = array('Delete Forum', 'Delete Forum ID %s');
+
+
+/**
+ * Other
+ */
+$GLOBALS['TL_LANG']['tl_bb_forum']['category'] = 'Category';

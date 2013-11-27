@@ -60,10 +60,6 @@ class ModuleBulletinBoard extends Module
 			return $this->displayWildcard();
 		}
 
-//		global $objPage;
-//		$objPage->noSearch = 1;
-//		$objPage->cache = 0;
-
 		// Set the item from the auto_item parameter
 		if (!isset($_GET['items']) && $GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
 		{
@@ -97,83 +93,29 @@ class ModuleBulletinBoard extends Module
 	 */
 	protected function compile()
 	{
-		$this->Template->categories = $this->parseCategories(BbForumModel::findPublishedCategories());
+		$this->Template->categories = $this->parseForums(BbForumModel::findPublishedForumsByPids(array(0)));
 	}
 
 
 	/**
-	 * @param Collection $objCategories
-	 * @return array
-	 */
-	protected function parseCategories($objCategories)
-	{
-
-		$limit = $objCategories != null ? $objCategories->count() : 0;
-
-		if ($limit < 1)
-		{
-			return array();
-		}
-
-		$count = 0;
-		$arrForums = array();
-
-		while ($objCategories->next())
-		{
-			$arrForums[] = $this->parseCategory($objCategories, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
-		}
-
-		return $arrForums;
-	}
-
-
-	/**
-	 * @param object $objCategory
-	 * @param string $strClass
-	 * @return string
-	 */
-	protected function parseCategory($objCategory, $strClass='')
-	{
-		$objTemplate = new FrontendTemplate('bb_board_category');
-		$objTemplate->setData($objCategory->row());
-
-		$objTemplate->class = $strClass;
-		$objTemplate->title = $objCategory->title;
-		$objTemplate->forums = $this->parseForums(BbForumModel::findPublishedForumsByCategory($objCategory));
-
-		return $objTemplate->parse();
-	}
-
-
-	/**
-	 * @param Collection $objForums
-	 * @return array
+	 * @param Collection $objForums collection of BbForumModel
+	 * @return array array of string
 	 */
 	protected function parseForums($objForums)
 	{
-
 		$limit = $objForums != null ? $objForums->count() : 0;
-
-		if ($limit < 1)
-		{
-			return array();
-		}
-
 		$count = 0;
 		$arrForums = array();
-
-		while ($objForums->next())
-		{
+ 		while ($objForums->next())
+ 		{
 			$arrForums[] = $this->parseForum($objForums, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
-		}
-
-		return $arrForums;
+ 		}
+ 		return $arrForums;
 	}
 
 
 	/**
-	 * @param object $objForum
-	 * @param string $strClass
+	 * @param BbForumModel $objForum
 	 * @return string
 	 */
 	protected function parseForum($objForum, $strClass='')
@@ -185,6 +127,22 @@ class ModuleBulletinBoard extends Module
 		$objTemplate->title = $objForum->title;
 		$objTemplate->link = $this->generateForumLink($objForum);
 		$objTemplate->description = $objForum->description;
+
+		$count = 0;
+		$objSubforums = BbForumModel::findPublishedForumsByPids(array($objForum->id));
+		$limit = $objSubforums != null ? $objSubforums->count() : 0;
+		$arrSubforums= array();
+		while ($objSubforums->next())
+		{
+			$strClass = ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even');
+			$arrSubforums[] = array(
+				'class'          => $strClass,
+				'title'          => $objSubforums->title,
+				'link'           => $this->generateForumLink($objSubforums),
+				'description'    => $objSubforums->description,
+			);
+		}
+		$objTemplate->subforums = $arrSubforums;
 
 		return $objTemplate->parse();
 	}

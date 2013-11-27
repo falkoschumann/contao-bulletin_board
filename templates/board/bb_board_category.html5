@@ -1,5 +1,0 @@
-
-<div class="category <?php echo $this->class; ?>">
-	<h2 class="title"><?php echo $this->title; ?></h2>
-	<?php foreach ($this->forums as $forum) echo $forum; ?>
-</div>

@@ -53,49 +53,31 @@ class BbForumModel extends Model
 
 
 	/**
-	 * Find published category items.
+	 * Find all published forums by their parent IDs
 	 *
+	 * @param array $arrPids An array of Forum IDs
 	 * @param array $arrOptions An optional options array
+	 *
 	 * @return Collection|null A collection of models or null if there are no forums
 	 */
-	public static function findPublishedCategories(array $arrOptions=array())
+	public static function findPublishedForumsByPids($arrPids, array $arrOptions=array())
 	{
-		$table = static::$strTable;
-		$arrColumns = array("$table.pid=0");
+		if (!is_array($arrPids) || empty($arrPids))
+		{
+			return null;
+		}
+
+		$t = static::$strTable;
+		$arrColumns = array("$t.pid IN(" . implode(',', array_map('intval', $arrPids)) . ")");
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$arrColumns[] = "$table.published=1";
+			$arrColumns[] = "$t.published=1";
 		}
 
 		if (!isset($arrOptions['order']))
 		{
-			$arrOptions['order'] = "$table.sorting";
-		}
-
-		return static::findBy($arrColumns, null, $arrOptions);
-	}
-
-	/**
-	 * Find published forum items by given category.
-	 *
-	 * @param object $objCategory A category object
-	 * @param array $arrOptions An optional options array
-	 * @return Collection|null A collection of models or null if there are no forums
-	 */
-	public static function findPublishedForumsByCategory($objCategory, array $arrOptions=array())
-	{
-		$table = static::$strTable;
-		$arrColumns = array("$table.pid=$objCategory->id");
-
-		if (!BE_USER_LOGGED_IN)
-		{
-			$arrColumns[] = "$table.published=1";
-		}
-
-		if (!isset($arrOptions['order']))
-		{
-			$arrOptions['order'] = "$table.sorting";
+			$arrOptions['order'] = "$t.pid, $t.sorting";
 		}
 
 		return static::findBy($arrColumns, null, $arrOptions);

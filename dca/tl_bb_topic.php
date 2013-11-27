@@ -35,9 +35,9 @@
 
 
 /**
- * Table tl_bb_post
+ * Table tl_bb_topic
  */
-$GLOBALS['TL_DCA']['tl_bb_post'] = array
+$GLOBALS['TL_DCA']['tl_bb_topic'] = array
 (
 
 	// Config
@@ -48,7 +48,7 @@ $GLOBALS['TL_DCA']['tl_bb_post'] = array
 			'keys' => array
 			(
 				'id'                  => 'primary',
-				'topic'               => 'index',
+				'forum'               => 'index',
 			)
 		)
 	),
@@ -60,7 +60,7 @@ $GLOBALS['TL_DCA']['tl_bb_post'] = array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'topic' => array
+		'forum' => array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),

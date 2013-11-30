@@ -1,0 +1,4 @@
+
+<div class="board">
+  <?php foreach ($this->categories as $category) echo $category; ?>
+</div>

@@ -49,6 +49,11 @@ class ModuleBulletinBoard extends Module
 	 */
 	protected $strTemplate = 'mod_bulletin_board';
 
+	/**
+	 * @return string
+	 */
+	private $strItem;
+
 
 	/**
 	 * @see Module::generate()
@@ -66,8 +71,7 @@ class ModuleBulletinBoard extends Module
 			Input::setGet('items', Input::get('auto_item'));
 		}
 
-		if (Input::get('items'))
-			return Input::get('items');
+		$this->strItem = Input::get('items');
 
 		return parent::generate();
 	}
@@ -93,79 +97,23 @@ class ModuleBulletinBoard extends Module
 	 */
 	protected function compile()
 	{
-		$this->Template->categories = $this->parseForums(BbForumModel::findPublishedForumsByPids(array(0)));
-	}
-
-
-	/**
-	 * @param Collection $objForums collection of BbForumModel
-	 * @return array array of string
-	 */
-	protected function parseForums($objForums)
-	{
-		$limit = $objForums != null ? $objForums->count() : 0;
-		$count = 0;
-		$arrForums = array();
- 		while ($objForums->next())
- 		{
-			$arrForums[] = $this->parseForum($objForums, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
- 		}
- 		return $arrForums;
-	}
-
-
-	/**
-	 * @param BbForumModel $objForum
-	 * @return string
-	 */
-	protected function parseForum($objForum, $strClass='')
-	{
-		$objTemplate = new FrontendTemplate('bb_board_forum');
-		$objTemplate->setData($objForum->row());
-
-		$objTemplate->class = $strClass;
-		$objTemplate->title = $objForum->title;
-		$objTemplate->link = $this->generateForumLink($objForum);
-		$objTemplate->description = $objForum->description;
-
-		$count = 0;
-		$objSubforums = BbForumModel::findPublishedForumsByPids(array($objForum->id));
-		$limit = $objSubforums != null ? $objSubforums->count() : 0;
-		$arrSubforums= array();
-		while ($objSubforums->next())
+		if ($this->strItem)
 		{
-			$strClass = ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even');
-			$arrSubforums[] = array(
-				'class'          => $strClass,
-				'title'          => $objSubforums->title,
-				'link'           => $this->generateForumLink($objSubforums),
-				'description'    => $objSubforums->description,
-			);
+			$this->Template->content = $this->strItem;
 		}
-		$objTemplate->subforums = $arrSubforums;
+		else {
+			$this->Template->content = $this->parseBoard();
+		}
+	}
+
+
+	private function parseBoard()
+	{
+		$objTemplate = new FrontendTemplate('bb_board');
+
+		$parser = new BoardParser();
+		$objTemplate->categories = $parser->parseCategories(BbForumModel::findPublishedForumsByPids(array(0)));
 
 		return $objTemplate->parse();
-	}
-
-
-	/**
-	 * @param object $objForum
-	 * @return string
-	 */
-	private function generateForumLink($objForum)
-	{
-		$itemPrefix = $GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/' : '/items/';
-		$item = $this->isAliasSetAndEnabled($objForum) ? $objForum->alias : $objForum->id;
-		return $this->generateFrontendUrl($GLOBALS['objPage']->row(), $itemPrefix . $item);
-	}
-
-
-	/**
-	 * @param object $objForum
-	 * @return boolean
-	 */
-	private function isAliasSetAndEnabled($objForum)
-	{
-		return $objForum->alias != '' && !$GLOBALS['TL_CONFIG']['disableAlias'];
 	}
 }

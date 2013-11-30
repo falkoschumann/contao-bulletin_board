@@ -1,0 +1,8 @@
+
+<div class="category <?php echo $this->class; ?>">
+  <h2 class="title"><a href="<?php echo $this->link; ?>"><?php echo $this->title; ?></a></h2>
+  <?php if ($this->description): ?>
+  <p class="description"><?php echo $this->description; ?></p>
+  <?php endif; ?>
+  <?php foreach ($this->forums as $forum) echo $forum; ?>
+</div>

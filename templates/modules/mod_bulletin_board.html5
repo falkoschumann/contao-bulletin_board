@@ -5,6 +5,6 @@
     <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
   <?php endif; ?>
 
-  <?php foreach ($this->categories as $category) echo $category; ?>
+  <?php echo $this->content; ?>
 </div>
 <!-- indexer::continue -->

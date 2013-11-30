@@ -17,6 +17,7 @@
 ClassLoader::addClasses(array
 (
 	// Classes
+	'BoardParser' => 'system/modules/bulletin_board/classes/BoardParser.php',
 
 	// Models
 	'BbForumModel' => 'system/modules/bulletin_board/models/BbForumModel.php',
@@ -32,6 +33,7 @@ ClassLoader::addClasses(array
 TemplateLoader::addFiles(array
 (
 	'mod_bulletin_board' => 'system/modules/bulletin_board/templates/modules',
-	'bb_board_category' => 'system/modules/bulletin_board/templates/board',
-	'bb_board_forum' => 'system/modules/bulletin_board/templates/board',
+	'bb_board' => 'system/modules/bulletin_board/templates/bulletin_board',
+	'bb_board_category' => 'system/modules/bulletin_board/templates/bulletin_board',
+	'bb_board_forum' => 'system/modules/bulletin_board/templates/bulletin_board',
 ));

@@ -38,4 +38,5 @@
  * Miscellaneous
  */
 $GLOBALS['TL_LANG']['MSC']['bb_board_index'] = 'Board index';
-$GLOBALS['TL_LANG']['MSC']['bb_forum_without_topics'] = 'There are no topics or posts in this forum.';
+$GLOBALS['TL_LANG']['MSC']['bb_new_topic'] = 'New topic';
+$GLOBALS['TL_LANG']['MSC']['bb_no_topics'] = 'There are no topics or posts in this forum.';

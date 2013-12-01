@@ -72,6 +72,15 @@ class ForumParser extends Frontend
 		$objTemplate->title = $objForum->title;
 		$objTemplate->subforums = $this->parseSubforums(BbForumModel::findPublishedForumsByPids(array($objForum->id)));
 		$objTemplate->topics = $this->parseTopics(BbTopicModel::findTopicsByForumId($objForum->id));
+		if ($objForum->type == 'forum')
+		{
+			$objTemplate->newTopic = '<a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] .'</a>';
+		}
+		else
+		{
+			$objTemplate->newTopic = '';
+		}
+		$objTemplate->labelNoTopics = $GLOBALS['TL_LANG']['MSC']['bb_no_topics'];
 		return $objTemplate->parse();
 	}
 
@@ -99,7 +108,7 @@ class ForumParser extends Frontend
 	 */
 	public function parseSubforum($objForum, $strClass='')
 	{
-		$objTemplate = new FrontendTemplate('bb_board_forum');
+		$objTemplate = new FrontendTemplate('bb_forum_subforum');
 		$objTemplate->setData($objForum->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objForum->title;
@@ -148,5 +157,13 @@ class ForumParser extends Frontend
 	private function generateTopicLink($objTopic)
 	{
 		return $this->addToUrl('topic=' . $objTopic->id);
+	}
+
+	/**
+	 * @return string
+	 */
+	private function generateNewTopicLink()
+	{
+		return $this->addToUrl('topic=new');
 	}
 }

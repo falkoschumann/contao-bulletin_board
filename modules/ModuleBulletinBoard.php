@@ -98,6 +98,7 @@ class ModuleBulletinBoard extends Module
 	 */
 	protected function compile()
 	{
+		$this->Template->breadcrumb = $this->parseBreadcrumb();
 		if ($this->strItem)
 		{
 			$parser = new ForumParser($this->strItem);
@@ -107,5 +108,58 @@ class ModuleBulletinBoard extends Module
 			$parser = new BoardParser();
 			$this->Template->content = $parser->parseBoard();
 		}
+	}
+
+
+	/**
+	 * @return string
+	 */
+	private function parseBreadcrumb()
+	{
+		$items = array();
+		if ($this->strItem) {
+			$objForum = BbForumModel::findByIdOrAlias($this->strItem);
+			$objForums = BbForumModel::findParentsById($objForum->id);
+			if ($objForums)
+			{
+				// add current forum
+				$items[] = array
+				(
+					'isActive' => true,
+					'title'    => $objForums->title,
+					'class'    => '',
+				);
+
+				// add parent forums
+				while ($objForums->next())
+				{
+					if (!$objForums->published && !BE_USER_LOGGED_IN)
+					{
+						continue;
+					}
+
+					$items[] = array
+					(
+						'isActive' => false,
+						'href'     => BulletinBoard::generateForumLink($objForums),
+						'title'    => $objForums->title,
+						'class'    => '',
+					);
+				}
+			}
+		}
+
+		// add board index
+		$items[] = array
+		(
+			'isActive' => false,
+			'href'     => static::generateFrontendUrl($GLOBALS['objPage']->row()),
+			'title'    => $GLOBALS['TL_LANG']['MSC']['bb_board_index'],
+			'class'    => 'first',
+		);
+
+		$objTemplate = new FrontendTemplate('bb_breadcrumb');
+		$objTemplate->items = array_reverse($items);
+		return $objTemplate->parse();
 	}
 }

@@ -5,6 +5,6 @@
   <?php if (count($this->topics)): ?>
   <?php foreach ($this->topics as $topic) echo $topic; ?>
   <?php else: ?>
-  <p><?php echo $GLOBALS['TL_LANG']['MSC']['forum_without_topics']; ?></p>
+  <p><?php echo $GLOBALS['TL_LANG']['MSC']['bb_forum_without_topics']; ?></p>
   <?php endif; ?>
 </div>

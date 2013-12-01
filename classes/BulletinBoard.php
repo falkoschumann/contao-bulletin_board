@@ -35,7 +35,34 @@
 
 
 /**
- * Miscellaneous
+ * Class BulletinBoard.
+ *
+ * @copyright  Falko Schumann 2013
+ * @author     Falko Schumann
+ * @package    BulletinBoard
  */
-$GLOBALS['TL_LANG']['MSC']['bb_board_index'] = 'Board index';
-$GLOBALS['TL_LANG']['MSC']['bb_forum_without_topics'] = 'There are no topics or posts in this forum.';
+class BulletinBoard extends Frontend
+{
+
+
+	/**
+	 * @param object $objForum
+	 * @return string
+	 */
+	public static function generateForumLink($objForum)
+	{
+		$itemPrefix = $GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/' : '/items/';
+		$item = static::isAliasSetAndEnabled($objForum) ? $objForum->alias : $objForum->id;
+		return static::generateFrontendUrl($GLOBALS['objPage']->row(), $itemPrefix . $item);
+	}
+
+
+	/**
+	 * @param object $objForum
+	 * @return boolean
+	 */
+	public static function isAliasSetAndEnabled($objForum)
+	{
+		return $objForum->alias != '' && !$GLOBALS['TL_CONFIG']['disableAlias'];
+	}
+}

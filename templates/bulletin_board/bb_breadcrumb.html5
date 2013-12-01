@@ -1,0 +1,14 @@
+
+<!-- indexer::stop -->
+<div class="breadcrumb">
+  <ul>
+    <?php foreach ($this->items as $item): ?>
+      <?php if ($item['isActive']): ?>
+        <li class="active<?php if ($item['class']): ?> <?php echo $item['class']; ?><?php endif; ?> last"><?php echo $item['title']; ?></li>
+      <?php else: ?>
+        <li<?php if ($item['class']): ?> class="<?php echo $item['class']; ?>"<?php endif; ?>><a href="<?php echo $item['href']; ?>"><?php echo $item['title']; ?></a></li>
+      <?php endif; ?>
+    <?php endforeach; ?>
+  </ul>
+</div>
+<!-- indexer::continue -->

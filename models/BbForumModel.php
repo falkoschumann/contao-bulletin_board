@@ -82,4 +82,25 @@ class BbForumModel extends Model
 
 		return static::findBy($arrColumns, null, $arrOptions);
 	}
+
+
+	/**
+	 * Find the parent forums of a forum
+	 *
+	 * @param integer $intId The forum's ID
+	 *
+	 * @return \Model\Collection|null A collection of models or null if there are no parent forums
+	 */
+	public static function findParentsById($intId)
+	{
+		$objForums = \Database::getInstance()->prepare("SELECT *, @pid:=pid FROM tl_bb_forum WHERE id=?" . str_repeat(" UNION SELECT *, @pid:=pid FROM tl_bb_forum WHERE id=@pid", 9))
+		->execute($intId);
+
+		if ($objForums->numRows < 1)
+		{
+			return null;
+		}
+
+		return \Model\Collection::createFromDbResult($objForums, 'tl_bb_forum');
+	}
 }

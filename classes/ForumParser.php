@@ -103,31 +103,9 @@ class ForumParser extends Frontend
 		$objTemplate->setData($objForum->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objForum->title;
-		$objTemplate->link = $this->generateForumLink($objForum);
+		$objTemplate->link = BulletinBoard::generateForumLink($objForum);
 		$objTemplate->description = $objForum->description;
 		return $objTemplate->parse();
-	}
-
-
-	/**
-	 * @param object $objForum
-	 * @return string
-	 */
-	private function generateForumLink($objForum)
-	{
-		$itemPrefix = $GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/' : '/items/';
-		$item = $this->isAliasSetAndEnabled($objForum) ? $objForum->alias : $objForum->id;
-		return $this->generateFrontendUrl($GLOBALS['objPage']->row(), $itemPrefix . $item);
-	}
-
-
-	/**
-	 * @param object $objForum
-	 * @return boolean
-	 */
-	private function isAliasSetAndEnabled($objForum)
-	{
-		return $objForum->alias != '' && !$GLOBALS['TL_CONFIG']['disableAlias'];
 	}
 
 
@@ -169,8 +147,6 @@ class ForumParser extends Frontend
 	 */
 	private function generateTopicLink($objTopic)
 	{
-		// FIXME Workaround: duplicate item alias
 		return $this->addToUrl('topic=' . $objTopic->id);
-		//return $this->addToUrl('items=' . $this->strItem . '&topic=' . $objTopic->id, true);
 	}
 }

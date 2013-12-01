@@ -5,6 +5,7 @@
     <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
   <?php endif; ?>
 
+  <?php echo $this->breadcrumb; ?>
   <?php echo $this->content; ?>
 </div>
 <!-- indexer::continue -->

@@ -82,32 +82,10 @@ class BoardParser extends Frontend
 		$objTemplate->setData($objCategory->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objCategory->title;
-		$objTemplate->link = $this->generateForumLink($objCategory);
+		$objTemplate->link = BulletinBoard::generateForumLink($objCategory);
 		$objTemplate->description = $objCategory->description;
 		$objTemplate->forums = $this->parseForums(BbForumModel::findPublishedForumsByPids(array($objCategory->id)));
 		return $objTemplate->parse();
-	}
-
-
-	/**
-	 * @param object $objForum
-	 * @return string
-	 */
-	private function generateForumLink($objForum)
-	{
-		$itemPrefix = $GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/' : '/items/';
-		$item = $this->isAliasSetAndEnabled($objForum) ? $objForum->alias : $objForum->id;
-		return $this->generateFrontendUrl($GLOBALS['objPage']->row(), $itemPrefix . $item);
-	}
-
-
-	/**
-	 * @param object $objForum
-	 * @return boolean
-	 */
-	private function isAliasSetAndEnabled($objForum)
-	{
-		return $objForum->alias != '' && !$GLOBALS['TL_CONFIG']['disableAlias'];
 	}
 
 
@@ -138,7 +116,7 @@ class BoardParser extends Frontend
 		$objTemplate->setData($objForum->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objForum->title;
-		$objTemplate->link = $this->generateForumLink($objForum);
+		$objTemplate->link = BulletinBoard::generateForumLink($objForum);
 		$objTemplate->description = $objForum->description;
 		return $objTemplate->parse();
 	}

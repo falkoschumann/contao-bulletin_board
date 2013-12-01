@@ -102,18 +102,8 @@ class ModuleBulletinBoard extends Module
 			$this->Template->content = $this->strItem;
 		}
 		else {
-			$this->Template->content = $this->parseBoard();
+			$parser = new BoardParser();
+			$this->Template->content = $parser->parseBoard();
 		}
-	}
-
-
-	private function parseBoard()
-	{
-		$objTemplate = new FrontendTemplate('bb_board');
-
-		$parser = new BoardParser();
-		$objTemplate->categories = $parser->parseCategories(BbForumModel::findPublishedForumsByPids(array(0)));
-
-		return $objTemplate->parse();
 	}
 }

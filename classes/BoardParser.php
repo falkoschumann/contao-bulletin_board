@@ -45,6 +45,17 @@ class BoardParser extends Frontend
 {
 
 	/**
+	 * @return string
+	 */
+	public function parseBoard()
+	{
+		$objTemplate = new FrontendTemplate('bb_board');
+		$objTemplate->categories = $this->parseCategories(BbForumModel::findPublishedForumsByPids(array(0)));
+		return $objTemplate->parse();
+	}
+
+
+	/**
 	 * @param Collection $objCategories collection of BbForumModel
 	 * @return array array of string
 	 */

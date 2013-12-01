@@ -51,4 +51,23 @@ class BbTopicModel extends Model
 	 */
 	protected static $strTable = 'tl_bb_topic';
 
+	/**
+	 * Find all topics by forum ID
+	 *
+	 * @param int $forumId forum ID
+	 * @param array $arrOptions An optional options array
+	 * @return Collection|null A collection of models or null if there are no topics
+	 */
+	public static function findTopicsByForumId($forumId, array $arrOptions=array())
+	{
+		$t = static::$strTable;
+		$arrColumns = array("$t.forum=$forumId");
+
+		if (!isset($arrOptions['order']))
+		{
+			$arrOptions['order'] = "$t.tstamp DESC";
+		}
+
+		return static::findBy($arrColumns, null, $arrOptions);
+	}
 }

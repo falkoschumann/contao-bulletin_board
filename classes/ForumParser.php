@@ -35,56 +35,76 @@
 
 
 /**
- * Class BoardParser render the board.
+ * Class ForumParser render a forum.
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BoardParser extends Frontend
+class ForumParser extends Frontend
 {
 
 	/**
 	 * @return string
 	 */
-	public function parseBoard()
+	private $strItem;
+
+
+	/**
+	 *
+	 * @param unknown $forum
+	 */
+	public function __construct($forum)
 	{
-		$objTemplate = new FrontendTemplate('bb_board');
-		$objTemplate->categories = $this->parseCategories(BbForumModel::findPublishedForumsByPids(array(0)));
+		parent::__construct();
+		$this->strItem = $forum;
+	}
+
+
+	/**
+	 * @param mixed $forum forum ID or forum alias
+	 * @return string
+	 */
+	public function parseForum()
+	{
+		$objForum = BbForumModel::findByIdOrAlias($this->strItem);
+		$objTemplate = new FrontendTemplate('bb_forum');
+		$objTemplate->title = $objForum->title;
+		$objTemplate->subforums = $this->parseSubforums(BbForumModel::findPublishedForumsByPids(array($objForum->id)));
+		$objTemplate->topics = $this->parseTopics(BbTopicModel::findTopicsByForumId($objForum->id));
 		return $objTemplate->parse();
 	}
 
 
 	/**
-	 * @param Collection $objCategories collection of BbForumModel
+	 * @param Collection $objForums collection of BbForumModel
 	 * @return array array of string
 	 */
-	public function parseCategories($objCategories)
+	public function parseSubforums($objForums)
 	{
-		$limit = $objCategories != null ? $objCategories->count() : 0;
+		$limit = $objForums != null ? $objForums->count() : 0;
 		$count = 0;
-		$arrCategories = array();
-		while ($limit && $objCategories->next())
+		$arrForums = array();
+		while ($limit && $objForums->next())
 		{
-			$arrCategories[] = $this->parseCategory($objCategories, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
+			$arrForums[] = $this->parseSubforum($objForums, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
 		}
-		return $arrCategories;
+		return $arrForums;
 	}
 
 
 	/**
-	 * @param BbForumModel $objCategory
+	 * @param BbForumModel $objForum
 	 * @return string
 	 */
-	public function parseCategory($objCategory, $strClass='')
+	public function parseSubforum($objForum, $strClass='')
 	{
-		$objTemplate = new FrontendTemplate('bb_board_category');
-		$objTemplate->setData($objCategory->row());
+		$objTemplate = new FrontendTemplate('bb_board_forum');
+		$objTemplate->setData($objForum->row());
 		$objTemplate->class = $strClass;
-		$objTemplate->title = $objCategory->title;
-		$objTemplate->link = $this->generateForumLink($objCategory);
-		$objTemplate->description = $objCategory->description;
-		$objTemplate->forums = $this->parseForums(BbForumModel::findPublishedForumsByPids(array($objCategory->id)));
+		$objTemplate->title = $objForum->title;
+		$objTemplate->link = $this->generateForumLink($objForum);
+		$objTemplate->description = $objForum->description;
 		return $objTemplate->parse();
 	}
 
@@ -112,34 +132,45 @@ class BoardParser extends Frontend
 
 
 	/**
-	 * @param Collection $objForums collection of BbForumModel
+	 * @param Collection $objTopic collection of BbTopicModel
 	 * @return array array of string
 	 */
-	public function parseForums($objForums)
+	public function parseTopics($objTopics)
 	{
-		$limit = $objForums != null ? $objForums->count() : 0;
+		$limit = $objTopics != null ? $objTopics->count() : 0;
 		$count = 0;
-		$arrForums = array();
-		while ($limit && $objForums->next())
+		$arrTopics = array();
+		while ($limit && $objTopics->next())
 		{
-			$arrForums[] = $this->parseForum($objForums, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
+			$arrTopics[] = $this->parseTopic($objTopics, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
 		}
-		return $arrForums;
+		return $arrTopics;
 	}
 
 
 	/**
-	 * @param BbForumModel $objForum
+	 * @param BbTopicModel $objTopic
 	 * @return string
 	 */
-	public function parseForum($objForum, $strClass='')
+	public function parseTopic($objTopic, $strClass='')
 	{
-		$objTemplate = new FrontendTemplate('bb_board_forum');
-		$objTemplate->setData($objForum->row());
+		$objTemplate = new FrontendTemplate('bb_forum_topic');
+		$objTemplate->setData($objTopic->row());
 		$objTemplate->class = $strClass;
-		$objTemplate->title = $objForum->title;
-		$objTemplate->link = $this->generateForumLink($objForum);
-		$objTemplate->description = $objForum->description;
+		$objTemplate->title = $objTopic->subject;
+		$objTemplate->link = $this->generateTopicLink($objTopic);
 		return $objTemplate->parse();
+	}
+
+
+	/**
+	 * @param object $objTopic
+	 * @return string
+	 */
+	private function generateTopicLink($objTopic)
+	{
+		// FIXME Workaround: duplicate item alias
+		return $this->addToUrl('topic=' . $objTopic->id);
+		//return $this->addToUrl('items=' . $this->strItem . '&topic=' . $objTopic->id, true);
 	}
 }

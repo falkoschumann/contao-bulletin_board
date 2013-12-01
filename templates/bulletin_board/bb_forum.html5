@@ -1,0 +1,10 @@
+
+<div class="forum">
+  <h1><?php echo $this->title; ?></h1>
+  <?php foreach ($this->subforums as $subforum) echo $subforum; ?>
+  <?php if (count($this->topics)): ?>
+  <?php foreach ($this->topics as $topic) echo $topic; ?>
+  <?php else: ?>
+  <p><?php echo $GLOBALS['TL_LANG']['MSC']['forum_without_topics']; ?></p>
+  <?php endif; ?>
+</div>

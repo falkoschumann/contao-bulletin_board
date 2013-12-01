@@ -1,0 +1,4 @@
+
+<div class="topic <?php echo $this->class; ?>">
+  <h2 class="title"><a href="<?php echo $this->link; ?>"><?php echo $this->title; ?></a></h2>
+</div>

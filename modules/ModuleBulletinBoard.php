@@ -33,7 +33,7 @@
  * @copyright Falko Schumann 2013
  */
 
-namespace BulletinBoard;
+namespace Muspellheim\BulletinBoard;
 
 /**
  * Class ModuleBulletinBoard render the bulletin board as frontend module.

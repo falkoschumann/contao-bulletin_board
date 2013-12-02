@@ -16,7 +16,7 @@
  */
 ClassLoader::addNamespaces(array
 (
-	'BulletinBoard',
+	'Muspellheim\BulletinBoard',
 ));
 
 
@@ -26,17 +26,17 @@ ClassLoader::addNamespaces(array
 ClassLoader::addClasses(array
 (
 	// Classes
-	'BulletinBoard\BoardParser'         => 'system/modules/bulletin_board/classes/BoardParser.php',
-	'BulletinBoard\BulletinBoard'       => 'system/modules/bulletin_board/classes/BulletinBoard.php',
-	'BulletinBoard\ForumParser'         => 'system/modules/bulletin_board/classes/ForumParser.php',
+	'Muspellheim\BulletinBoard\BoardParser'         => 'system/modules/bulletin_board/classes/BoardParser.php',
+	'Muspellheim\BulletinBoard\BulletinBoard'       => 'system/modules/bulletin_board/classes/BulletinBoard.php',
+	'Muspellheim\BulletinBoard\ForumParser'         => 'system/modules/bulletin_board/classes/ForumParser.php',
 
 	// Models
-	'BulletinBoard\BbForumModel'        => 'system/modules/bulletin_board/models/BbForumModel.php',
-	'BulletinBoard\BbPostModel'         => 'system/modules/bulletin_board/models/BbPostModel.php',
-	'BulletinBoard\BbTopicModel'        => 'system/modules/bulletin_board/models/BbTopicModel.php',
+	'Muspellheim\BulletinBoard\BbForumModel'        => 'system/modules/bulletin_board/models/BbForumModel.php',
+	'Muspellheim\BulletinBoard\BbPostModel'         => 'system/modules/bulletin_board/models/BbPostModel.php',
+	'Muspellheim\BulletinBoard\BbTopicModel'        => 'system/modules/bulletin_board/models/BbTopicModel.php',
 
 	// Modules
-	'BulletinBoard\ModuleBulletinBoard' => 'system/modules/bulletin_board/modules/ModuleBulletinBoard.php',
+	'Muspellheim\BulletinBoard\ModuleBulletinBoard' => 'system/modules/bulletin_board/modules/ModuleBulletinBoard.php',
 ));
 
 

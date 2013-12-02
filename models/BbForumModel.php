@@ -34,7 +34,7 @@
  */
 
 
-namespace BulletinBoard;
+namespace Muspellheim\BulletinBoard;
 
 
 /**

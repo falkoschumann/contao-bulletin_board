@@ -34,6 +34,9 @@
  */
 
 
+namespace BulletinBoard;
+
+
 /**
  * Class BbTopicModel manages access to topics.
  *
@@ -41,7 +44,7 @@
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BbTopicModel extends Model
+class BbTopicModel extends \Model
 {
 
 	/**

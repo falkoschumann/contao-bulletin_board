@@ -34,6 +34,9 @@
  */
 
 
+namespace BulletinBoard;
+
+
 /**
  * Class BulletinBoard.
  *
@@ -41,7 +44,7 @@
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BulletinBoard extends Frontend
+class BulletinBoard extends \Frontend
 {
 
 

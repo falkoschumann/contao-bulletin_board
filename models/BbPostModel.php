@@ -34,6 +34,9 @@
  */
 
 
+namespace BulletinBoard;
+
+
 /**
  * Class BbPostModel manages access to posts.
  *
@@ -41,7 +44,7 @@
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BbPostModel extends Model
+class BbPostModel extends \Model
 {
 
 	/**

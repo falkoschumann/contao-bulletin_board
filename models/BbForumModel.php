@@ -34,6 +34,9 @@
  */
 
 
+namespace BulletinBoard;
+
+
 /**
  * Class BbForumModel manages access to forums and forum categories.
  *
@@ -41,7 +44,7 @@
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BbForumModel extends Model
+class BbForumModel extends \Model
 {
 
 	/**

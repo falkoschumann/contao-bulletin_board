@@ -34,6 +34,9 @@
  */
 
 
+namespace BulletinBoard;
+
+
 /**
  * Class BoardParser render the board.
  *
@@ -41,7 +44,7 @@
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BoardParser extends Frontend
+class BoardParser extends \Frontend
 {
 
 	/**
@@ -49,7 +52,7 @@ class BoardParser extends Frontend
 	 */
 	public function parseBoard()
 	{
-		$objTemplate = new FrontendTemplate('bb_board');
+		$objTemplate = new \FrontendTemplate('bb_board');
 		$objTemplate->categories = $this->parseCategories(BbForumModel::findPublishedForumsByPids(array(0)));
 		return $objTemplate->parse();
 	}
@@ -78,7 +81,7 @@ class BoardParser extends Frontend
 	 */
 	public function parseCategory($objCategory, $strClass='')
 	{
-		$objTemplate = new FrontendTemplate('bb_board_category');
+		$objTemplate = new \FrontendTemplate('bb_board_category');
 		$objTemplate->setData($objCategory->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objCategory->title;
@@ -112,7 +115,7 @@ class BoardParser extends Frontend
 	 */
 	public function parseForum($objForum, $strClass='')
 	{
-		$objTemplate = new FrontendTemplate('bb_board_forum');
+		$objTemplate = new \FrontendTemplate('bb_board_forum');
 		$objTemplate->setData($objForum->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objForum->title;

@@ -33,6 +33,7 @@
  * @copyright Falko Schumann 2013
  */
 
+namespace BulletinBoard;
 
 /**
  * Class ModuleBulletinBoard render the bulletin board as frontend module.
@@ -41,7 +42,7 @@
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class ModuleBulletinBoard extends Module
+class ModuleBulletinBoard extends \Module
 {
 
 	/**
@@ -67,11 +68,11 @@ class ModuleBulletinBoard extends Module
 
 		if (isset($_GET['items']))
 		{
-			$this->strItem = Input::get('items');
+			$this->strItem = \Input::get('items');
 		}
 		else if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
 		{
-			$this->strItem = Input::get('auto_item');
+			$this->strItem = \Input::get('auto_item');
 		}
 
 		return parent::generate();
@@ -83,7 +84,7 @@ class ModuleBulletinBoard extends Module
 	 */
 	private function displayWildcard()
 	{
-		$objTemplate = new BackendTemplate('be_wildcard');
+		$objTemplate = new \BackendTemplate('be_wildcard');
 		$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['bulletin_board'][0]) . ' ###';
 		$objTemplate->title = $this->headline;
 		$objTemplate->id = $this->id;
@@ -158,7 +159,7 @@ class ModuleBulletinBoard extends Module
 			'class'    => 'first',
 		);
 
-		$objTemplate = new FrontendTemplate('bb_breadcrumb');
+		$objTemplate = new \FrontendTemplate('bb_breadcrumb');
 		$objTemplate->items = array_reverse($items);
 		return $objTemplate->parse();
 	}

@@ -12,21 +12,31 @@
 
 
 /**
+ * Register the namespaces
+ */
+ClassLoader::addNamespaces(array
+(
+	'BulletinBoard',
+));
+
+
+/**
  * Register the classes
  */
 ClassLoader::addClasses(array
 (
 	// Classes
-	'BulletinBoard'                   => 'system/modules/bulletin_board/classes/BulletinBoard.php',
-	'BoardParser'                     => 'system/modules/bulletin_board/classes/BoardParser.php',
-	'ForumParser'                     => 'system/modules/bulletin_board/classes/ForumParser.php',
+	'BulletinBoard\BoardParser'         => 'system/modules/bulletin_board/classes/BoardParser.php',
+	'BulletinBoard\BulletinBoard'       => 'system/modules/bulletin_board/classes/BulletinBoard.php',
+	'BulletinBoard\ForumParser'         => 'system/modules/bulletin_board/classes/ForumParser.php',
 
 	// Models
-	'BbForumModel'                    => 'system/modules/bulletin_board/models/BbForumModel.php',
-	'BbTopicModel'                    => 'system/modules/bulletin_board/models/BbTopicModel.php',
+	'BulletinBoard\BbForumModel'        => 'system/modules/bulletin_board/models/BbForumModel.php',
+	'BulletinBoard\BbPostModel'         => 'system/modules/bulletin_board/models/BbPostModel.php',
+	'BulletinBoard\BbTopicModel'        => 'system/modules/bulletin_board/models/BbTopicModel.php',
 
 	// Modules
-	'ModuleBulletinBoard'             => 'system/modules/bulletin_board/modules/ModuleBulletinBoard.php',
+	'BulletinBoard\ModuleBulletinBoard' => 'system/modules/bulletin_board/modules/ModuleBulletinBoard.php',
 ));
 
 
@@ -35,12 +45,12 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-	'mod_bulletin_board'              => 'system/modules/bulletin_board/templates/modules',
-	'bb_breadcrumb'                   => 'system/modules/bulletin_board/templates/bulletin_board',
-	'bb_board'                        => 'system/modules/bulletin_board/templates/bulletin_board',
-	'bb_board_category'               => 'system/modules/bulletin_board/templates/bulletin_board',
-	'bb_board_forum'                  => 'system/modules/bulletin_board/templates/bulletin_board',
-	'bb_forum'                        => 'system/modules/bulletin_board/templates/bulletin_board',
-	'bb_forum_subforum'               => 'system/modules/bulletin_board/templates/bulletin_board',
-	'bb_forum_topic'                  => 'system/modules/bulletin_board/templates/bulletin_board',
+	'bb_board'           => 'system/modules/bulletin_board/templates/bulletin_board',
+	'bb_board_category'  => 'system/modules/bulletin_board/templates/bulletin_board',
+	'bb_board_forum'     => 'system/modules/bulletin_board/templates/bulletin_board',
+	'bb_breadcrumb'      => 'system/modules/bulletin_board/templates/bulletin_board',
+	'bb_forum'           => 'system/modules/bulletin_board/templates/bulletin_board',
+	'bb_forum_subforum'  => 'system/modules/bulletin_board/templates/bulletin_board',
+	'bb_forum_topic'     => 'system/modules/bulletin_board/templates/bulletin_board',
+	'mod_bulletin_board' => 'system/modules/bulletin_board/templates/modules',
 ));

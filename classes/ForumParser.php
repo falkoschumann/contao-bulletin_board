@@ -34,6 +34,9 @@
  */
 
 
+namespace BulletinBoard;
+
+
 /**
  * Class ForumParser render a forum.
  *
@@ -41,7 +44,7 @@
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class ForumParser extends Frontend
+class ForumParser extends \Frontend
 {
 
 	/**
@@ -68,7 +71,7 @@ class ForumParser extends Frontend
 	public function parseForum()
 	{
 		$objForum = BbForumModel::findByIdOrAlias($this->strItem);
-		$objTemplate = new FrontendTemplate('bb_forum');
+		$objTemplate = new \FrontendTemplate('bb_forum');
 		$objTemplate->title = $objForum->title;
 		$objTemplate->subforums = $this->parseSubforums(BbForumModel::findPublishedForumsByPids(array($objForum->id)));
 		$objTemplate->topics = $this->parseTopics(BbTopicModel::findTopicsByForumId($objForum->id));
@@ -108,7 +111,7 @@ class ForumParser extends Frontend
 	 */
 	public function parseSubforum($objForum, $strClass='')
 	{
-		$objTemplate = new FrontendTemplate('bb_forum_subforum');
+		$objTemplate = new \FrontendTemplate('bb_forum_subforum');
 		$objTemplate->setData($objForum->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objForum->title;
@@ -141,7 +144,7 @@ class ForumParser extends Frontend
 	 */
 	public function parseTopic($objTopic, $strClass='')
 	{
-		$objTemplate = new FrontendTemplate('bb_forum_topic');
+		$objTemplate = new \FrontendTemplate('bb_forum_topic');
 		$objTemplate->setData($objTopic->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objTopic->subject;

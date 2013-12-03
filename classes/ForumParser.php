@@ -50,7 +50,7 @@ class ForumParser extends \Frontend
 	/**
 	 * @return string
 	 */
-	private $strItem;
+	private $forum;
 
 
 	/**
@@ -60,17 +60,16 @@ class ForumParser extends \Frontend
 	public function __construct($forum)
 	{
 		parent::__construct();
-		$this->strItem = $forum;
+		$this->forum = $forum;
 	}
 
 
 	/**
-	 * @param mixed $forum forum ID or forum alias
 	 * @return string
 	 */
 	public function parseForum()
 	{
-		$objForum = BbForumModel::findByIdOrAlias($this->strItem);
+		$objForum = BbForumModel::findByIdOrAlias($this->forum);
 		$objTemplate = new \FrontendTemplate('bb_forum');
 		$objTemplate->title = $objForum->title;
 		$objTemplate->subforums = $this->parseSubforums(BbForumModel::findPublishedForumsByPids(array($objForum->id)));

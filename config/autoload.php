@@ -26,9 +26,11 @@ ClassLoader::addNamespaces(array
 ClassLoader::addClasses(array
 (
 	// Classes
-	'Muspellheim\BulletinBoard\BoardParser'         => 'system/modules/bulletin_board/classes/BoardParser.php',
 	'Muspellheim\BulletinBoard\BulletinBoard'       => 'system/modules/bulletin_board/classes/BulletinBoard.php',
+	'Muspellheim\BulletinBoard\BreadcrumbParser'    => 'system/modules/bulletin_board/classes/BreadcrumbParser.php',
+	'Muspellheim\BulletinBoard\BoardParser'         => 'system/modules/bulletin_board/classes/BoardParser.php',
 	'Muspellheim\BulletinBoard\ForumParser'         => 'system/modules/bulletin_board/classes/ForumParser.php',
+	'Muspellheim\BulletinBoard\TopicParser'         => 'system/modules/bulletin_board/classes/TopicParser.php',
 
 	// Models
 	'Muspellheim\BulletinBoard\BbForumModel'        => 'system/modules/bulletin_board/models/BbForumModel.php',
@@ -45,6 +47,7 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
+	'mod_bulletin_board' => 'system/modules/bulletin_board/templates/modules',
 	'bb_board'           => 'system/modules/bulletin_board/templates/bulletin_board',
 	'bb_board_category'  => 'system/modules/bulletin_board/templates/bulletin_board',
 	'bb_board_forum'     => 'system/modules/bulletin_board/templates/bulletin_board',
@@ -52,5 +55,6 @@ TemplateLoader::addFiles(array
 	'bb_forum'           => 'system/modules/bulletin_board/templates/bulletin_board',
 	'bb_forum_subforum'  => 'system/modules/bulletin_board/templates/bulletin_board',
 	'bb_forum_topic'     => 'system/modules/bulletin_board/templates/bulletin_board',
-	'mod_bulletin_board' => 'system/modules/bulletin_board/templates/modules',
+	'bb_topic'           => 'system/modules/bulletin_board/templates/bulletin_board',
+	'bb_topic_post'      => 'system/modules/bulletin_board/templates/bulletin_board',
 ));

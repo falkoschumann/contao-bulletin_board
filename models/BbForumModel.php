@@ -94,7 +94,7 @@ class BbForumModel extends \Model
 	 *
 	 * @return \Model\Collection|null A collection of models or null if there are no parent forums
 	 */
-	public static function findParentsById($intId)
+	public static function findParentForumsById($intId)
 	{
 		$objForums = \Database::getInstance()->prepare("SELECT *, @pid:=pid FROM tl_bb_forum WHERE id=?" . str_repeat(" UNION SELECT *, @pid:=pid FROM tl_bb_forum WHERE id=@pid", 9))
 		->execute($intId);

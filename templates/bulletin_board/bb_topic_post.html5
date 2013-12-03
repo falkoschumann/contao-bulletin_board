@@ -1,0 +1,6 @@
+
+<div class="post <?php echo $this->class; ?>">
+  <h2><?php echo $this->subject; ?></h2>
+  <p><span class="author"><?php echo $this->author; ?></span> <span class="timestamp"><?php echo $this->timestamp; ?></span></p>
+  <p class="text"><?php echo $this->text; ?></p>
+</div>

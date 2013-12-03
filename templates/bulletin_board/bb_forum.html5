@@ -2,10 +2,10 @@
 <div class="forum">
   <h1><?php echo $this->title; ?></h1>
   <?php foreach ($this->subforums as $subforum) echo $subforum; ?>
-  <?php echo $this->newTopic; ?>
+  <p><?php echo $this->newTopic; ?></p>
   <?php if (count($this->topics)): ?>
   <?php foreach ($this->topics as $topic) echo $topic; ?>
-  <?php echo $this->newTopic; ?>
+  <p><?php echo $this->newTopic; ?></p>
   <?php else: ?>
   <p><?php $this->labelNoTopics; ?></p>
   <?php endif; ?>

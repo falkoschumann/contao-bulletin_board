@@ -47,7 +47,6 @@ namespace Muspellheim\BulletinBoard;
 class BulletinBoard extends \Frontend
 {
 
-
 	/**
 	 * @param object $objForum
 	 * @return string
@@ -64,7 +63,7 @@ class BulletinBoard extends \Frontend
 	 * @param object $objForum
 	 * @return boolean
 	 */
-	public static function isAliasSetAndEnabled($objForum)
+	private static function isAliasSetAndEnabled($objForum)
 	{
 		return $objForum->alias != '' && !$GLOBALS['TL_CONFIG']['disableAlias'];
 	}

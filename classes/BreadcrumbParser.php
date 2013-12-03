@@ -38,40 +38,80 @@ namespace Muspellheim\BulletinBoard;
 
 
 /**
- * Class BbPostModel manages access to posts.
+ * Class BreadcrumbParser render a forum breadcrumb.
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BbPostModel extends \Model
+class BreadcrumbParser extends \Frontend
 {
 
 	/**
-	 * Name of the table
-	 *
 	 * @var string
 	 */
-	protected static $strTable = 'tl_bb_post';
+	private $forum;
 
 
 	/**
-	 * Find all posts by topic ID
-	 *
-	 * @param int $topicId topic ID
-	 * @param array $arrOptions An optional options array
-	 * @return Collection|null A collection of models or null if there are no posts
+	 * @param int|string $forum
 	 */
-	public static function findPostsByTopicId($topicId, array $arrOptions=array())
+	public function __construct($forum)
 	{
-		$t = static::$strTable;
-		$arrColumns = array("$t.topic=$topicId");
+		parent::__construct();
+		$this->forum = $forum;
+	}
 
-		if (!isset($arrOptions['order']))
-		{
-			$arrOptions['order'] = "$t.tstamp";
+
+	/**
+	 * @return string
+	 */
+	public function parseBreadcrumb()
+	{
+		$items = array();
+		if ($this->forum) {
+			$objForum = BbForumModel::findByIdOrAlias($this->forum);
+			$objForums = BbForumModel::findParentForumsById($objForum->id);
+			if ($objForums)
+			{
+				// add current forum
+				$items[] = array
+				(
+					'isActive' => true,
+					'title'    => $objForums->title,
+					'class'    => '',
+				);
+
+				// add parent forums
+				while ($objForums->next())
+				{
+					if (!$objForums->published && !BE_USER_LOGGED_IN)
+					{
+						continue;
+					}
+
+					$items[] = array
+					(
+						'isActive' => false,
+						'href'     => BulletinBoard::generateForumLink($objForums),
+						'title'    => $objForums->title,
+						'class'    => '',
+					);
+				}
+			}
 		}
 
-		return static::findBy($arrColumns, null, $arrOptions);
+		// add board index
+		$items[] = array
+		(
+			'isActive' => false,
+			'href'     => static::generateFrontendUrl($GLOBALS['objPage']->row()),
+			'title'    => $GLOBALS['TL_LANG']['MSC']['bb_board_index'],
+			'class'    => 'first',
+		);
+
+		$objTemplate = new \FrontendTemplate('bb_breadcrumb');
+		$objTemplate->items = array_reverse($items);
+		return $objTemplate->parse();
 	}
 }

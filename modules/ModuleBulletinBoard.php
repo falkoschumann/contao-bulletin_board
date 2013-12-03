@@ -50,10 +50,17 @@ class ModuleBulletinBoard extends \Module
 	 */
 	protected $strTemplate = 'mod_bulletin_board';
 
+
 	/**
-	 * @return string
+	 * @var int|string
 	 */
-	private $strItem;
+	private $forum;
+
+
+	/**
+	 * @var int|string
+	 */
+	private $topic;
 
 
 	/**
@@ -68,12 +75,14 @@ class ModuleBulletinBoard extends \Module
 
 		if (isset($_GET['items']))
 		{
-			$this->strItem = \Input::get('items');
+			$this->forum = \Input::get('items');
 		}
 		else if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
 		{
-			$this->strItem = \Input::get('auto_item');
+			$this->forum = \Input::get('auto_item');
 		}
+
+		$this->topic = \Input::get('topic');
 
 		return parent::generate();
 	}
@@ -99,68 +108,22 @@ class ModuleBulletinBoard extends \Module
 	 */
 	protected function compile()
 	{
-		$this->Template->breadcrumb = $this->parseBreadcrumb();
-		if ($this->strItem)
+		$parser = new BreadcrumbParser($this->forum);
+		$this->Template->breadcrumb = $parser->parseBreadcrumb();
+		if ($this->topic)
 		{
-			$parser = new ForumParser($this->strItem);
+			$parser = new TopicParser($this->topic);
+			$this->Template->content = $parser->parseTopic();
+		}
+		else if ($this->forum)
+		{
+			$parser = new ForumParser($this->forum);
 			$this->Template->content = $parser->parseForum();
 		}
-		else {
+		else
+		{
 			$parser = new BoardParser();
 			$this->Template->content = $parser->parseBoard();
 		}
-	}
-
-
-	/**
-	 * @return string
-	 */
-	private function parseBreadcrumb()
-	{
-		$items = array();
-		if ($this->strItem) {
-			$objForum = BbForumModel::findByIdOrAlias($this->strItem);
-			$objForums = BbForumModel::findParentsById($objForum->id);
-			if ($objForums)
-			{
-				// add current forum
-				$items[] = array
-				(
-					'isActive' => true,
-					'title'    => $objForums->title,
-					'class'    => '',
-				);
-
-				// add parent forums
-				while ($objForums->next())
-				{
-					if (!$objForums->published && !BE_USER_LOGGED_IN)
-					{
-						continue;
-					}
-
-					$items[] = array
-					(
-						'isActive' => false,
-						'href'     => BulletinBoard::generateForumLink($objForums),
-						'title'    => $objForums->title,
-						'class'    => '',
-					);
-				}
-			}
-		}
-
-		// add board index
-		$items[] = array
-		(
-			'isActive' => false,
-			'href'     => static::generateFrontendUrl($GLOBALS['objPage']->row()),
-			'title'    => $GLOBALS['TL_LANG']['MSC']['bb_board_index'],
-			'class'    => 'first',
-		);
-
-		$objTemplate = new \FrontendTemplate('bb_breadcrumb');
-		$objTemplate->items = array_reverse($items);
-		return $objTemplate->parse();
 	}
 }

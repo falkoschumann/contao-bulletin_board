@@ -78,6 +78,7 @@ class BreadcrumbParser extends \Frontend
 				$items[] = array
 				(
 					'isActive' => true,
+					'href'     => BulletinBoard::generateForumLink($objForums),
 					'title'    => $objForums->title,
 					'class'    => '',
 				);

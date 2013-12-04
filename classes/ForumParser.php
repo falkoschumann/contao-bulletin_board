@@ -74,14 +74,15 @@ class ForumParser extends \Frontend
 		$objTemplate->title = $objForum->title;
 		$objTemplate->subforums = $this->parseSubforums(BbForumModel::findPublishedForumsByPids(array($objForum->id)));
 		$objTemplate->topics = $this->parseTopics(BbTopicModel::findTopicsByForumId($objForum->id));
-		if ($objForum->type == 'forum')
+		if ($objForum->type == 'forum' && (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN))
 		{
-			$objTemplate->newTopic = '<a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] .'</a>';
+			$objTemplate->newTopic = '<p><a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] .'</a></p>';
 		}
 		else
 		{
 			$objTemplate->newTopic = '';
 		}
+
 		$objTemplate->labelNoTopics = $GLOBALS['TL_LANG']['MSC']['bb_no_topics'];
 		return $objTemplate->parse();
 	}

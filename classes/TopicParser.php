@@ -74,7 +74,13 @@ class TopicParser extends \Frontend
 		$objTemplate->subject = $objTopic->subject;
 		$objTemplate->topic = $this->parsePost($objTopic, 'topic');
 		$objTemplate->posts = $this->parsePosts(BbPostModel::findPostsByTopicId($objTopic->id));
-		$objTemplate->postReply = '<a href="' . $this->generatePostReplayLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_post_reply'] .'</a>';
+		if (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN)
+		{
+			$objTemplate->postReply = '<p><a href="' . $this->generatePostReplayLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_post_reply'] .'</a></p>';
+		}
+		else {
+			$objTemplate->postReply = '';
+		}
 		return $objTemplate->parse();
 	}
 

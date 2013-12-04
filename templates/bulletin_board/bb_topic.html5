@@ -1,8 +1,8 @@
 
 <div class="topic">
   <h1><?php echo $this->subject; ?></h1>
-  <p><?php echo $this->postReply; ?></p>
+  <?php echo $this->postReply; ?>
   <?php echo $this->topic; ?>
   <?php foreach ($this->posts as $post) echo $post; ?>
-  <p><?php echo $this->postReply; ?></p>
+  <?php echo $this->postReply; ?>
 </div>

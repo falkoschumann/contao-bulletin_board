@@ -89,32 +89,31 @@ class ModuleBulletinBoard extends \Module
 		if (isset($_GET['items']))
 		{
 			$forum = \Input::get('items');
-			$objForum = BbForumModel::findByIdOrAlias($forum);
-			$forumIsSpecified = true;
 		}
 		else if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
 		{
 			$forum = \Input::get('auto_item');
-			$objForum = BbForumModel::findByIdOrAlias($forum);
-			$forumIsSpecified = true;
 		}
 
+		$objForum = BbForumModel::findByIdOrAlias($forum);
 		$parser = new BreadcrumbParser($objForum);
 		$this->Template->breadcrumb = $parser->parseBreadcrumb();
 
-		if ($forumIsSpecified && $objForum === null)
-		{
-			$objPage->noSearch = 1;
-			$objPage->cache = 0;
-			header('HTTP/1.1 404 Not Found');
-			$this->Template->content = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_forum'], $forum) . '</p>';
-			return;
+		if ($forum) {
+			if ($objForum === null)
+			{
+				$objPage->noSearch = 1;
+				$objPage->cache = 0;
+				header('HTTP/1.1 404 Not Found');
+				$this->Template->content = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_forum'], $forum) . '</p>';
+				return;
+			}
 		}
 
 		if (isset($_GET['topic']))
 		{
 			$topic = \Input::get('topic');
-			$objTopic = BbForumModel::findByIdOrAlias($topic);
+			$objTopic = BbTopicModel::findByPk($topic);
 			if ($objTopic === null)
 			{
 				$objPage->noSearch = 1;
@@ -125,7 +124,7 @@ class ModuleBulletinBoard extends \Module
 			}
 		}
 
-		if ($this->objTopic)
+		if ($objTopic)
 		{
 			$parser = new TopicParser($objTopic);
 			$this->Template->content = $parser->parseTopic();

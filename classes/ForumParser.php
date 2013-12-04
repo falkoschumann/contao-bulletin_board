@@ -48,19 +48,19 @@ class ForumParser extends \Frontend
 {
 
 	/**
-	 * @return string
+	 * @val BbForumModel
 	 */
-	private $forum;
+	private $objForum;
 
 
 	/**
 	 *
-	 * @param unknown $forum
+	 * @param BbForumModel $objForum
 	 */
-	public function __construct($forum)
+	public function __construct($objForum)
 	{
 		parent::__construct();
-		$this->forum = $forum;
+		$this->objForum = $objForum;
 	}
 
 
@@ -69,12 +69,11 @@ class ForumParser extends \Frontend
 	 */
 	public function parseForum()
 	{
-		$objForum = BbForumModel::findByIdOrAlias($this->forum);
 		$objTemplate = new \FrontendTemplate('bb_forum');
-		$objTemplate->title = $objForum->title;
-		$objTemplate->subforums = $this->parseSubforums(BbForumModel::findPublishedForumsByPids(array($objForum->id)));
-		$objTemplate->topics = $this->parseTopics(BbTopicModel::findTopicsByForumId($objForum->id));
-		if ($objForum->type == 'forum' && (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN))
+		$objTemplate->title = $this->objForum->title;
+		$objTemplate->subforums = $this->parseSubforums(BbForumModel::findPublishedForumsByPids(array($this->objForum->id)));
+		$objTemplate->topics = $this->parseTopics(BbTopicModel::findTopicsByForumId($this->objForum->id));
+		if ($this->objForum->type == 'forum' && (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN))
 		{
 			$objTemplate->newTopic = '<p><a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] .'</a></p>';
 		}

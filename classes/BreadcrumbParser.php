@@ -48,18 +48,18 @@ class BreadcrumbParser extends \Frontend
 {
 
 	/**
-	 * @var string
+	 * @var BbForumModel
 	 */
-	private $forum;
+	private $objForum;
 
 
 	/**
-	 * @param int|string $forum
+	 * @param BbForumModel $objForum
 	 */
-	public function __construct($forum)
+	public function __construct($objForum)
 	{
 		parent::__construct();
-		$this->forum = $forum;
+		$this->objForum = $objForum;
 	}
 
 
@@ -69,9 +69,8 @@ class BreadcrumbParser extends \Frontend
 	public function parseBreadcrumb()
 	{
 		$items = array();
-		if ($this->forum) {
-			$objForum = BbForumModel::findByIdOrAlias($this->forum);
-			$objForums = BbForumModel::findParentForumsById($objForum->id);
+		if ($this->objForum) {
+			$objForums = BbForumModel::findParentForumsById($this->objForum->id);
 			if ($objForums)
 			{
 				// add current forum

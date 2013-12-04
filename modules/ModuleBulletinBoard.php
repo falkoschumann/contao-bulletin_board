@@ -52,15 +52,15 @@ class ModuleBulletinBoard extends \Module
 
 
 	/**
-	 * @var int|string
+	 * @var BbForumModel
 	 */
-	private $forum;
+	private $objForum;
 
 
 	/**
-	 * @var int|string
+	 * @var BbTopicModel
 	 */
-	private $topic;
+	private $objTopic;
 
 
 	/**
@@ -75,14 +75,17 @@ class ModuleBulletinBoard extends \Module
 
 		if (isset($_GET['items']))
 		{
-			$this->forum = \Input::get('items');
+			$this->objForum = BbForumModel::findByIdOrAlias(\Input::get('items'));
 		}
 		else if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
 		{
-			$this->forum = \Input::get('auto_item');
+			$this->objForum = BbForumModel::findByIdOrAlias(\Input::get('auto_item'));
 		}
 
-		$this->topic = \Input::get('topic');
+		if (isset($_GET['topic']))
+		{
+			$this->objTopic = BbTopicModel::findByPk(\Input::get('topic'));
+		}
 
 		return parent::generate();
 	}
@@ -108,16 +111,16 @@ class ModuleBulletinBoard extends \Module
 	 */
 	protected function compile()
 	{
-		$parser = new BreadcrumbParser($this->forum);
+		$parser = new BreadcrumbParser($this->objForum);
 		$this->Template->breadcrumb = $parser->parseBreadcrumb();
-		if ($this->topic)
+		if ($this->objTopic)
 		{
-			$parser = new TopicParser($this->topic);
+			$parser = new TopicParser($this->objTopic);
 			$this->Template->content = $parser->parseTopic();
 		}
-		else if ($this->forum)
+		else if ($this->objForum)
 		{
-			$parser = new ForumParser($this->forum);
+			$parser = new ForumParser($this->objForum);
 			$this->Template->content = $parser->parseForum();
 		}
 		else

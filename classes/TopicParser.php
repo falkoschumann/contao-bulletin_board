@@ -48,19 +48,19 @@ class TopicParser extends \Frontend
 {
 
 	/**
-	 * @var int|string
+	 * @var BbTopicModel
 	 */
-	private $topic;
+	private $objTopic;
 
 
 	/**
 	 *
-	 * @param unknown $topic
+	 * @param BbTopicModel $objTopic
 	 */
-	public function __construct($topic)
+	public function __construct($objTopic)
 	{
 		parent::__construct();
-		$this->topic = $topic;
+		$this->objTopic = $objTopic;
 	}
 
 
@@ -69,11 +69,10 @@ class TopicParser extends \Frontend
 	 */
 	public function parseTopic()
 	{
-		$objTopic = BbTopicModel::findByPk($this->topic);
 		$objTemplate = new \FrontendTemplate('bb_topic');
-		$objTemplate->subject = $objTopic->subject;
-		$objTemplate->topic = $this->parsePost($objTopic, 'topic');
-		$objTemplate->posts = $this->parsePosts(BbPostModel::findPostsByTopicId($objTopic->id));
+		$objTemplate->subject = $this->objTopic->subject;
+		$objTemplate->topic = $this->parsePost($this->objTopic, 'topic');
+		$objTemplate->posts = $this->parsePosts(BbPostModel::findPostsByTopicId($this->objTopic->id));
 		if (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN)
 		{
 			$objTemplate->postReply = '<p><a href="' . $this->generatePostReplayLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_post_reply'] .'</a></p>';

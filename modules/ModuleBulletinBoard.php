@@ -52,18 +52,6 @@ class ModuleBulletinBoard extends \Module
 
 
 	/**
-	 * @var BbForumModel
-	 */
-	private $objForum;
-
-
-	/**
-	 * @var BbTopicModel
-	 */
-	private $objTopic;
-
-
-	/**
 	 * @see Module::generate()
 	 */
 	public function generate()
@@ -71,20 +59,6 @@ class ModuleBulletinBoard extends \Module
 		if (TL_MODE == 'BE')
 		{
 			return $this->displayWildcard();
-		}
-
-		if (isset($_GET['items']))
-		{
-			$this->objForum = BbForumModel::findByIdOrAlias(\Input::get('items'));
-		}
-		else if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
-		{
-			$this->objForum = BbForumModel::findByIdOrAlias(\Input::get('auto_item'));
-		}
-
-		if (isset($_GET['topic']))
-		{
-			$this->objTopic = BbTopicModel::findByPk(\Input::get('topic'));
 		}
 
 		return parent::generate();
@@ -111,16 +85,54 @@ class ModuleBulletinBoard extends \Module
 	 */
 	protected function compile()
 	{
-		$parser = new BreadcrumbParser($this->objForum);
+		global $objPage;
+		if (isset($_GET['items']))
+		{
+			$forum = \Input::get('items');
+			$objForum = BbForumModel::findByIdOrAlias($forum);
+			$forumIsSpecified = true;
+		}
+		else if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
+		{
+			$forum = \Input::get('auto_item');
+			$objForum = BbForumModel::findByIdOrAlias($forum);
+			$forumIsSpecified = true;
+		}
+
+		$parser = new BreadcrumbParser($objForum);
 		$this->Template->breadcrumb = $parser->parseBreadcrumb();
+
+		if ($forumIsSpecified && $objForum === null)
+		{
+			$objPage->noSearch = 1;
+			$objPage->cache = 0;
+			header('HTTP/1.1 404 Not Found');
+			$this->Template->content = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_forum'], $forum) . '</p>';
+			return;
+		}
+
+		if (isset($_GET['topic']))
+		{
+			$topic = \Input::get('topic');
+			$objTopic = BbForumModel::findByIdOrAlias($topic);
+			if ($objTopic === null)
+			{
+				$objPage->noSearch = 1;
+				$objPage->cache = 0;
+				header('HTTP/1.1 404 Not Found');
+				$this->Template->content = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_topic'], $topic) . '</p>';
+				return;
+			}
+		}
+
 		if ($this->objTopic)
 		{
-			$parser = new TopicParser($this->objTopic);
+			$parser = new TopicParser($objTopic);
 			$this->Template->content = $parser->parseTopic();
 		}
-		else if ($this->objForum)
+		else if ($objForum)
 		{
-			$parser = new ForumParser($this->objForum);
+			$parser = new ForumParser($objForum);
 			$this->Template->content = $parser->parseForum();
 		}
 		else

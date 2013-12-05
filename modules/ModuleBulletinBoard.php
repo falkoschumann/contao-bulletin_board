@@ -148,7 +148,7 @@ class ModuleBulletinBoard extends \Module
 
 	private function checkForum()
 	{
-		if ($this->forum && $this->objForum === null)
+		if ($this->forum && is_null($this->objForum))
 		{
 			global $objPage;
 			$objPage->noSearch = 1;
@@ -169,7 +169,12 @@ class ModuleBulletinBoard extends \Module
 
 	private function checkTopic()
 	{
-		if ($this->topic && $this->objTopic === null)
+		if ($this->topic === "new")
+		{
+			return;
+		}
+
+		if ($this->topic && is_null($this->objTopic))
 		{
 			global $objPage;
 			$objPage->noSearch = 1;
@@ -190,8 +195,16 @@ class ModuleBulletinBoard extends \Module
 		}
 		else if ($this->objForum)
 		{
-			$parser = new ForumParser($this->objForum);
-			$this->Template->content = $parser->parseForum();
+			if ($this->topic === "new")
+			{
+				$parser = new NewTopicParser($this->objForum);
+				$this->Template->content = $parser->parseNewTopic();
+			}
+			else
+			{
+				$parser = new ForumParser($this->objForum);
+				$this->Template->content = $parser->parseForum();
+			}
 		}
 		else
 		{

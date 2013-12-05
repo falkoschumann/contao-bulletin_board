@@ -1,0 +1,12 @@
+
+<div class="new_topic">
+  <h2><?php echo $this->forum; ?></h2>
+  <h3><?php echo $this->newTopic; ?></h3>
+  <form action="<?php echo $this->action; ?>" method="post">
+  	<label for="subject"><?php echo $this->subject; ?></label>
+  	<input id="subject" type="text">
+  	<label for="text"><?php echo $this->text; ?></label>
+  	<textarea id="text">
+  	<input type="submit"/>
+  </form>
+</div>

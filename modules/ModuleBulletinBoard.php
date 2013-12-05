@@ -52,6 +52,30 @@ class ModuleBulletinBoard extends \Module
 
 
 	/**
+	 * @var forum ID or forum alias
+	 */
+	private $forum;
+
+
+	/**
+	 * @var BBForumModel
+	 */
+	private $objForum;
+
+
+	/**
+	 * @var topic ID
+	 */
+	private $topic;
+
+
+	/**
+	 * @var BBTopicModel
+	 */
+	private $objTopic;
+
+
+	/**
 	 * @see Module::generate()
 	 */
 	public function generate()
@@ -85,53 +109,88 @@ class ModuleBulletinBoard extends \Module
 	 */
 	protected function compile()
 	{
-		global $objPage;
+		try
+		{
+			$this->getForum();
+			$this->parseBreadcrumb();
+			$this->checkForum();
+			$this->getTopic();
+			$this->checkTopic();
+			$this->parseContent();
+		}
+		catch (\Exception $ex)
+		{
+			// do nothing
+		}
+	}
+
+
+	private function getForum()
+	{
 		if (isset($_GET['items']))
 		{
-			$forum = \Input::get('items');
+			$this->forum = \Input::get('items');
 		}
 		else if ($GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
 		{
-			$forum = \Input::get('auto_item');
+			$this->forum = \Input::get('auto_item');
 		}
+		$this->objForum = BbForumModel::findByIdOrAlias($this->forum);
+	}
 
-		$objForum = BbForumModel::findByIdOrAlias($forum);
-		$parser = new BreadcrumbParser($objForum);
+
+	private function parseBreadcrumb()
+	{
+		$parser = new BreadcrumbParser($this->objForum);
 		$this->Template->breadcrumb = $parser->parseBreadcrumb();
+	}
 
-		if ($forum) {
-			if ($objForum === null)
-			{
-				$objPage->noSearch = 1;
-				$objPage->cache = 0;
-				header('HTTP/1.1 404 Not Found');
-				$this->Template->content = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_forum'], $forum) . '</p>';
-				return;
-			}
-		}
 
-		if (isset($_GET['topic']))
+	private function checkForum()
+	{
+		if ($this->forum && $this->objForum === null)
 		{
-			$topic = \Input::get('topic');
-			$objTopic = BbTopicModel::findByPk($topic);
-			if ($objTopic === null)
-			{
-				$objPage->noSearch = 1;
-				$objPage->cache = 0;
-				header('HTTP/1.1 404 Not Found');
-				$this->Template->content = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_topic'], $topic) . '</p>';
-				return;
-			}
+			global $objPage;
+			$objPage->noSearch = 1;
+			$objPage->cache = 0;
+			header('HTTP/1.1 404 Not Found');
+			$this->Template->content = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_forum'], $this->forum) . '</p>';
+			throw new \Exception();
 		}
+	}
 
-		if ($objTopic)
+
+	private function getTopic()
+	{
+		$this->topic = \Input::get('topic');
+		$this->objTopic = BbTopicModel::findByPk($this->topic);
+	}
+
+
+	private function checkTopic()
+	{
+		if ($this->topic && $this->objTopic === null)
 		{
-			$parser = new TopicParser($objTopic);
+			global $objPage;
+			$objPage->noSearch = 1;
+			$objPage->cache = 0;
+			header('HTTP/1.1 404 Not Found');
+			$this->Template->content = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_topic'], $this->topic) . '</p>';
+			throw new \Exception();
+		}
+	}
+
+
+	private function parseContent()
+	{
+		if ($this->objTopic)
+		{
+			$parser = new TopicParser($this->objTopic);
 			$this->Template->content = $parser->parseTopic();
 		}
-		else if ($objForum)
+		else if ($this->objForum)
 		{
-			$parser = new ForumParser($objForum);
+			$parser = new ForumParser($this->objForum);
 			$this->Template->content = $parser->parseForum();
 		}
 		else

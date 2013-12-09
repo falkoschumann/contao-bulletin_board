@@ -69,12 +69,68 @@ class NewTopicParser extends \Frontend
 	 */
 	public function parseNewTopic()
 	{
+		// TODO create record for new topic
 		$objTemplate = new \FrontendTemplate('bb_topic_new');
-		$objTemplate->action = '';
 		$objTemplate->forum = $this->objForum->title;
 		$objTemplate->newTopic = 'Post a new Topic';
-		$objTemplate->subject = 'Subject';
-		$objTemplate->text = 'Text';
+
+		// Form fields
+		$arrFields = array
+		(
+			'subject' => array
+			(
+				'name'      => 'subject',
+				'label'     => $GLOBALS['TL_LANG']['MSC']['bb_subject'],
+				'inputType' => 'text',
+				'eval'      => array('mandatory'=>true, 'maxlength'=>100),
+			),
+			'text' => array
+			(
+				'name'      => 'text',
+				'label'     => $GLOBALS['TL_LANG']['MSC']['bb_text'],
+				'inputType' => 'textarea',
+				'eval'      => array('mandatory'=>true, 'rows'=>10, 'cols'=>80, 'preserveTags'=>false),
+			),
+		);
+
+		$doNotSubmit = false;
+		$arrWidgets = array();
+		$strFormId = 'bulletin_board';
+
+		// Initialize the widgets
+		foreach ($arrFields as $arrField)
+		{
+			$strClass = $GLOBALS['TL_FFL'][$arrField['inputType']];
+
+			// Continue if the class is not defined
+			if (!class_exists($strClass))
+			{
+				continue;
+			}
+
+			$arrField['eval']['required'] = $arrField['eval']['mandatory'];
+			$objWidget = new $strClass($strClass::getAttributesFromDca($arrField, $arrField['name'], $arrField['value']));
+
+			// Validate the widget
+			if (\Input::post('FORM_SUBMIT') == $strFormId)
+			{
+				$objWidget->validate();
+
+				if ($objWidget->hasErrors())
+				{
+					$doNotSubmit = true;
+				}
+			}
+
+			$arrWidgets[$arrField['name']] = $objWidget;
+		}
+
+		$objTemplate->fields = $arrWidgets;
+		$objTemplate->submit = $GLOBALS['TL_LANG']['MSC']['bb_submit'];
+		$objTemplate->action = ampersand(\Environment::get('request'));
+		$objTemplate->formId = $strFormId;
+		$objTemplate->hasError = $doNotSubmit;
+
 		return $objTemplate->parse();
 	}
 }

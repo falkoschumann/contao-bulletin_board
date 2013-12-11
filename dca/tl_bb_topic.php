@@ -76,7 +76,7 @@ $GLOBALS['TL_DCA']['tl_bb_topic'] = array
 		(
 			'sql'                     => "varchar(100) NOT NULL default ''"
 		),
-		'text' => array
+		'message' => array
 		(
 			'sql'                     => "mediumtext NULL"
 		),

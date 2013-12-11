@@ -113,7 +113,7 @@ class TopicParser extends \Frontend
 		$objTemplate->setData($objPost->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->subject = $objPost->subject;
-		$objTemplate->text = $objPost->text;
+		$objTemplate->message = $objPost->message;
 		$objTemplate->author = sprintf($GLOBALS['TL_LANG']['MSC']['bb_author'], $member->username);
 		$objTemplate->timestamp = \Date::parse($objPage->datimFormat, $objPost->tstamp);
 		return $objTemplate->parse();

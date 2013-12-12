@@ -69,7 +69,8 @@ class NewTopicParser extends \Frontend
 	 */
 	public function parseNewTopic()
 	{
-		// TODO create record for new topic
+		$this->import('FrontendUser', 'User');
+
 		$objTemplate = new \FrontendTemplate('bb_topic_new');
 		$objTemplate->forum = $this->objForum->title;
 		$objTemplate->newTopic = 'Post a new Topic';
@@ -84,10 +85,10 @@ class NewTopicParser extends \Frontend
 				'inputType' => 'text',
 				'eval'      => array('mandatory'=>true, 'maxlength'=>100),
 			),
-			'text' => array
+			'message' => array
 			(
-				'name'      => 'text',
-				'label'     => $GLOBALS['TL_LANG']['MSC']['bb_text'],
+				'name'      => 'message',
+				'label'     => $GLOBALS['TL_LANG']['MSC']['bb_message'],
 				'inputType' => 'textarea',
 				'eval'      => array('mandatory'=>true, 'rows'=>10, 'cols'=>80, 'preserveTags'=>false),
 			),
@@ -131,6 +132,148 @@ class NewTopicParser extends \Frontend
 		$objTemplate->formId = $strFormId;
 		$objTemplate->hasError = $doNotSubmit;
 
+		// Store the comment
+		if (!$doNotSubmit && \Input::post('FORM_SUBMIT') == $strFormId)
+		{
+			// Do not parse any tags in the comment
+			$strMessage = htmlspecialchars(trim($arrWidgets['message']->value));
+			$strMessage = str_replace(array('&amp;', '&lt;', '&gt;'), array('[&]', '[lt]', '[gt]'), $strMessage);
+
+			// Remove multiple line feeds
+			$strMessage = preg_replace('@\n\n+@', "\n\n", $strMessage);
+
+			// Parse BBCode
+			if ($objConfig->bbcode)
+			{
+				$strMessage = $this->parseBbCode($strMessage);
+			}
+
+			// Prevent cross-site request forgeries
+			$strMessage = preg_replace('/(href|src|on[a-z]+)="[^"]*(contao\/main\.php|typolight\/main\.php|javascript|vbscri?pt|script|alert|document|cookie|window)[^"]*"+/i', '$1="#"', $strMessage);
+
+			$time = time();
+
+			// Prepare the record
+			$arrSet = array
+			(
+				'tstamp'    => $time,
+				'forum'     => $this->objForum->id,
+				'author'    => $this->User->id,
+				'subject'   => $arrWidgets['subject']->value,
+				'message'   => $this->convertLineFeeds($strMessage),
+			);
+
+			// Store the comment
+			$objTopic = new BbTopicModel();
+			$objTopic->setRow($arrSet)->save();
+
+			$this->redirect($this->generateTopicLink($objTopic));
+		}
+
 		return $objTemplate->parse();
+	}
+
+
+	/**
+	 * Replace bbcode and return the HTML string
+	 *
+	 * Supports the following tags:
+	 * - [b][/b] bold
+	 * - [i][/i] italic
+	 * - [u][/u] underline
+	 * - [img][/img]
+	 * - [code][/code]
+	 * - [color=#ff0000][/color]
+	 * - [quote][/quote]
+	 * - [quote=tim][/quote]
+	 * - [url][/url]
+	 * - [url=http://][/url]
+	 * - [email][/email]
+	 * - [email=name@example.com][/email]
+	 * @param string
+	 * @return string
+	 */
+	public function parseBbCode($strMessage)
+	{
+		$arrSearch = array
+		(
+			'@\[b\](.*)\[/b\]@Uis',
+			'@\[i\](.*)\[/i\]@Uis',
+			'@\[u\](.*)\[/u\]@Uis',
+			'@\s*\[code\](.*)\[/code\]\s*@Uis',
+			'@\[color=([^\]" ]+)\](.*)\[/color\]@Uis',
+			'@\s*\[quote\](.*)\[/quote\]\s*@Uis',
+			'@\s*\[quote=([^\]]+)\](.*)\[/quote\]\s*@Uis',
+			'@\[img\]\s*([^\[" ]+\.(jpe?g|png|gif|bmp|tiff?|ico))\s*\[/img\]@i',
+			'@\[url\]\s*([^\[" ]+)\s*\[/url\]@i',
+			'@\[url=([^\]" ]+)\](.*)\[/url\]@Uis',
+			'@\[email\]\s*([^\[" ]+)\s*\[/email\]@i',
+			'@\[email=([^\]" ]+)\](.*)\[/email\]@Uis',
+			'@href="(([a-z0-9]+\.)*[a-z0-9]+\.([a-z]{2}|asia|biz|com|info|name|net|org|tel)(/|"))@i'
+		);
+
+		$arrReplace = array
+		(
+			'<strong>$1</strong>',
+			'<em>$1</em>',
+			'<span style="text-decoration:underline">$1</span>',
+			"\n\n" . '<div class="code"><p>'. $GLOBALS['TL_LANG']['MSC']['com_code'] .'</p><pre>$1</pre></div>' . "\n\n",
+			'<span style="color:$1">$2</span>',
+			"\n\n" . '<div class="quote">$1</div>' . "\n\n",
+			"\n\n" . '<div class="quote"><p>'. sprintf($GLOBALS['TL_LANG']['MSC']['com_quote'], '$1') .'</p>$2</div>' . "\n\n",
+			'<img src="$1" alt="" />',
+			'<a href="$1">$1</a>',
+			'<a href="$1">$2</a>',
+			'<a href="mailto:$1">$1</a>',
+			'<a href="mailto:$1">$2</a>',
+			'href="http://$1'
+		);
+
+		$strMessage = preg_replace($arrSearch, $arrReplace, $strMessage);
+
+		// Encode e-mail addresses
+		if (strpos($strMessage, 'mailto:') !== false)
+		{
+			$strMessage = \String::encodeEmail($strMessage);
+		}
+
+		return $strMessage;
+	}
+
+
+	/**
+	 * Convert line feeds to <br /> tags
+	 * @param string
+	 * @return string
+	 */
+	public function convertLineFeeds($strMessage)
+	{
+		global $objPage;
+		$strMessage = nl2br_pre($strMessage, ($objPage->outputFormat == 'xhtml'));
+
+		// Use paragraphs to generate new lines
+		if (strncmp('<p>', $strMessage, 3) !== 0)
+		{
+			$strMessage = '<p>'. $strMessage .'</p>';
+		}
+
+		$arrReplace = array
+		(
+			'@<br>\s?<br>\s?@' => "</p>\n<p>", // Convert two linebreaks into a new paragraph
+			'@\s?<br></p>@'    => '</p>',      // Remove BR tags before closing P tags
+			'@<p><div@'        => '<div',      // Do not nest DIVs inside paragraphs
+			'@</div></p>@'     => '</div>'     // Do not nest DIVs inside paragraphs
+		);
+
+		return preg_replace(array_keys($arrReplace), array_values($arrReplace), $strMessage);
+	}
+
+	/**
+	 * @param object $objTopic
+	 * @return string
+	 */
+	private function generateTopicLink($objTopic)
+	{
+		return $this->addToUrl('topic=' . $objTopic->id);
 	}
 }

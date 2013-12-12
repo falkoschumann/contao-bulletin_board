@@ -45,5 +45,5 @@ $GLOBALS['TL_LANG']['MSC']['bb_author'] = 'by %s';
 $GLOBALS['TL_LANG']['MSC']['bb_invalid_forum'] = 'Forum "%s" does not exist.';
 $GLOBALS['TL_LANG']['MSC']['bb_invalid_topic'] = 'Topic "%s" does not exist.';
 $GLOBALS['TL_LANG']['MSC']['bb_subject'] = 'Subject';
-$GLOBALS['TL_LANG']['MSC']['bb_text'] = 'Text';
+$GLOBALS['TL_LANG']['MSC']['bb_message'] = 'Message';
 $GLOBALS['TL_LANG']['MSC']['bb_submit'] = 'Submit';

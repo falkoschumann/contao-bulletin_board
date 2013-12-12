@@ -12,7 +12,7 @@
       </div>
 
       <div class="widget">
-        <?php echo $this->fields['text']->generateWithError(); ?> <label for="ctrl_<?php echo $this->fields['text']->id; ?>" class="invisible"><?php echo $this->fields['text']->label; ?></label>
+        <?php echo $this->fields['message']->generateWithError(); ?> <label for="ctrl_<?php echo $this->fields['message']->id; ?>" class="invisible"><?php echo $this->fields['message']->label; ?></label>
       </div>
 
       <div class="submit_container">

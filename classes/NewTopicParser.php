@@ -52,6 +52,21 @@ class NewTopicParser extends \Frontend
 	 */
 	private $objForum;
 
+	/**
+	 * @var array
+	 */
+	private $arrWidgets = array();
+
+	/**
+	 * @var boolean
+	 */
+	private $doNotSubmit = false;
+
+	/**
+	 * @var string
+	 */
+	private $strFormId = 'bulletin_board';
+
 
 	/**
 	 *
@@ -75,6 +90,22 @@ class NewTopicParser extends \Frontend
 		$objTemplate->forum = $this->objForum->title;
 		$objTemplate->newTopic = 'Post a new Topic';
 
+		$this->createForm();
+
+		$objTemplate->fields = $this->arrWidgets;
+		$objTemplate->submit = $GLOBALS['TL_LANG']['MSC']['bb_submit'];
+		$objTemplate->action = ampersand(\Environment::get('request'));
+		$objTemplate->formId = $this->strFormId;
+		$objTemplate->hasError = $this->doNotSubmit;
+
+		$this->storeMessage();
+
+		return $objTemplate->parse();
+	}
+
+
+	private function createForm()
+	{
 		// Form fields
 		$arrFields = array
 		(
@@ -94,10 +125,6 @@ class NewTopicParser extends \Frontend
 			),
 		);
 
-		$doNotSubmit = false;
-		$arrWidgets = array();
-		$strFormId = 'bulletin_board';
-
 		// Initialize the widgets
 		foreach ($arrFields as $arrField)
 		{
@@ -113,40 +140,35 @@ class NewTopicParser extends \Frontend
 			$objWidget = new $strClass($strClass::getAttributesFromDca($arrField, $arrField['name'], $arrField['value']));
 
 			// Validate the widget
-			if (\Input::post('FORM_SUBMIT') == $strFormId)
+			if (\Input::post('FORM_SUBMIT') == $this->strFormId)
 			{
 				$objWidget->validate();
 
 				if ($objWidget->hasErrors())
 				{
-					$doNotSubmit = true;
+					$this->doNotSubmit = true;
 				}
 			}
 
-			$arrWidgets[$arrField['name']] = $objWidget;
+			$this->arrWidgets[$arrField['name']] = $objWidget;
 		}
+	}
 
-		$objTemplate->fields = $arrWidgets;
-		$objTemplate->submit = $GLOBALS['TL_LANG']['MSC']['bb_submit'];
-		$objTemplate->action = ampersand(\Environment::get('request'));
-		$objTemplate->formId = $strFormId;
-		$objTemplate->hasError = $doNotSubmit;
 
-		// Store the comment
-		if (!$doNotSubmit && \Input::post('FORM_SUBMIT') == $strFormId)
+	private function storeMessage()
+	{
+		// Store the message
+		if (!$this->doNotSubmit && \Input::post('FORM_SUBMIT') == $this->strFormId)
 		{
 			// Do not parse any tags in the comment
-			$strMessage = htmlspecialchars(trim($arrWidgets['message']->value));
+			$strMessage = htmlspecialchars(trim($this->arrWidgets['message']->value));
 			$strMessage = str_replace(array('&amp;', '&lt;', '&gt;'), array('[&]', '[lt]', '[gt]'), $strMessage);
 
 			// Remove multiple line feeds
 			$strMessage = preg_replace('@\n\n+@', "\n\n", $strMessage);
 
 			// Parse BBCode
-			if ($objConfig->bbcode)
-			{
-				$strMessage = $this->parseBbCode($strMessage);
-			}
+			$strMessage = $this->parseBbCode($strMessage);
 
 			// Prevent cross-site request forgeries
 			$strMessage = preg_replace('/(href|src|on[a-z]+)="[^"]*(contao\/main\.php|typolight\/main\.php|javascript|vbscri?pt|script|alert|document|cookie|window)[^"]*"+/i', '$1="#"', $strMessage);
@@ -159,7 +181,7 @@ class NewTopicParser extends \Frontend
 				'tstamp'    => $time,
 				'forum'     => $this->objForum->id,
 				'author'    => $this->User->id,
-				'subject'   => $arrWidgets['subject']->value,
+				'subject'   => $this->arrWidgets['subject']->value,
 				'message'   => $this->convertLineFeeds($strMessage),
 			);
 
@@ -169,8 +191,6 @@ class NewTopicParser extends \Frontend
 
 			$this->redirect($this->generateTopicLink($objTopic));
 		}
-
-		return $objTemplate->parse();
 	}
 
 
@@ -193,7 +213,7 @@ class NewTopicParser extends \Frontend
 	 * @param string
 	 * @return string
 	 */
-	public function parseBbCode($strMessage)
+	public function parseBbCode($strComment)
 	{
 		$arrSearch = array
 		(
@@ -229,15 +249,15 @@ class NewTopicParser extends \Frontend
 			'href="http://$1'
 		);
 
-		$strMessage = preg_replace($arrSearch, $arrReplace, $strMessage);
+		$strComment = preg_replace($arrSearch, $arrReplace, $strComment);
 
 		// Encode e-mail addresses
-		if (strpos($strMessage, 'mailto:') !== false)
+		if (strpos($strComment, 'mailto:') !== false)
 		{
-			$strMessage = \String::encodeEmail($strMessage);
+			$strComment = \String::encodeEmail($strComment);
 		}
 
-		return $strMessage;
+		return $strComment;
 	}
 
 

@@ -1,5 +1,4 @@
 
-<!-- indexer::stop -->
 <div class="breadcrumb">
   <ul>
     <?php foreach ($this->items as $item): ?>
@@ -11,4 +10,3 @@
     <?php endforeach; ?>
   </ul>
 </div>
-<!-- indexer::continue -->

@@ -53,7 +53,7 @@ class BulletinBoard extends \Frontend
 	 */
 	public static function generateForumLink($objForum)
 	{
-		$itemPrefix = $GLOBALS['TL_CONFIG']['useAutoItem'] ?  '/' : '/items/';
+		$itemPrefix = $GLOBALS['TL_CONFIG']['useAutoItem'] ? '/' : '/items/';
 		$item = static::isAliasSetAndEnabled($objForum) ? $objForum->alias : $objForum->id;
 		return static::generateFrontendUrl($GLOBALS['objPage']->row(), $itemPrefix . $item);
 	}

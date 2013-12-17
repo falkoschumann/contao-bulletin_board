@@ -41,147 +41,147 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 (
 
 	// Config
-	'config' => array
+	'config'      => array
 	(
-		'label'                       => $GLOBALS['TL_CONFIG']['websiteTitle'],
-		'dataContainer'               => 'Table',
-		'enableVersioning'            => true,
-		'sql' => array
+		'label'            => $GLOBALS['TL_CONFIG']['websiteTitle'],
+		'dataContainer'    => 'Table',
+		'enableVersioning' => true,
+		'sql'              => array
 		(
 			'keys' => array
 			(
-				'id'                  => 'primary',
-				'pid'                 => 'index',
-				'alias'               => 'index',
+				'id'    => 'primary',
+				'pid'   => 'index',
+				'alias' => 'index',
 			)
 		)
 	),
 
 	// List
-	'list' => array
+	'list'        => array
 	(
-		'sorting' => array
+		'sorting'           => array
 		(
-			'mode'                    => 5,
-			'panelLayout'             => 'filter,search'
+			'mode'        => 5,
+			'panelLayout' => 'filter,search'
 		),
-		'label' => array
+		'label'             => array
 		(
-			'fields'                  => array('title', 'type'),
-			'format'                  => '%s <span style="color:#b3b3b3;padding-left:3px">[%s]</span>',
+			'fields' => array('title', 'type'),
+			'format' => '%s <span style="color:#b3b3b3;padding-left:3px">[%s]</span>',
 		),
 		'global_operations' => array
 		(
 			'toggleNodes' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['MSC']['toggleAll'],
-				'href'                => 'ptg=all',
-				'class'               => 'header_toggle'
+				'label' => &$GLOBALS['TL_LANG']['MSC']['toggleAll'],
+				'href'  => 'ptg=all',
+				'class' => 'header_toggle'
 			),
-			'all' => array
+			'all'         => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
-				'href'                => 'act=select',
-				'class'               => 'header_edit_all',
-				'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+				'label'      => &$GLOBALS['TL_LANG']['MSC']['all'],
+				'href'       => 'act=select',
+				'class'      => 'header_edit_all',
+				'attributes' => 'onclick="Backend.getScrollOffset();" accesskey="e"'
 			)
 		),
-		'operations' => array
+		'operations'        => array
 		(
-			'edit' => array
+			'edit'       => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['edit'],
-				'href'                => 'act=edit',
-				'icon'                => 'edit.gif'
+				'label' => &$GLOBALS['TL_LANG']['tl_bb_forum']['edit'],
+				'href'  => 'act=edit',
+				'icon'  => 'edit.gif'
 			),
-			'copy' => array
+			'copy'       => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['copy'],
-				'href'                => 'act=copy',
-				'icon'                => 'copy.gif'
+				'label' => &$GLOBALS['TL_LANG']['tl_bb_forum']['copy'],
+				'href'  => 'act=copy',
+				'icon'  => 'copy.gif'
 			),
 			'copyChilds' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['copyChilds'],
-				'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
-				'icon'                => 'copychilds.gif',
+				'label' => &$GLOBALS['TL_LANG']['tl_bb_forum']['copyChilds'],
+				'href'  => 'act=paste&amp;mode=copy&amp;childs=1',
+				'icon'  => 'copychilds.gif',
 			),
-			'cut' => array
+			'cut'        => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['cut'],
-				'href'                => 'act=paste&amp;mode=cut',
-				'icon'                => 'cut.gif',
+				'label' => &$GLOBALS['TL_LANG']['tl_bb_forum']['cut'],
+				'href'  => 'act=paste&amp;mode=cut',
+				'icon'  => 'cut.gif',
 			),
-			'delete' => array
+			'delete'     => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['delete'],
-				'href'                => 'act=delete',
-				'icon'                => 'delete.gif',
-				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
+				'label'      => &$GLOBALS['TL_LANG']['tl_bb_forum']['delete'],
+				'href'       => 'act=delete',
+				'icon'       => 'delete.gif',
+				'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
 			),
-			'toggle' => array
+			'toggle'     => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['toggle'],
-				'icon'                => 'visible.gif',
-				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-				'button_callback'     => array('tl_bb_forum', 'toggleIcon')
+				'label'           => &$GLOBALS['TL_LANG']['tl_bb_forum']['toggle'],
+				'icon'            => 'visible.gif',
+				'attributes'      => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
+				'button_callback' => array('tl_bb_forum', 'toggleIcon')
 			),
-			'show' => array
+			'show'       => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_bb_forum']['show'],
-				'href'                => 'act=show',
-				'icon'                => 'show.gif'
+				'label' => &$GLOBALS['TL_LANG']['tl_bb_forum']['show'],
+				'href'  => 'act=show',
+				'icon'  => 'show.gif'
 			)
 		)
 	),
 
 	// Select
-	'select' => array
+	'select'      => array
 	(
 		'buttons_callback' => array()
 	),
 
 	// Edit
-	'edit' => array
+	'edit'        => array
 	(
 		'buttons_callback' => array()
 	),
 
 	// Palettes
-	'palettes' => array
+	'palettes'    => array
 	(
-		'__selector__'                => array('type'),
-		'default'                     => '{title_legend},title,type',
-		'category'                    => '{title_legend},title,type,alias;{publish_legend},published',
-		'forum'                       => '{title_legend},title,type,alias;{description_legend},description;{publish_legend},published',
+		'__selector__' => array('type'),
+		'default'      => '{title_legend},title,type',
+		'category'     => '{title_legend},title,type,alias;{publish_legend},published',
+		'forum'        => '{title_legend},title,type,alias;{description_legend},description;{publish_legend},published',
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
-		''                            => ''
+		'' => ''
 	),
 
 	// Fields
-	'fields' => array
+	'fields'      => array
 	(
-		'id' => array
+		'id'          => array
 		(
-			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
+			'sql' => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'pid' => array
+		'pid'         => array
 		(
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'sorting' => array
+		'sorting'     => array
 		(
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'tstamp' => array
+		'tstamp'      => array
 		(
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'type'  => array
+		'type'        => array
 		(
 			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['type'],
 			'default'   => 'forum',
@@ -194,44 +194,44 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'eval'      => array('includeBlankOption' => false, 'submitOnChange' => true, 'mandatory' => true, 'tl_class' => 'w50'),
 			'sql'       => "varchar(10) NOT NULL default ''"
 		),
-		'alias' => array
+		'alias'       => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['alias'],
-			'exclude'                 => true,
-			'search'                  => true,
-			'inputType'               => 'text',
-			'eval'                    => array('rgxp'=>'alias', 'unique'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
+			'label'         => &$GLOBALS['TL_LANG']['tl_bb_forum']['alias'],
+			'exclude'       => true,
+			'search'        => true,
+			'inputType'     => 'text',
+			'eval'          => array('rgxp' => 'alias', 'unique' => true, 'maxlength' => 128, 'tl_class' => 'w50'),
 			'save_callback' => array
 			(
 				array('tl_bb_forum', 'generateAlias')
 			),
-			'sql'                     => "varchar(128) COLLATE utf8_bin NOT NULL default ''"
+			'sql'           => "varchar(128) COLLATE utf8_bin NOT NULL default ''"
 		),
-		'title' => array
+		'title'       => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['title'],
-			'exclude'                 => true,
-			'search'                  => true,
-			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>100, 'tl_class'=>'w50'),
-			'sql'                     => "varchar(100) NOT NULL default ''"
+			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['title'],
+			'exclude'   => true,
+			'search'    => true,
+			'inputType' => 'text',
+			'eval'      => array('mandatory' => true, 'maxlength' => 100, 'tl_class' => 'w50'),
+			'sql'       => "varchar(100) NOT NULL default ''"
 		),
 		'description' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['description'],
-			'exclude'                 => true,
-			'search'                  => true,
-			'inputType'               => 'textarea',
-			'eval'                    => array('maxlength'=>300),
-			'sql'                     => "varchar(300) NOT NULL default ''"
+			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['description'],
+			'exclude'   => true,
+			'search'    => true,
+			'inputType' => 'textarea',
+			'eval'      => array('maxlength' => 300),
+			'sql'       => "varchar(300) NOT NULL default ''"
 		),
-		'published' => array
+		'published'   => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_bb_forum']['published'],
-			'exclude'                 => true,
-			'inputType'               => 'checkbox',
-			'eval'                    => array('doNotCopy'=>true),
-			'sql'                     => "char(1) NOT NULL default ''"
+			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['published'],
+			'exclude'   => true,
+			'inputType' => 'checkbox',
+			'eval'      => array('doNotCopy' => true),
+			'sql'       => "char(1) NOT NULL default ''"
 		)
 	)
 );
@@ -320,14 +320,14 @@ class tl_bb_forum extends Backend
 			return '';
 		}
 
-		$href .= '&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
+		$href .= '&amp;tid=' . $row['id'] . '&amp;state=' . ($row['published'] ? '' : 1);
 
 		if (!$row['published'])
 		{
 			$icon = 'invisible.gif';
 		}
 
-		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+		return '<a href="' . $this->addToUrl($href) . '" title="' . specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
 	}
 
 
@@ -346,7 +346,7 @@ class tl_bb_forum extends Backend
 		// Check permissions to publish
 		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_bb_forum::published', 'alexf'))
 		{
-			$this->log('Not enough permissions to publish/unpublish forum item ID "'.$intId.'"', __METHOD__, TL_ERROR);
+			$this->log('Not enough permissions to publish/unpublish forum item ID "' . $intId . '"', __METHOD__, TL_ERROR);
 			$this->redirect('contao/main.php?act=error');
 		}
 
@@ -371,10 +371,10 @@ class tl_bb_forum extends Backend
 		}
 
 		// Update the database
-		$this->Database->prepare("UPDATE tl_bb_forum SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
-		->execute($intId);
+		$this->Database->prepare("UPDATE tl_bb_forum SET tstamp=" . time() . ", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
+			->execute($intId);
 
 		$objVersions->create();
-		$this->log('A new version of record "tl_bb_forum.id='.$intId.'" has been created'.$this->getParentEntries('tl_bb_forum', $intId), __METHOD__, TL_GENERAL);
+		$this->log('A new version of record "tl_bb_forum.id=' . $intId . '" has been created' . $this->getParentEntries('tl_bb_forum', $intId), __METHOD__, TL_GENERAL);
 	}
 }

@@ -117,8 +117,7 @@ class ModuleBulletinBoard extends \Module
 			$this->getTopic();
 			$this->checkTopic();
 			$this->parseContent();
-		}
-		catch (\Exception $ex)
+		} catch (\Exception $ex)
 		{
 			// do nothing
 		}

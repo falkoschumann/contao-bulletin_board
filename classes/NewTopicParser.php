@@ -114,14 +114,14 @@ class NewTopicParser extends \Frontend
 				'name'      => 'subject',
 				'label'     => $GLOBALS['TL_LANG']['MSC']['bb_subject'],
 				'inputType' => 'text',
-				'eval'      => array('mandatory'=>true, 'maxlength'=>100),
+				'eval'      => array('mandatory' => true, 'maxlength' => 100),
 			),
 			'message' => array
 			(
 				'name'      => 'message',
 				'label'     => $GLOBALS['TL_LANG']['MSC']['bb_message'],
 				'inputType' => 'textarea',
-				'eval'      => array('mandatory'=>true, 'rows'=>10, 'cols'=>80, 'preserveTags'=>false),
+				'eval'      => array('mandatory' => true, 'rows' => 10, 'cols' => 80, 'preserveTags' => false),
 			),
 		);
 
@@ -178,11 +178,11 @@ class NewTopicParser extends \Frontend
 			// Prepare the record
 			$arrSet = array
 			(
-				'tstamp'    => $time,
-				'forum'     => $this->objForum->id,
-				'author'    => $this->User->id,
-				'subject'   => $this->arrWidgets['subject']->value,
-				'message'   => $this->convertLineFeeds($strMessage),
+				'tstamp'  => $time,
+				'forum'   => $this->objForum->id,
+				'author'  => $this->User->id,
+				'subject' => $this->arrWidgets['subject']->value,
+				'message' => $this->convertLineFeeds($strMessage),
 			);
 
 			// Store the comment
@@ -237,10 +237,10 @@ class NewTopicParser extends \Frontend
 			'<strong>$1</strong>',
 			'<em>$1</em>',
 			'<span style="text-decoration:underline">$1</span>',
-			"\n\n" . '<div class="code"><p>'. $GLOBALS['TL_LANG']['MSC']['com_code'] .'</p><pre>$1</pre></div>' . "\n\n",
+			"\n\n" . '<div class="code"><p>' . $GLOBALS['TL_LANG']['MSC']['com_code'] . '</p><pre>$1</pre></div>' . "\n\n",
 			'<span style="color:$1">$2</span>',
 			"\n\n" . '<div class="quote">$1</div>' . "\n\n",
-			"\n\n" . '<div class="quote"><p>'. sprintf($GLOBALS['TL_LANG']['MSC']['com_quote'], '$1') .'</p>$2</div>' . "\n\n",
+			"\n\n" . '<div class="quote"><p>' . sprintf($GLOBALS['TL_LANG']['MSC']['com_quote'], '$1') . '</p>$2</div>' . "\n\n",
 			'<img src="$1" alt="" />',
 			'<a href="$1">$1</a>',
 			'<a href="$1">$2</a>',
@@ -274,15 +274,15 @@ class NewTopicParser extends \Frontend
 		// Use paragraphs to generate new lines
 		if (strncmp('<p>', $strMessage, 3) !== 0)
 		{
-			$strMessage = '<p>'. $strMessage .'</p>';
+			$strMessage = '<p>' . $strMessage . '</p>';
 		}
 
 		$arrReplace = array
 		(
 			'@<br>\s?<br>\s?@' => "</p>\n<p>", // Convert two linebreaks into a new paragraph
-			'@\s?<br></p>@'    => '</p>',      // Remove BR tags before closing P tags
-			'@<p><div@'        => '<div',      // Do not nest DIVs inside paragraphs
-			'@</div></p>@'     => '</div>'     // Do not nest DIVs inside paragraphs
+			'@\s?<br></p>@'    => '</p>', // Remove BR tags before closing P tags
+			'@<p><div@'        => '<div', // Do not nest DIVs inside paragraphs
+			'@</div></p>@'     => '</div>' // Do not nest DIVs inside paragraphs
 		);
 
 		return preg_replace(array_keys($arrReplace), array_values($arrReplace), $strMessage);

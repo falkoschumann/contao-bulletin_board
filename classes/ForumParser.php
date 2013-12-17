@@ -75,7 +75,7 @@ class ForumParser extends \Frontend
 		$objTemplate->topics = $this->parseTopics(BbTopicModel::findTopicsByForumId($this->objForum->id));
 		if ($this->objForum->type == 'forum' && (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN))
 		{
-			$objTemplate->newTopic = '<p><a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] .'</a></p>';
+			$objTemplate->newTopic = '<p><a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] . '</a></p>';
 		}
 		else
 		{
@@ -108,7 +108,7 @@ class ForumParser extends \Frontend
 	 * @param BbForumModel $objForum
 	 * @return string
 	 */
-	public function parseSubforum($objForum, $strClass='')
+	public function parseSubforum($objForum, $strClass = '')
 	{
 		$objTemplate = new \FrontendTemplate('bb_forum_subforum');
 		$objTemplate->setData($objForum->row());
@@ -141,7 +141,7 @@ class ForumParser extends \Frontend
 	 * @param BbTopicModel $objTopic
 	 * @return string
 	 */
-	public function parseTopic($objTopic, $strClass='')
+	public function parseTopic($objTopic, $strClass = '')
 	{
 		$objTemplate = new \FrontendTemplate('bb_forum_topic');
 		$objTemplate->setData($objTopic->row());
@@ -160,6 +160,7 @@ class ForumParser extends \Frontend
 	{
 		return $this->addToUrl('topic=' . $objTopic->id);
 	}
+
 
 	/**
 	 * @return string

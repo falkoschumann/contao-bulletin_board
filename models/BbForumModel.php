@@ -63,7 +63,7 @@ class BbForumModel extends \Model
 	 *
 	 * @return Collection|null A collection of models or null if there are no forums
 	 */
-	public static function findPublishedForumsByPids($arrPids, array $arrOptions=array())
+	public static function findPublishedForumsByPids($arrPids, array $arrOptions = array())
 	{
 		if (!is_array($arrPids) || empty($arrPids))
 		{
@@ -96,8 +96,7 @@ class BbForumModel extends \Model
 	 */
 	public static function findParentForumsById($intId)
 	{
-		$objForums = \Database::getInstance()->prepare("SELECT *, @pid:=pid FROM tl_bb_forum WHERE id=?" . str_repeat(" UNION SELECT *, @pid:=pid FROM tl_bb_forum WHERE id=@pid", 9))
-		->execute($intId);
+		$objForums = \Database::getInstance()->prepare("SELECT *, @pid:=pid FROM tl_bb_forum WHERE id=?" . str_repeat(" UNION SELECT *, @pid:=pid FROM tl_bb_forum WHERE id=@pid", 9))->execute($intId);
 
 		if ($objForums->numRows < 1)
 		{

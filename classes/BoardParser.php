@@ -79,7 +79,7 @@ class BoardParser extends \Frontend
 	 * @param BbForumModel $objCategory
 	 * @return string
 	 */
-	public function parseCategory($objCategory, $strClass='')
+	public function parseCategory($objCategory, $strClass = '')
 	{
 		$objTemplate = new \FrontendTemplate('bb_board_category');
 		$objTemplate->setData($objCategory->row());
@@ -113,7 +113,7 @@ class BoardParser extends \Frontend
 	 * @param BbForumModel $objForum
 	 * @return string
 	 */
-	public function parseForum($objForum, $strClass='')
+	public function parseForum($objForum, $strClass = '')
 	{
 		$objTemplate = new \FrontendTemplate('bb_board_forum');
 		$objTemplate->setData($objForum->row());

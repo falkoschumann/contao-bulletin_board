@@ -75,9 +75,10 @@ class TopicParser extends \Frontend
 		$objTemplate->posts = $this->parsePosts(BbPostModel::findPostsByTopicId($this->objTopic->id));
 		if (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN)
 		{
-			$objTemplate->postReply = '<p><a href="' . $this->generatePostReplayLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_post_reply'] .'</a></p>';
+			$objTemplate->postReply = '<p><a href="' . $this->generatePostReplayLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_post_reply'] . '</a></p>';
 		}
-		else {
+		else
+		{
 			$objTemplate->postReply = '';
 		}
 		return $objTemplate->parse();
@@ -105,7 +106,7 @@ class TopicParser extends \Frontend
 	 * @param BbPostModel $objPost
 	 * @return string
 	 */
-	public function parsePost($objPost, $strClass='')
+	public function parsePost($objPost, $strClass = '')
 	{
 		global $objPage;
 		$member = \MemberModel::findByPk($objPost->author);
@@ -121,8 +122,8 @@ class TopicParser extends \Frontend
 
 
 	/**
- 	 * @return string
- 	 */
+	 * @return string
+	 */
 	private function generatePostReplayLink()
 	{
 		return '#';

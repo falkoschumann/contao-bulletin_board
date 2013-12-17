@@ -47,8 +47,8 @@ $GLOBALS['TL_DCA']['tl_bb_topic'] = array
 		(
 			'keys' => array
 			(
-				'id'                  => 'primary',
-				'forum'               => 'index',
+				'id'    => 'primary',
+				'forum' => 'index',
 			)
 		)
 	),
@@ -56,29 +56,29 @@ $GLOBALS['TL_DCA']['tl_bb_topic'] = array
 	// Fields
 	'fields' => array
 	(
-		'id' => array
+		'id'      => array
 		(
-			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
+			'sql' => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'forum' => array
+		'forum'   => array
 		(
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'author' => array
+		'author'  => array
 		(
-			'sql'                     => "int(10) unsigned NOT NULL default '0'",
+			'sql' => "int(10) unsigned NOT NULL default '0'",
 		),
-		'tstamp' => array
+		'tstamp'  => array
 		(
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
 		'subject' => array
 		(
-			'sql'                     => "varchar(100) NOT NULL default ''"
+			'sql' => "varchar(100) NOT NULL default ''"
 		),
 		'message' => array
 		(
-			'sql'                     => "mediumtext NULL"
+			'sql' => "mediumtext NULL"
 		),
 	)
 );

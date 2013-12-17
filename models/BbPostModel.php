@@ -62,7 +62,7 @@ class BbPostModel extends \Model
 	 * @param array $arrOptions An optional options array
 	 * @return Collection|null A collection of models or null if there are no posts
 	 */
-	public static function findPostsByTopicId($topicId, array $arrOptions=array())
+	public static function findPostsByTopicId($topicId, array $arrOptions = array())
 	{
 		$t = static::$strTable;
 		$arrColumns = array("$t.topic=$topicId");

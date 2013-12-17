@@ -69,7 +69,8 @@ class BreadcrumbParser extends \Frontend
 	public function parseBreadcrumb()
 	{
 		$items = array();
-		if ($this->objForum) {
+		if ($this->objForum)
+		{
 			$objForums = BbForumModel::findParentForumsById($this->objForum->id);
 			if ($objForums)
 			{

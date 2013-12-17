@@ -61,7 +61,7 @@ class BbTopicModel extends \Model
 	 * @param array $arrOptions An optional options array
 	 * @return Collection|null A collection of models or null if there are no topics
 	 */
-	public static function findTopicsByForumId($forumId, array $arrOptions=array())
+	public static function findTopicsByForumId($forumId, array $arrOptions = array())
 	{
 		$t = static::$strTable;
 		$arrColumns = array("$t.forum=$forumId");

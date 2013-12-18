@@ -114,14 +114,22 @@ class NewTopicParser extends \Frontend
 				'name'      => 'subject',
 				'label'     => $GLOBALS['TL_LANG']['MSC']['bb_subject'],
 				'inputType' => 'text',
-				'eval'      => array('mandatory' => true, 'maxlength' => 100),
+				'eval'      => array(
+					'mandatory' => true,
+					'maxlength' => 100
+				),
 			),
 			'message' => array
 			(
 				'name'      => 'message',
 				'label'     => $GLOBALS['TL_LANG']['MSC']['bb_message'],
 				'inputType' => 'textarea',
-				'eval'      => array('mandatory' => true, 'rows' => 10, 'cols' => 80, 'preserveTags' => false),
+				'eval'      => array(
+					'mandatory'    => true,
+					'rows'         => 10,
+					'cols'         => 80,
+					'preserveTags' => false
+				),
 			),
 		);
 
@@ -162,7 +170,15 @@ class NewTopicParser extends \Frontend
 		{
 			// Do not parse any tags in the comment
 			$strMessage = htmlspecialchars(trim($this->arrWidgets['message']->value));
-			$strMessage = str_replace(array('&amp;', '&lt;', '&gt;'), array('[&]', '[lt]', '[gt]'), $strMessage);
+			$strMessage = str_replace(array(
+										   '&amp;',
+										   '&lt;',
+										   '&gt;'
+									  ), array(
+											  '[&]',
+											  '[lt]',
+											  '[gt]'
+										 ), $strMessage);
 
 			// Remove multiple line feeds
 			$strMessage = preg_replace('@\n\n+@', "\n\n", $strMessage);
@@ -279,10 +295,14 @@ class NewTopicParser extends \Frontend
 
 		$arrReplace = array
 		(
-			'@<br>\s?<br>\s?@' => "</p>\n<p>", // Convert two linebreaks into a new paragraph
-			'@\s?<br></p>@'    => '</p>', // Remove BR tags before closing P tags
-			'@<p><div@'        => '<div', // Do not nest DIVs inside paragraphs
-			'@</div></p>@'     => '</div>' // Do not nest DIVs inside paragraphs
+			'@<br>\s?<br>\s?@' => "</p>\n<p>",
+			// Convert two linebreaks into a new paragraph
+			'@\s?<br></p>@'    => '</p>',
+			// Remove BR tags before closing P tags
+			'@<p><div@'        => '<div',
+			// Do not nest DIVs inside paragraphs
+			'@</div></p>@'     => '</div>'
+			// Do not nest DIVs inside paragraphs
 		);
 
 		return preg_replace(array_keys($arrReplace), array_values($arrReplace), $strMessage);

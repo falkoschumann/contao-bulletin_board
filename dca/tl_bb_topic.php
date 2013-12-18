@@ -43,12 +43,14 @@ $GLOBALS['TL_DCA']['tl_bb_topic'] = array
 	// Config
 	'config' => array
 	(
-		'sql' => array
+		'ptable' => 'tl_bb_forum',
+		'ctable' => 'tl_bb_post',
+		'sql'    => array
 		(
 			'keys' => array
 			(
-				'id'    => 'primary',
-				'forum' => 'index',
+				'id'  => 'primary',
+				'pid' => 'index',
 			)
 		)
 	),
@@ -56,29 +58,53 @@ $GLOBALS['TL_DCA']['tl_bb_topic'] = array
 	// Fields
 	'fields' => array
 	(
-		'id'      => array
+		'id'              => array
 		(
 			'sql' => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'forum'   => array
+		'pid'             => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'author'  => array
-		(
-			'sql' => "int(10) unsigned NOT NULL default '0'",
-		),
-		'tstamp'  => array
+		'tstamp'          => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'subject' => array
+		'title'           => array
 		(
 			'sql' => "varchar(100) NOT NULL default ''"
 		),
-		'message' => array
+		'views'           => array
 		(
-			'sql' => "mediumtext NULL"
+			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
+		'replies'         => array
+		(
+			'sql' => "int(10) unsigned NOT NULL default '0'"
+		),
+		'firstPost'       => array
+		(
+			'sql' => "int(10) unsigned NOT NULL default '0'"
+		),
+		'firstPoster'     => array
+		(
+			'sql' => "int(10) unsigned NOT NULL default '0'"
+		),
+		'firstPosterName' => array
+		(
+			'sql' => "varchar(64) NOT NULL default ''"
+		),
+		'lastPost'        => array
+		(
+			'sql' => "int(10) unsigned NOT NULL default '0'"
+		),
+		'lastPoster'      => array
+		(
+			'sql' => "int(10) unsigned NOT NULL default '0'"
+		),
+		'lastPosterName'  => array
+		(
+			'sql' => "varchar(64) NOT NULL default ''"
+		)
 	)
 );

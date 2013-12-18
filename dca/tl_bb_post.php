@@ -43,12 +43,13 @@ $GLOBALS['TL_DCA']['tl_bb_post'] = array
 	// Config
 	'config' => array
 	(
-		'sql' => array
+		'ptable' => 'tl_bb_topic',
+		'sql'    => array
 		(
 			'keys' => array
 			(
-				'id'    => 'primary',
-				'topic' => 'index',
+				'id'  => 'primary',
+				'pid' => 'index',
 			)
 		)
 	),
@@ -56,29 +57,37 @@ $GLOBALS['TL_DCA']['tl_bb_post'] = array
 	// Fields
 	'fields' => array
 	(
-		'id'      => array
+		'id'         => array
 		(
 			'sql' => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'topic'   => array
+		'pid'        => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'author'  => array
-		(
-			'sql' => "int(10) unsigned NOT NULL default '0'",
-		),
-		'tstamp'  => array
+		'tstamp'     => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'subject' => array
+		'poster'     => array
+		(
+			'sql' => "int(10) unsigned NOT NULL default '0'"
+		),
+		'posterIp'   => array
+		(
+			'sql' => "varchar(64) NULL"
+		),
+		'posterName' => array
+		(
+			'sql' => "varchar(64) NOT NULL default ''"
+		),
+		'subject'    => array
 		(
 			'sql' => "varchar(100) NOT NULL default ''"
 		),
-		'message' => array
+		'text'       => array
 		(
 			'sql' => "mediumtext NULL"
-		),
+		)
 	)
 );

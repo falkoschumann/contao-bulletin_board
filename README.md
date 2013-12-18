@@ -40,7 +40,7 @@ Datenmodell
 
 *Hinzukommen noch Metainformationen:*
 - Nummer der Kategorie für Sortierung
-- Nummer des Fourms für Sortierung
+- Nummer des Forums für Sortierung
 - Anzahl der Themen eines Forums
 - Anzahl der Beitrag eines Forums
 - Letzter Beitrag eines Forums

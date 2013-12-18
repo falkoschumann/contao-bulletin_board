@@ -1,7 +1,11 @@
-
-<div class="forum <?php echo $this->class; ?>">
-  <h2 class="title"><a href="<?php echo $this->link; ?>"><?php echo $this->title; ?></a></h2>
-  <?php if ($this->description): ?>
-  <p class="description"><?php echo $this->description; ?></p>
-  <?php endif; ?>
-</div>
+<tr class="forum <?php echo $this->class; ?>">
+	<td class="forum">
+		<h2><a href="<?php echo $this->link; ?>"><?php echo $this->name; ?></a></h2>
+		<?php if ($this->description): ?>
+			<p class="description"><?php echo $this->description; ?></p>
+		<?php endif; ?>
+	</td>
+	<td class="topics"><?php echo $this->topics; ?></td>
+	<td class="posts"><?php echo $this->posts; ?></td>
+	<td class="last_post"><?php echo $this->lastPost; ?></td>
+</tr>

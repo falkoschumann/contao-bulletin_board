@@ -35,12 +35,17 @@
 
 
 /**
- * Back end modules
+ * Table tl_bb_member
  */
-$GLOBALS['TL_LANG']['MOD'][''] = array('', '');
-
-
-/**
- * Front end modules
- */
-$GLOBALS['TL_LANG']['FMD'][''] = array('', '');
+$GLOBALS['TL_DCA']['tl_member']['fields']['bb_lastPostTime'] = array
+(
+	'sql' => "int(10) unsigned NOT NULL default '0'"
+);
+$GLOBALS['TL_DCA']['tl_member']['fields']['bb_posts'] = array
+(
+	'sql' => "int(10) unsigned NOT NULL default '0'"
+);
+$GLOBALS['TL_DCA']['tl_member']['fields']['bb_signature'] = array
+(
+	'sql' => "mediumtext NULL"
+);

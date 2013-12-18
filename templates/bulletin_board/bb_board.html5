@@ -1,4 +1,12 @@
 
-<div class="board">
-  <?php foreach ($this->categories as $category) echo $category; ?>
-</div>
+<table class="board">
+	<thead>
+	<tr>
+		<th class="forum">Forum</th>
+		<th class="topics">Topics</th>
+		<th class="posts">Posts</th>
+		<th class="last_post">Last Post</th>
+	</tr>
+	</thead>
+	<?php foreach ($this->categories as $category) echo $category; ?>
+</table>

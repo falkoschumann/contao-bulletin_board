@@ -45,6 +45,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 	(
 		'label'            => $GLOBALS['TL_CONFIG']['websiteTitle'],
 		'dataContainer'    => 'Table',
+		'ctable'           => array('tl_bb_topic'),
 		'enableVersioning' => true,
 		'sql'              => array
 		(
@@ -53,6 +54,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 				'id'    => 'primary',
 				'pid'   => 'index',
 				'alias' => 'index',
+				'type'  => 'index'
 			)
 		)
 	),
@@ -67,7 +69,10 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 		),
 		'label'             => array
 		(
-			'fields' => array('title', 'type'),
+			'fields' => array(
+				'name',
+				'type'
+			),
 			'format' => '%s <span style="color:#b3b3b3;padding-left:3px">[%s]</span>',
 		),
 		'global_operations' => array
@@ -124,7 +129,10 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 				'label'           => &$GLOBALS['TL_LANG']['tl_bb_forum']['toggle'],
 				'icon'            => 'visible.gif',
 				'attributes'      => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-				'button_callback' => array('tl_bb_forum', 'toggleIcon')
+				'button_callback' => array(
+					'tl_bb_forum',
+					'toggleIcon'
+				)
 			),
 			'show'       => array
 			(
@@ -151,9 +159,9 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 	'palettes'    => array
 	(
 		'__selector__' => array('type'),
-		'default'      => '{title_legend},title,type',
-		'category'     => '{title_legend},title,type,alias;{publish_legend},published',
-		'forum'        => '{title_legend},title,type,alias;{description_legend},description;{publish_legend},published',
+		'default'      => '{title_legend},name,type,alias,jumpTo;{publish_legend},published',
+		'category'     => '{title_legend},name,type,alias,jumpTo;{publish_legend},published',
+		'forum'        => '{title_legend},name,type,alias,jumpTo;{description_legend},description;{publish_legend},published'
 	),
 
 	// Subpalettes
@@ -173,11 +181,11 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'sorting'     => array
+		'tstamp'      => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'tstamp'      => array
+		'sorting'     => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
@@ -189,10 +197,60 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'exclude'   => true,
 			'sorting'   => true,
 			'flag'      => 1,
-			'options'   => array('forum', 'category'),
+			'options'   => array(
+				'forum',
+				'category'
+			),
 			'reference' => &$GLOBALS['TL_LANG']['tl_bb_forum'],
-			'eval'      => array('includeBlankOption' => false, 'submitOnChange' => true, 'mandatory' => true, 'tl_class' => 'w50'),
-			'sql'       => "varchar(10) NOT NULL default ''"
+			'eval'      => array(
+				'includeBlankOption' => false,
+				'submitOnChange'     => true,
+				'mandatory'          => true,
+				'tl_class'           => 'w50'
+			),
+			'sql'       => "varchar(32) NOT NULL default ''"
+		),
+		'jumpTo'      => array
+		(
+			'label'      => &$GLOBALS['TL_LANG']['tl_bb_forum']['jumpTo'],
+			'exclude'    => true,
+			'inputType'  => 'pageTree',
+			'foreignKey' => 'tl_page.title',
+			'eval'       => array(
+				'fieldType' => 'radio',
+				'tl_class'  => 'clr'
+			),
+			'sql'        => "int(10) unsigned NOT NULL default '0'",
+			'relation'   => array(
+				'type' => 'hasOne',
+				'load' => 'eager'
+			)
+		),
+		'name'        => array
+		(
+			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['name'],
+			'exclude'   => true,
+			'search'    => true,
+			'inputType' => 'text',
+			'eval'      => array(
+				'mandatory' => true,
+				'maxlength' => 100,
+				'tl_class'  => 'w50'
+			),
+			'sql'       => "varchar(100) NOT NULL default ''"
+		),
+		'description' => array
+		(
+			'label'       => &$GLOBALS['TL_LANG']['tl_bb_forum']['description'],
+			'exclude'     => true,
+			'search'      => true,
+			'inputType'   => 'textarea',
+			'eval'        => array(
+				'rte'        => 'tinyMCE',
+				'helpwizard' => true
+			),
+			'explanation' => 'insertTags',
+			'sql'         => "mediumtext NULL"
 		),
 		'alias'       => array
 		(
@@ -200,30 +258,20 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'exclude'       => true,
 			'search'        => true,
 			'inputType'     => 'text',
-			'eval'          => array('rgxp' => 'alias', 'unique' => true, 'maxlength' => 128, 'tl_class' => 'w50'),
+			'eval'          => array(
+				'rgxp'      => 'alias',
+				'unique'    => true,
+				'maxlength' => 128,
+				'tl_class'  => 'w50'
+			),
 			'save_callback' => array
 			(
-				array('tl_bb_forum', 'generateAlias')
+				array(
+					'tl_bb_forum',
+					'generateAlias'
+				)
 			),
 			'sql'           => "varchar(128) COLLATE utf8_bin NOT NULL default ''"
-		),
-		'title'       => array
-		(
-			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['title'],
-			'exclude'   => true,
-			'search'    => true,
-			'inputType' => 'text',
-			'eval'      => array('mandatory' => true, 'maxlength' => 100, 'tl_class' => 'w50'),
-			'sql'       => "varchar(100) NOT NULL default ''"
-		),
-		'description' => array
-		(
-			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['description'],
-			'exclude'   => true,
-			'search'    => true,
-			'inputType' => 'textarea',
-			'eval'      => array('maxlength' => 300),
-			'sql'       => "varchar(300) NOT NULL default ''"
 		),
 		'published'   => array
 		(
@@ -232,6 +280,22 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'inputType' => 'checkbox',
 			'eval'      => array('doNotCopy' => true),
 			'sql'       => "char(1) NOT NULL default ''"
+		),
+		'topics'      => array
+		(
+			'sql' => "int(10) unsigned NOT NULL default '0'"
+		),
+		'posts'       => array
+		(
+			'sql' => "int(10) unsigned NOT NULL default '0'"
+		),
+		'lastPost'    => array
+		(
+			'sql' => "int(10) unsigned NOT NULL default '0'"
+		),
+		'lastPoster'  => array
+		(
+			'sql' => "int(10) unsigned NOT NULL default '0'"
 		)
 	)
 );
@@ -274,7 +338,7 @@ class tl_bb_forum extends Backend
 		if ($varValue == '')
 		{
 			$autoAlias = true;
-			$varValue = standardize(String::restoreBasicEntities($dc->activeRecord->title));
+			$varValue = standardize(String::restoreBasicEntities($dc->activeRecord->name));
 		}
 
 		$objAlias = $this->Database->prepare("SELECT id FROM tl_bb_forum WHERE alias=?")->execute($varValue);

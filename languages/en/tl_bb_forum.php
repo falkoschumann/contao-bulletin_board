@@ -37,10 +37,11 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_bb_forum']['title'] = array('Title', 'Please enter the forum title.');
-$GLOBALS['TL_LANG']['tl_bb_forum']['alias'] = array('Forum alias', 'The forum alias is a unique reference to the forum which can be called instead of its numeric ID.');
 $GLOBALS['TL_LANG']['tl_bb_forum']['type'] = array('Type', 'Please select if you will create a category or a forum.');
+$GLOBALS['TL_LANG']['tl_bb_forum']['jumpTo'] = array('Redirect page', 'Please choose the forum page to which visitors will be redirected when clicking a forum.');
+$GLOBALS['TL_LANG']['tl_bb_forum']['name'] = array('Name', 'Please enter the forum name.');
 $GLOBALS['TL_LANG']['tl_bb_forum']['description'] = array('Description', 'Please enter the forum description.');
+$GLOBALS['TL_LANG']['tl_bb_forum']['alias'] = array('Forum alias', 'The forum alias is a unique reference to the forum which can be called instead of its numeric ID.');
 $GLOBALS['TL_LANG']['tl_bb_forum']['published'] = array('Publish forum', 'Make the forum publicly visible on the website.');
 
 

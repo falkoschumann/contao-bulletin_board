@@ -38,7 +38,7 @@ namespace Muspellheim\BulletinBoard;
 
 
 /**
- * Class BreadcrumbParser render a forum breadcrumb.
+ * Class BreadcrumbParser render forum breadcrumb.
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
@@ -72,14 +72,14 @@ class BreadcrumbParser extends \Frontend
 		if ($this->objForum)
 		{
 			$objForums = BbForumModel::findParentForumsById($this->objForum->id);
-			if ($objForums)
+			if ($objForums !== null)
 			{
 				// add current forum
 				$items[] = array
 				(
 					'isActive' => true,
 					'href'     => BulletinBoard::generateForumLink($objForums),
-					'title'    => $objForums->title,
+					'title'    => $objForums->name,
 					'class'    => '',
 				);
 
@@ -95,7 +95,7 @@ class BreadcrumbParser extends \Frontend
 					(
 						'isActive' => false,
 						'href'     => BulletinBoard::generateForumLink($objForums),
-						'title'    => $objForums->title,
+						'title'    => $objForums->name,
 						'class'    => '',
 					);
 				}
@@ -105,7 +105,7 @@ class BreadcrumbParser extends \Frontend
 		// add board index
 		$items[] = array
 		(
-			'isActive' => false,
+			'isActive' => $this->objForum === null,
 			'href'     => static::generateFrontendUrl($GLOBALS['objPage']->row()),
 			'title'    => $GLOBALS['TL_LANG']['MSC']['bb_board_index'],
 			'class'    => 'first',

@@ -48,7 +48,7 @@ class ForumParser extends BulletinBoard
 {
 
 	/**
-	 * @val BbForumModel
+	 * @val ForumModel
 	 */
 	private $objForum;
 
@@ -71,8 +71,8 @@ class ForumParser extends BulletinBoard
 	{
 		$objTemplate = new \FrontendTemplate('bb_forum');
 		$objTemplate->title = $this->objForum->title;
-		$objTemplate->subforums = $this->parseSubforums(BbForumModel::findPublishedForumsByPids(array($this->objForum->id)));
-		$objTemplate->topics = $this->parseTopics(BbTopicModel::findTopicsByForumId($this->objForum->id));
+		$objTemplate->subforums = $this->parseSubforums(ForumModel::findPublishedForumsByPids(array($this->objForum->id)));
+		$objTemplate->topics = $this->parseTopics(TopicModel::findTopicsByForumId($this->objForum->id));
 		if ($this->objForum->type == 'forum' && (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN))
 		{
 			$objTemplate->newTopic = '<p><a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] . '</a></p>';
@@ -88,7 +88,7 @@ class ForumParser extends BulletinBoard
 
 
 	/**
-	 * @param Collection $objForums collection of BbForumModel
+	 * @param Collection $objForums collection of ForumModel
 	 * @return array array of string
 	 */
 	public function parseSubforums($objForums)
@@ -121,7 +121,7 @@ class ForumParser extends BulletinBoard
 
 
 	/**
-	 * @param Collection $objTopic collection of BbTopicModel
+	 * @param Collection $objTopic collection of TopicModel
 	 * @return array array of string
 	 */
 	public function parseTopics($objTopics)

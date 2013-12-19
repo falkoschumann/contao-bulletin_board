@@ -53,13 +53,13 @@ class BoardParser extends BulletinBoard
 	public function parseBoard()
 	{
 		$objTemplate = new \FrontendTemplate('bb_board');
-		$objTemplate->categories = $this->parseCategories(BbForumModel::findPublishedForumsByPids(array(0)));
+		$objTemplate->categories = $this->parseCategories(ForumModel::findPublishedForumsByPids(array(0)));
 		return $objTemplate->parse();
 	}
 
 
 	/**
-	 * @param Collection $objCategories collection of BbForumModel
+	 * @param Collection $objCategories collection of ForumModel
 	 * @return array array of string
 	 */
 	public function parseCategories($objCategories)
@@ -85,13 +85,13 @@ class BoardParser extends BulletinBoard
 		$objTemplate->setData($objCategory->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->link = static::generateForumLink($objCategory);
-		$objTemplate->forums = $this->parseForums(BbForumModel::findPublishedForumsByPids(array($objCategory->id)));
+		$objTemplate->forums = $this->parseForums(ForumModel::findPublishedForumsByPids(array($objCategory->id)));
 		return $objTemplate->parse();
 	}
 
 
 	/**
-	 * @param Collection $objForums collection of BbForumModel
+	 * @param Collection $objForums collection of ForumModel
 	 * @return array array of string
 	 */
 	public function parseForums($objForums)

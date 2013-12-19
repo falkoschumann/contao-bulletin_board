@@ -189,9 +189,9 @@ $GLOBALS['FE_MOD']['application']['bulletin_board'] = 'ModuleBulletinBoard';
  *
  * You can register your mappings in the config.php file of your extension.
  */
-$GLOBALS['TL_MODELS'][\Muspellheim\BulletinBoard\BbForumModel::getTable()] = '\Muspellheim\BulletinBoard\BbForumModel';
-$GLOBALS['TL_MODELS'][\Muspellheim\BulletinBoard\BbTopicModel::getTable()] = '\Muspellheim\BulletinBoard\BbTopicModel';
-$GLOBALS['TL_MODELS'][\Muspellheim\BulletinBoard\BbPostModel::getTable()]  = '\Muspellheim\BulletinBoard\BbPostModel';
+$GLOBALS['TL_MODELS'][\Muspellheim\BulletinBoard\ForumModel::getTable()] = '\Muspellheim\BulletinBoard\ForumModel';
+$GLOBALS['TL_MODELS'][\Muspellheim\BulletinBoard\TopicModel::getTable()] = '\Muspellheim\BulletinBoard\TopicModel';
+$GLOBALS['TL_MODELS'][\Muspellheim\BulletinBoard\PostModel::getTable()]  = '\Muspellheim\BulletinBoard\PostModel';
 
 
 /**

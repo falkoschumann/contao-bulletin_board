@@ -34,9 +34,9 @@ ClassLoader::addClasses(array
 	'Muspellheim\BulletinBoard\NewTopicParser'      => 'system/modules/bulletin_board/classes/NewTopicParser.php',
 
 	// Models
-	'Muspellheim\BulletinBoard\BbForumModel'        => 'system/modules/bulletin_board/models/BbForumModel.php',
-	'Muspellheim\BulletinBoard\BbPostModel'         => 'system/modules/bulletin_board/models/BbPostModel.php',
-	'Muspellheim\BulletinBoard\BbTopicModel'        => 'system/modules/bulletin_board/models/BbTopicModel.php',
+	'Muspellheim\BulletinBoard\ForumModel'          => 'system/modules/bulletin_board/models/ForumModel.php',
+	'Muspellheim\BulletinBoard\PostModel'           => 'system/modules/bulletin_board/models/PostModel.php',
+	'Muspellheim\BulletinBoard\TopicModel'          => 'system/modules/bulletin_board/models/TopicModel.php',
 
 	// Modules
 	'Muspellheim\BulletinBoard\ModuleBulletinBoard' => 'system/modules/bulletin_board/modules/ModuleBulletinBoard.php',

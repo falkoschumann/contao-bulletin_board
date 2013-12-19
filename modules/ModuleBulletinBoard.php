@@ -134,7 +134,7 @@ class ModuleBulletinBoard extends \Module
 		{
 			$this->forum = \Input::get('auto_item');
 		}
-		$this->objForum = BbForumModel::findByIdOrAlias($this->forum);
+		$this->objForum = ForumModel::findByIdOrAlias($this->forum);
 	}
 
 
@@ -162,7 +162,7 @@ class ModuleBulletinBoard extends \Module
 	private function getTopic()
 	{
 		$this->topic = \Input::get('topic');
-		$this->objTopic = BbTopicModel::findByPk($this->topic);
+		$this->objTopic = TopicModel::findByPk($this->topic);
 	}
 
 

@@ -202,7 +202,7 @@ class NewTopicParser extends BulletinBoard
 			);
 
 			// Store the comment
-			$objTopic = new BbTopicModel();
+			$objTopic = new TopicModel();
 			$objTopic->setRow($arrSet)->save();
 
 			$this->redirect($this->generateTopicLink($objTopic));

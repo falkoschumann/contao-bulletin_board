@@ -38,13 +38,13 @@ namespace Muspellheim\BulletinBoard;
 
 
 /**
- * Class BbPostModel manages access to posts.
+ * Class PostModel manages access to posts.
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BbPostModel extends \Model
+class PostModel extends \Model
 {
 
 	/**

@@ -38,13 +38,13 @@ namespace Muspellheim\BulletinBoard;
 
 
 /**
- * Class BbForumModel manages access to forums and forum categories.
+ * Class ForumModel manages access to forums and forum categories.
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BbForumModel extends \Model
+class ForumModel extends \Model
 {
 
 	/**

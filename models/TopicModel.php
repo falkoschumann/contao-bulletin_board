@@ -38,13 +38,13 @@ namespace Muspellheim\BulletinBoard;
 
 
 /**
- * Class BbTopicModel manages access to topics.
+ * Class TopicModel manages access to topics.
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BbTopicModel extends \Model
+class TopicModel extends \Model
 {
 
 	/**

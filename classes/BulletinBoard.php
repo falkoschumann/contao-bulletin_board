@@ -72,7 +72,7 @@ class BulletinBoard extends \Frontend
 	 * @param BbPostModel $objPost
 	 * @return string
 	 */
-	public static function generateTopicLink($objPost)
+	public static function generatePostLink($objPost)
 	{
 		$objTopic = $objPost->pid;
 		$objForum = $objTopic->pid;

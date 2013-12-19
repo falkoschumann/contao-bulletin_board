@@ -71,7 +71,7 @@ class BreadcrumbParser extends BulletinBoard
 		$items = array();
 		if ($this->objForum)
 		{
-			$objForums = BbForumModel::findParentForumsById($this->objForum->id);
+			$objForums = ForumModel::findParentForumsById($this->objForum->id);
 			if ($objForums !== null)
 			{
 				// add current forum

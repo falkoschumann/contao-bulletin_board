@@ -72,7 +72,7 @@ class TopicParser extends BulletinBoard
 		$objTemplate = new \FrontendTemplate('bb_topic');
 		$objTemplate->subject = $this->objTopic->subject;
 		$objTemplate->topic = $this->parsePost($this->objTopic, 'topic');
-		$objTemplate->posts = $this->parsePosts(BbPostModel::findPostsByTopicId($this->objTopic->id));
+		$objTemplate->posts = $this->parsePosts(PostModel::findPostsByTopicId($this->objTopic->id));
 		if (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN)
 		{
 			$objTemplate->postReply = '<p><a href="' . $this->generatePostReplayLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_post_reply'] . '</a></p>';
@@ -86,7 +86,7 @@ class TopicParser extends BulletinBoard
 
 
 	/**
-	 * @param Collection $objPosts collection of BbPostModel
+	 * @param Collection $objPosts collection of PostModel
 	 * @return array array of string
 	 */
 	public function parsePosts($objPosts)

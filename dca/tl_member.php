@@ -35,7 +35,7 @@
 
 
 /**
- * Table tl_bb_member
+ * Table tl_member
  */
 $GLOBALS['TL_DCA']['tl_member']['fields']['bb_lastPostTime'] = array
 (

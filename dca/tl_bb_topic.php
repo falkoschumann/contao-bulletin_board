@@ -99,7 +99,7 @@ $GLOBALS['TL_DCA']['tl_bb_topic'] = array
 		'firstPoster'     => array
 		(
 			'sql'        => "int(10) unsigned NOT NULL default '0'",
-			'foreignKey' => 'tl_bb_member.username',
+			'foreignKey' => 'tl_member.username',
 			'relation'   => array(
 				'type' => 'hasOne',
 				'load' => 'eager'

@@ -119,7 +119,7 @@ class ModuleBulletinBoard extends \Module
 			$this->parseContent();
 		} catch (\Exception $ex)
 		{
-			// do nothing
+			$this->log($ex->getMessage(), __METHOD__, TL_ERROR);
 		}
 	}
 
@@ -154,7 +154,7 @@ class ModuleBulletinBoard extends \Module
 			$objPage->cache = 0;
 			header('HTTP/1.1 404 Not Found');
 			$this->Template->content = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_forum'], $this->forum) . '</p>';
-			throw new \Exception();
+			throw new \Exception(sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_forum'], $this->forum));
 		}
 	}
 
@@ -180,7 +180,7 @@ class ModuleBulletinBoard extends \Module
 			$objPage->cache = 0;
 			header('HTTP/1.1 404 Not Found');
 			$this->Template->content = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_topic'], $this->topic) . '</p>';
-			throw new \Exception();
+			throw new \Exception(sprintf($GLOBALS['TL_LANG']['MSC']['bb_invalid_topic'], $this->topic));
 		}
 	}
 

@@ -44,7 +44,7 @@ namespace Muspellheim\BulletinBoard;
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BreadcrumbParser extends \Frontend
+class BreadcrumbParser extends BulletinBoard
 {
 
 	/**
@@ -78,7 +78,7 @@ class BreadcrumbParser extends \Frontend
 				$items[] = array
 				(
 					'isActive' => true,
-					'href'     => BulletinBoard::generateForumLink($objForums),
+					'href'     => static::generateForumLink($objForums),
 					'title'    => $objForums->name,
 					'class'    => '',
 				);
@@ -94,7 +94,7 @@ class BreadcrumbParser extends \Frontend
 					$items[] = array
 					(
 						'isActive' => false,
-						'href'     => BulletinBoard::generateForumLink($objForums),
+						'href'     => static::generateForumLink($objForums),
 						'title'    => $objForums->name,
 						'class'    => '',
 					);

@@ -44,7 +44,7 @@ namespace Muspellheim\BulletinBoard;
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class BoardParser extends \Frontend
+class BoardParser extends BulletinBoard
 {
 
 	/**
@@ -85,7 +85,7 @@ class BoardParser extends \Frontend
 		$objTemplate->setData($objCategory->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objCategory->title;
-		$objTemplate->link = BulletinBoard::generateForumLink($objCategory);
+		$objTemplate->link = static::generateForumLink($objCategory);
 		$objTemplate->description = $objCategory->description;
 		$objTemplate->forums = $this->parseForums(BbForumModel::findPublishedForumsByPids(array($objCategory->id)));
 		return $objTemplate->parse();
@@ -119,7 +119,7 @@ class BoardParser extends \Frontend
 		$objTemplate->setData($objForum->row());
 		$objTemplate->class = $strClass;
 		$objTemplate->title = $objForum->title;
-		$objTemplate->link = BulletinBoard::generateForumLink($objForum);
+		$objTemplate->link = static::generateForumLink($objForum);
 		$objTemplate->description = $objForum->description;
 		return $objTemplate->parse();
 	}

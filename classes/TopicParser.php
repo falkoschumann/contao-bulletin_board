@@ -44,7 +44,7 @@ namespace Muspellheim\BulletinBoard;
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class TopicParser extends \Frontend
+class TopicParser extends BulletinBoard
 {
 
 	/**

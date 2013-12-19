@@ -1,5 +1,5 @@
 
-<div class="breadcrumb">
+<div class="board breadcrumb">
   <ul>
     <?php foreach ($this->items as $item): ?>
       <?php if ($item['isActive']): ?>

@@ -63,7 +63,12 @@ $GLOBALS['TL_DCA']['tl_bb_post'] = array
 		),
 		'pid'        => array
 		(
-			'sql' => "int(10) unsigned NOT NULL default '0'"
+			'sql'        => "int(10) unsigned NOT NULL default '0'",
+			'foreignKey' => 'tl_bb_topic.title',
+			'relation'   => array(
+				'type' => 'belongsTo',
+				'load' => 'lazy'
+			)
 		),
 		'tstamp'     => array
 		(
@@ -71,7 +76,12 @@ $GLOBALS['TL_DCA']['tl_bb_post'] = array
 		),
 		'poster'     => array
 		(
-			'sql' => "int(10) unsigned NOT NULL default '0'"
+			'sql'        => "int(10) unsigned NOT NULL default '0'",
+			'foreignKey' => 'tl_member.username',
+			'relation'   => array(
+				'type' => 'hasOne',
+				'load' => 'eager'
+			)
 		),
 		'posterIp'   => array
 		(

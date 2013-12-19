@@ -173,23 +173,23 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 	// Fields
 	'fields'      => array
 	(
-		'id'          => array
+		'id'             => array
 		(
 			'sql' => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'pid'         => array
+		'pid'            => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'tstamp'      => array
+		'tstamp'         => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'sorting'     => array
+		'sorting'        => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'type'        => array
+		'type'           => array
 		(
 			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['type'],
 			'default'   => 'forum',
@@ -210,7 +210,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			),
 			'sql'       => "varchar(32) NOT NULL default ''"
 		),
-		'jumpTo'      => array
+		'jumpTo'         => array
 		(
 			'label'      => &$GLOBALS['TL_LANG']['tl_bb_forum']['jumpTo'],
 			'exclude'    => true,
@@ -223,10 +223,10 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'sql'        => "int(10) unsigned NOT NULL default '0'",
 			'relation'   => array(
 				'type' => 'hasOne',
-				'load' => 'eager'
+				'load' => 'lazy'
 			)
 		),
-		'name'        => array
+		'name'           => array
 		(
 			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['name'],
 			'exclude'   => true,
@@ -239,7 +239,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			),
 			'sql'       => "varchar(100) NOT NULL default ''"
 		),
-		'description' => array
+		'description'    => array
 		(
 			'label'       => &$GLOBALS['TL_LANG']['tl_bb_forum']['description'],
 			'exclude'     => true,
@@ -252,7 +252,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'explanation' => 'insertTags',
 			'sql'         => "mediumtext NULL"
 		),
-		'alias'       => array
+		'alias'          => array
 		(
 			'label'         => &$GLOBALS['TL_LANG']['tl_bb_forum']['alias'],
 			'exclude'       => true,
@@ -273,7 +273,7 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			),
 			'sql'           => "varchar(128) COLLATE utf8_bin NOT NULL default ''"
 		),
-		'published'   => array
+		'published'      => array
 		(
 			'label'     => &$GLOBALS['TL_LANG']['tl_bb_forum']['published'],
 			'exclude'   => true,
@@ -281,21 +281,35 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'eval'      => array('doNotCopy' => true),
 			'sql'       => "char(1) NOT NULL default ''"
 		),
-		'topics'      => array
+		'topics'         => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'posts'       => array
+		'posts'          => array
 		(
-			'sql' => "int(10) unsigned NOT NULL default '0'"
+			'sql' => "int(10) unsigned NOT NULL default '0'",
 		),
-		'lastPost'    => array
+		'lastPost'       => array
 		(
-			'sql' => "int(10) unsigned NOT NULL default '0'"
+			'sql'        => "int(10) unsigned NOT NULL default '0'",
+			'foreignKey' => 'tl_bb_post.subject',
+			'relation'   => array(
+				'type' => 'hasOne',
+				'load' => 'eager'
+			)
 		),
-		'lastPoster'  => array
+		'lastPoster'     => array
 		(
-			'sql' => "int(10) unsigned NOT NULL default '0'"
+			'sql'        => "int(10) unsigned NOT NULL default '0'",
+			'foreignKey' => 'tl_member.username',
+			'relation'   => array(
+				'type' => 'hasOne',
+				'load' => 'eager'
+			)
+		),
+		'lastPosterName' => array
+		(
+			'sql' => "varchar(64) NOT NULL default ''"
 		)
 	)
 );

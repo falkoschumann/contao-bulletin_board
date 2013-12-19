@@ -64,7 +64,12 @@ $GLOBALS['TL_DCA']['tl_bb_topic'] = array
 		),
 		'pid'             => array
 		(
-			'sql' => "int(10) unsigned NOT NULL default '0'"
+			'sql'        => "int(10) unsigned NOT NULL default '0'",
+			'foreignKey' => 'tl_bb_forum.name',
+			'relation'   => array(
+				'type' => 'belongsTo',
+				'load' => 'lazy'
+			)
 		),
 		'tstamp'          => array
 		(
@@ -84,11 +89,21 @@ $GLOBALS['TL_DCA']['tl_bb_topic'] = array
 		),
 		'firstPost'       => array
 		(
-			'sql' => "int(10) unsigned NOT NULL default '0'"
+			'sql'        => "int(10) unsigned NOT NULL default '0'",
+			'foreignKey' => 'tl_bb_post.subject',
+			'relation'   => array(
+				'type' => 'hasOne',
+				'load' => 'eager'
+			)
 		),
 		'firstPoster'     => array
 		(
-			'sql' => "int(10) unsigned NOT NULL default '0'"
+			'sql'        => "int(10) unsigned NOT NULL default '0'",
+			'foreignKey' => 'tl_bb_member.username',
+			'relation'   => array(
+				'type' => 'hasOne',
+				'load' => 'eager'
+			)
 		),
 		'firstPosterName' => array
 		(
@@ -96,11 +111,21 @@ $GLOBALS['TL_DCA']['tl_bb_topic'] = array
 		),
 		'lastPost'        => array
 		(
-			'sql' => "int(10) unsigned NOT NULL default '0'"
+			'sql'        => "int(10) unsigned NOT NULL default '0'",
+			'foreignKey' => 'tl_bb_post.subject',
+			'relation'   => array(
+				'type' => 'hasOne',
+				'load' => 'eager'
+			)
 		),
 		'lastPoster'      => array
 		(
-			'sql' => "int(10) unsigned NOT NULL default '0'"
+			'sql'        => "int(10) unsigned NOT NULL default '0'",
+			'foreignKey' => 'tl_member.username',
+			'relation'   => array(
+				'type' => 'hasOne',
+				'load' => 'eager'
+			)
 		),
 		'lastPosterName'  => array
 		(

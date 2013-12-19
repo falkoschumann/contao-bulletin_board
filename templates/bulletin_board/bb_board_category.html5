@@ -1,7 +1,7 @@
 <tbody class="category <?php echo $this->class; ?>">
 <tr>
 	<th class="category" colspan="4" scope="rowgroup">
-		<h2><a href="<?php echo $this->link; ?>"><?php echo $this->name; ?></a></h2>
+		<h4><a href="<?php echo $this->link; ?>"><?php echo $this->name; ?></a></h4>
 	</th>
 </tr>
 <?php foreach ($this->forums as $forum) echo $forum; ?>

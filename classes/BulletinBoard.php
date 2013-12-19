@@ -48,7 +48,7 @@ class BulletinBoard extends \Frontend
 {
 
 	/**
-	 * @param object $objForum
+	 * @param BbForumModel $objForum
 	 * @return string
 	 */
 	public static function generateForumLink($objForum)
@@ -66,5 +66,18 @@ class BulletinBoard extends \Frontend
 	private static function isAliasSetAndEnabled($objForum)
 	{
 		return $objForum->alias != '' && !$GLOBALS['TL_CONFIG']['disableAlias'];
+	}
+
+	/**
+	 * @param BbPostModel $objPost
+	 * @return string
+	 */
+	public static function generateTopicLink($objPost)
+	{
+		$objTopic = $objPost->pid;
+		$objForum = $objTopic->pid;
+		$itemPrefix = $GLOBALS['TL_CONFIG']['useAutoItem'] ? '/' : '/items/';
+		$item = static::isAliasSetAndEnabled($objForum) ? $objForum->alias : $objForum->id;
+		return static::generateFrontendUrl($GLOBALS['objPage']->row(), $itemPrefix . $item);
 	}
 }

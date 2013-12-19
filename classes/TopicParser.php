@@ -115,7 +115,7 @@ class TopicParser extends BulletinBoard
 		$objTemplate->class = $strClass;
 		$objTemplate->subject = $objPost->subject;
 		$objTemplate->message = $objPost->message;
-		$objTemplate->author = sprintf($GLOBALS['TL_LANG']['MSC']['bb_author'], $member->username);
+		$objTemplate->author = sprintf($GLOBALS['TL_LANG']['MSC']['bb_poster'], $member->username);
 		$objTemplate->timestamp = \Date::parse($objPage->datimFormat, $objPost->tstamp);
 		return $objTemplate->parse();
 	}

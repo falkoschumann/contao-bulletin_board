@@ -50,5 +50,4 @@ $GLOBALS['TL_LANG']['MSC']['bb_submit'] = 'Submit';
 $GLOBALS['TL_LANG']['MSC']['bb_topics'] = 'Topics';
 $GLOBALS['TL_LANG']['MSC']['bb_posts'] = 'Posts';
 $GLOBALS['TL_LANG']['MSC']['bb_last_post'] = 'Last post';
-$GLOBALS['TL_LANG']['MSC']['bb_last_post_description'] = 'by %s %s<br>%s';
 $GLOBALS['TL_LANG']['MSC']['bb_no_post'] = 'No posts';

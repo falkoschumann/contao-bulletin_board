@@ -84,9 +84,7 @@ class BoardParser extends BulletinBoard
 		$objTemplate = new \FrontendTemplate('bb_board_category');
 		$objTemplate->setData($objCategory->row());
 		$objTemplate->class = $strClass;
-		$objTemplate->title = $objCategory->title;
 		$objTemplate->link = static::generateForumLink($objCategory);
-		$objTemplate->description = $objCategory->description;
 		$objTemplate->forums = $this->parseForums(BbForumModel::findPublishedForumsByPids(array($objCategory->id)));
 		return $objTemplate->parse();
 	}
@@ -118,9 +116,25 @@ class BoardParser extends BulletinBoard
 		$objTemplate = new \FrontendTemplate('bb_board_forum');
 		$objTemplate->setData($objForum->row());
 		$objTemplate->class = $strClass;
-		$objTemplate->title = $objForum->title;
 		$objTemplate->link = static::generateForumLink($objForum);
-		$objTemplate->description = $objForum->description;
+		if ($objForum->lastPost)
+		{
+			global $objPage;
+			$lastPostTime = \Date::parse($objPage->datimFormat, $objForum->lastPost);
+			if ($objForum->lastPoster)
+			{
+				$lastPoster = sprintf($GLOBALS['TL_LANG']['MSC']['bb_poster'], $objForum->lastPoster->username);
+			}
+			else
+			{
+				$lastPoster = $objForum->lastPosterName;
+			}
+			$objTemplate->lastPost = '<a href="' . $this->generatePostLink($objForum->lastPost) . '">' . $lastPostTime . '<br>' . $lastPoster . '</a>';
+		}
+		else
+		{
+			$objTemplate->lastPost = $GLOBALS['TL_LANG']['MSC']['bb_no_post'];
+		}
 		return $objTemplate->parse();
 	}
 }

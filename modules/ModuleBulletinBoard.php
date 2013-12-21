@@ -207,7 +207,7 @@ class ModuleBulletinBoard extends \Module
 		}
 		else
 		{
-			$parser = new BoardParser();
+			$parser = new ForumListParser();
 			$this->Template->content = $parser->parseBoard();
 		}
 	}

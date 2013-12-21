@@ -38,6 +38,7 @@
  * Miscellaneous
  */
 $GLOBALS['TL_LANG']['MSC']['bb_board_index'] = 'Board index';
+$GLOBALS['TL_LANG']['MSC']['bb_no_forums'] = 'There are no forums.';
 $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] = 'New topic';
 $GLOBALS['TL_LANG']['MSC']['bb_no_topics'] = 'There are no topics or posts in this forum.';
 $GLOBALS['TL_LANG']['MSC']['bb_post_reply'] = 'Post reply';
@@ -47,6 +48,7 @@ $GLOBALS['TL_LANG']['MSC']['bb_invalid_topic'] = 'Topic "%s" does not exist.';
 $GLOBALS['TL_LANG']['MSC']['bb_post_subject'] = 'Subject';
 $GLOBALS['TL_LANG']['MSC']['bb_post_text'] = 'Text';
 $GLOBALS['TL_LANG']['MSC']['bb_submit'] = 'Submit';
+$GLOBALS['TL_LANG']['MSC']['bb_forum'] = 'Forum';
 $GLOBALS['TL_LANG']['MSC']['bb_topics'] = 'Topics';
 $GLOBALS['TL_LANG']['MSC']['bb_posts'] = 'Posts';
 $GLOBALS['TL_LANG']['MSC']['bb_last_post'] = 'Last post';

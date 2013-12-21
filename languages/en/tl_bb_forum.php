@@ -50,6 +50,7 @@ $GLOBALS['TL_LANG']['tl_bb_forum']['published'] = array('Publish forum', 'Make t
  */
 $GLOBALS['TL_LANG']['tl_bb_forum']['category'] = 'Category';
 $GLOBALS['TL_LANG']['tl_bb_forum']['forum'] = 'Forum';
+$GLOBALS['TL_LANG']['tl_bb_forum']['link'] = 'Link';
 
 
 /**

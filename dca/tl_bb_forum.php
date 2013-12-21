@@ -161,7 +161,8 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 		'__selector__' => array('type'),
 		'default'      => '{title_legend},name,type,alias,jumpTo;{publish_legend},published',
 		'category'     => '{title_legend},name,type,alias,jumpTo;{publish_legend},published',
-		'forum'        => '{title_legend},name,type,alias,jumpTo;{description_legend},description;{publish_legend},published'
+		'forum'        => '{title_legend},name,type,alias,jumpTo;{description_legend},description;{publish_legend},published',
+		'link'         => '{title_legend},name,type,url;{description_legend},description;{publish_legend},published'
 	),
 
 	// Subpalettes
@@ -199,7 +200,8 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 			'flag'      => 1,
 			'options'   => array(
 				'forum',
-				'category'
+				'category',
+				'link'
 			),
 			'reference' => &$GLOBALS['TL_LANG']['tl_bb_forum'],
 			'eval'      => array(
@@ -225,6 +227,29 @@ $GLOBALS['TL_DCA']['tl_bb_forum'] = array
 				'type' => 'hasOne',
 				'load' => 'lazy'
 			)
+		),
+		'url'            => array
+		(
+			'label'     => &$GLOBALS['TL_LANG']['MSC']['url'],
+			'exclude'   => true,
+			'search'    => true,
+			'inputType' => 'text',
+			'eval'      => array(
+				'mandatory'      => true,
+				'rgxp'           => 'url',
+				'decodeEntities' => true,
+				'maxlength'      => 255,
+				'fieldType'      => 'radio',
+				'tl_class'       => 'w50 wizard'
+			),
+			'wizard'    => array
+			(
+				array(
+					'tl_bb_forum',
+					'pagePicker'
+				)
+			),
+			'sql'       => "varchar(255) NOT NULL default ''"
 		),
 		'name'           => array
 		(
@@ -454,5 +479,19 @@ class tl_bb_forum extends Backend
 
 		$objVersions->create();
 		$this->log('A new version of record "tl_bb_forum.id=' . $intId . '" has been created' . $this->getParentEntries('tl_bb_forum', $intId), __METHOD__, TL_GENERAL);
+	}
+
+
+	/**
+	 * Return the link picker wizard
+	 * @param \DataContainer
+	 * @return string
+	 */
+	public function pagePicker(DataContainer $dc)
+	{
+		return ' <a href="contao/page.php?do=' . Input::get('do') . '&amp;table=' . $dc->table . '&amp;field=' . $dc->field . '&amp;value=' . str_replace(array(
+																																							   '{{link_url::',
+																																							   '}}'
+																																						  ), '', $dc->value) . '" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']) . '" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'' . specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])) . '\',\'url\':this.href,\'id\':\'' . $dc->field . '\',\'tag\':\'ctrl_' . $dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '') . '\',\'self\':this});return false">' . Image::getHtml('pickpage.gif', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
 	}
 }

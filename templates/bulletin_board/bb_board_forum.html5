@@ -1,9 +1,0 @@
-<tr class="forum <?php echo $this->class; ?>">
-	<td class="forum">
-		<h5><a href="<?php echo $this->link; ?>"><?php echo $this->name; ?></a></h5>
-		<?php if ($this->description) echo $this->description; ?>
-	</td>
-	<td class="topics"><?php echo $this->topics; ?></td>
-	<td class="posts"><?php echo $this->posts; ?></td>
-	<td class="last_post"><?php echo $this->lastPost; ?></td>
-</tr>

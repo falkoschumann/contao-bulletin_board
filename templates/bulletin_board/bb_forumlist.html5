@@ -1,0 +1,53 @@
+<table class="forumlist">
+	<thead>
+	<tr>
+		<th class="forum"><?php echo $this->labelForum; ?></th>
+		<th class="topics"><?php echo $this->labelTopics; ?></th>
+		<th class="posts"><?php echo $this->labelPosts; ?></th>
+		<th class="last_post"><?php echo $this->labelLastPost; ?></th>
+	</tr>
+	</thead>
+<?php
+$insideBody = false;
+foreach ($this->forums as $forum) :
+	if ($forum['type'] === 'category') :
+		if ($insideBody) echo "</tbody>\n";
+		$insideBody = true;
+?>
+	<tbody>
+	<tr class="category">
+		<th class="category" scope="rowgroup">
+			<h4><a href="<?php echo $forum['url']; ?>"><?php echo $forum['name']; ?></a></h4>
+		</th>
+		<th class="empty" colspan="3">[nbsp]</th>
+	</tr>
+<?php
+	elseif ($forum['type'] === 'forum') :
+		if (!$insideBody) echo "<tbody>\n";
+?>
+	<tr class="forum">
+		<td class="forum">
+			<h5><a href="<?php echo $forum['url']; ?>"><?php echo $forum['name']; ?></a></h5>
+			<?php if ($forum['description']) echo $forum['description']; ?>
+		</td>
+		<td class="topics"><?php echo $forum['topics']; ?></td>
+		<td class="posts"><?php echo $forum['posts']; ?></td>
+		<td class="last_post"><?php echo $forum['lastPost']; ?></td>
+	</tr>
+<?php
+	elseif ($forum['type'] === 'link') :
+		if (!$insideBody) echo "<tbody>\n";
+?>
+	<tr class="link">
+		<td class="forum">
+			<h5><a href="<?php echo $forum['url']; ?>"><?php echo $forum['name']; ?></a></h5>
+			<?php if ($forum['description']) echo $forum['description']; ?>
+		</td>
+		<td class="empty" colspan="3">[nbsp]</td>
+	</tr>
+<?php
+	endif;
+endforeach;
+if ($insideBody) echo "</tbody>\n";
+?>
+</table>

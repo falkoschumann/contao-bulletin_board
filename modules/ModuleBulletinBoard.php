@@ -201,14 +201,14 @@ class ModuleBulletinBoard extends \Module
 			}
 			else
 			{
-				$parser = new ForumParser($this->objForum);
+				$parser = new ViewForumParser($this->objForum);
 				$this->Template->content = $parser->parseForum();
 			}
 		}
 		else
 		{
 			$parser = new ForumListParser(array(0));
-			$this->Template->content = $parser->parseBoard();
+			$this->Template->content = $parser->parseForumList();
 		}
 	}
 }

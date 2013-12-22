@@ -67,7 +67,7 @@ class ForumListParser extends BulletinBoard
 	/**
 	 * @return string
 	 */
-	public function parseBoard()
+	public function parseForumList()
 	{
 		$objTemplate = new \FrontendTemplate('bb_forumlist');
 		$objTemplate->labelForum = $GLOBALS['TL_LANG']['MSC']['bb_forum'];

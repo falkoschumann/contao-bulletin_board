@@ -38,13 +38,13 @@ namespace Muspellheim\BulletinBoard;
 
 
 /**
- * Class ForumParser render a forum.
+ * Class ViewForumParser render a forum.
  *
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
  */
-class ForumParser extends BulletinBoard
+class ViewForumParser extends BulletinBoard
 {
 
 	/**
@@ -70,7 +70,13 @@ class ForumParser extends BulletinBoard
 	public function parseForum()
 	{
 		$objTemplate = new \FrontendTemplate('bb_viewforum');
+		$objTemplate->setData($this->objForum->row());
 		$objTemplate->title = $this->objForum->title;
+		if (ForumModel::findPublishedForumsByPids(array($this->objForum->id)) !== null)
+		{
+			$forumListParser = new ForumListParser(array($this->objForum->id));
+			$objTemplate->subforums = $forumListParser->parseForumList();
+		}
 		$objTemplate->labelTopics = $GLOBALS['TL_LANG']['MSC']['bb_topics'];
 		$objTemplate->labelAuthor = $GLOBALS['TL_LANG']['MSC']['bb_author'];
 		$objTemplate->labelReplies = $GLOBALS['TL_LANG']['MSC']['bb_replies'];
@@ -81,11 +87,7 @@ class ForumParser extends BulletinBoard
 		{
 			$objTemplate->newTopic = '<p class="new_topic"><a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] . '</a></p>';
 		}
-		else
-		{
-			$objTemplate->newTopic = '';
-		}
-
+		$objTemplate->topics = array();
 		return $objTemplate->parse();
 	}
 

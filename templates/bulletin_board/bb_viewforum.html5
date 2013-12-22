@@ -1,7 +1,10 @@
 
-<h1><?php echo $this->title; ?></h1>
+<h2><?php echo $this->name; ?></h2>
 <?php echo $this->subforums; ?>
-<?php echo $this->newTopic; ?>
+<?php
+if ($this->type === 'forum') :
+	echo $this->newTopic;
+?>
 <table class="topiclist">
 	<thead>
 	<tr>
@@ -14,8 +17,8 @@
 	</thead>
 	<tbody>
 <?php
-if (count($this->topics)):
-	foreach ($this->topics as $topic) :
+	if (!empty($this->topics)):
+		foreach ($this->topics as $topic) :
 ?>
 	<tr class="topic">
 		<td class="topics">
@@ -27,12 +30,17 @@ if (count($this->topics)):
 		<td class="last_post"><?php echo $topic['lastPost']; ?></td>
 	</tr>
 <?php
-	endforeach;
+		endforeach;
 else:
 ?>
 	<tr class="topic">
 		<td class="no_topics" colspan="5"><?php echo $this->labelNoTopics; ?></td>
 	</tr>
-<?php endif; ?>
+<?php
+	endif;
+?>
 </table>
 <?php echo $this->newTopic; ?>
+<?php
+endif;
+?>

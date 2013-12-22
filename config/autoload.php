@@ -29,7 +29,7 @@ ClassLoader::addClasses(array
 	'Muspellheim\BulletinBoard\BulletinBoard'       => 'system/modules/bulletin_board/classes/BulletinBoard.php',
 	'Muspellheim\BulletinBoard\BreadcrumbParser'    => 'system/modules/bulletin_board/classes/BreadcrumbParser.php',
 	'Muspellheim\BulletinBoard\ForumListParser'     => 'system/modules/bulletin_board/classes/ForumListParser.php',
-	'Muspellheim\BulletinBoard\ForumParser'         => 'system/modules/bulletin_board/classes/ForumParser.php',
+	'Muspellheim\BulletinBoard\ViewForumParser'     => 'system/modules/bulletin_board/classes/ViewForumParser.php',
 	'Muspellheim\BulletinBoard\TopicParser'         => 'system/modules/bulletin_board/classes/TopicParser.php',
 	'Muspellheim\BulletinBoard\NewTopicParser'      => 'system/modules/bulletin_board/classes/NewTopicParser.php',
 

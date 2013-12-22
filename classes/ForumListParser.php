@@ -48,6 +48,23 @@ class ForumListParser extends BulletinBoard
 {
 
 	/**
+	 * @val array
+	 */
+	private $arrForumIds;
+
+
+	/**
+	 *
+	 * @param array $arrForumIds
+	 */
+	public function __construct($arrForumIds)
+	{
+		parent::__construct();
+		$this->arrForumIds = $arrForumIds;
+	}
+
+
+	/**
 	 * @return string
 	 */
 	public function parseBoard()
@@ -59,7 +76,7 @@ class ForumListParser extends BulletinBoard
 		$objTemplate->labelLastPost = $GLOBALS['TL_LANG']['MSC']['bb_last_post'];
 
 		$arrForums = array();
-		$objForums = ForumModel::findPublishedForumsByPids(array(0));
+		$objForums = ForumModel::findPublishedForumsByPids($this->arrForumIds);
 		if ($objForums !== null)
 		{
 			while ($objForums->next())

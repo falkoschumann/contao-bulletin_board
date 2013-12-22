@@ -1,0 +1,38 @@
+
+<h1><?php echo $this->title; ?></h1>
+<?php echo $this->subforums; ?>
+<?php echo $this->newTopic; ?>
+<table class="topiclist">
+	<thead>
+	<tr>
+		<th class="topics"><?php echo $this->labelTopics; ?></th>
+		<th class="author"><?php echo $this->labelAuthor; ?></th>
+		<th class="replies"><?php echo $this->labelReplies; ?></th>
+		<th class="views"><?php echo $this->labelViews; ?></th>
+		<th class="last_post"><?php echo $this->labelLastPost; ?></th>
+	</tr>
+	</thead>
+	<tbody>
+<?php
+if (count($this->topics)):
+	foreach ($this->topics as $topic) :
+?>
+	<tr class="topic">
+		<td class="topics">
+			<h5><a href="<?php echo $topic['url']; ?>"><?php echo $topic['title']; ?></a></h5>
+		</td>
+		<td class="author"><?php echo $topic['author']; ?></td>
+		<td class="replies"><?php echo $topic['replies']; ?></td>
+		<td class="views"><?php echo $topic['views']; ?></td>
+		<td class="last_post"><?php echo $topic['lastPost']; ?></td>
+	</tr>
+<?php
+	endforeach;
+else:
+?>
+	<tr class="topic">
+		<td class="no_topics" colspan="5"><?php echo $this->labelNoTopics; ?></td>
+	</tr>
+<?php endif; ?>
+</table>
+<?php echo $this->newTopic; ?>

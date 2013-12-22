@@ -69,6 +69,32 @@ class ForumParser extends BulletinBoard
 	 */
 	public function parseForum()
 	{
+		$objTemplate = new \FrontendTemplate('bb_viewforum');
+		$objTemplate->title = $this->objForum->title;
+		$objTemplate->labelTopics = $GLOBALS['TL_LANG']['MSC']['bb_topics'];
+		$objTemplate->labelAuthor = $GLOBALS['TL_LANG']['MSC']['bb_author'];
+		$objTemplate->labelReplies = $GLOBALS['TL_LANG']['MSC']['bb_replies'];
+		$objTemplate->labelViews = $GLOBALS['TL_LANG']['MSC']['bb_views'];
+		$objTemplate->labelLastPost = $GLOBALS['TL_LANG']['MSC']['bb_last_post'];
+		$objTemplate->labelNoTopics = $GLOBALS['TL_LANG']['MSC']['bb_no_topics'];
+		if ($this->objForum->type == 'forum' && (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN))
+		{
+			$objTemplate->newTopic = '<p class="new_topic"><a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] . '</a></p>';
+		}
+		else
+		{
+			$objTemplate->newTopic = '';
+		}
+
+		return $objTemplate->parse();
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function parseForumOld()
+	{
 		$objTemplate = new \FrontendTemplate('bb_forum');
 		$objTemplate->title = $this->objForum->title;
 		$objTemplate->subforums = $this->parseSubforums(ForumModel::findPublishedForumsByPids(array($this->objForum->id)));

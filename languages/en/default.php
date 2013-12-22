@@ -53,3 +53,6 @@ $GLOBALS['TL_LANG']['MSC']['bb_topics'] = 'Topics';
 $GLOBALS['TL_LANG']['MSC']['bb_posts'] = 'Posts';
 $GLOBALS['TL_LANG']['MSC']['bb_last_post'] = 'Last post';
 $GLOBALS['TL_LANG']['MSC']['bb_no_post'] = 'No posts';
+$GLOBALS['TL_LANG']['MSC']['bb_author'] = 'Author';
+$GLOBALS['TL_LANG']['MSC']['bb_replies'] = 'Replies';
+$GLOBALS['TL_LANG']['MSC']['bb_views'] = 'Views';

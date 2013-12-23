@@ -35,6 +35,7 @@
 
 
 namespace Muspellheim\BulletinBoard;
+use Contao\UserModel;
 
 
 /**
@@ -191,19 +192,43 @@ class NewTopicParser extends BulletinBoard
 
 			$time = time();
 
-			// Prepare the record
-			$arrSet = array
-			(
-				'tstamp'  => $time,
-				'forum'   => $this->objForum->id,
-				'author'  => $this->User->id,
-				'subject' => $this->arrWidgets['subject']->value,
-				'message' => $this->convertLineFeeds($strMessage),
-			);
+			// Prepare the record and store the post
+			$objPost = new PostModel();
+			//$objPost->pid = $objTopic->id;
+			$objPost->tstamp = $time;
+			$objPost->poster = $this->User->id;
+			$objPost->posterIp = \System::anonymizeIp(\Environment::get('ip'));
+			$objPost->subject = $this->arrWidgets['subject']->value;
+			$objPost->text = $this->arrWidgets['text']->value;
+			$objPost->save();
 
-			// Store the comment
+			// Prepare the record and store the topic
 			$objTopic = new TopicModel();
-			$objTopic->setRow($arrSet)->save();
+			$objTopic->pid = $this->objForum->id;
+			$objTopic->tstamp = $time;
+			$objTopic->title = $objPost->subject;
+			$objTopic->firstPost = $objPost->id;
+			$objTopic->firstPoster = $objPost->poster;
+			$objTopic->lastPost = $objTopic->firstPost;
+			$objTopic->lastPoster = $objTopic->firstPoster;
+			$objTopic->save();
+
+			// Update the record and store the post
+			$objPost->pid = $objTopic->id;
+			$objPost->save();
+
+			// Update the record and store the forum
+			$this->objForum->topics = $this->objForum->topics + 1;
+			$this->objForum->posts = $this->objForum->posts + 1;
+			$this->objForum->lastPost = $objPost->id;
+			$this->objForum->lastPoster = $objPost->poster;
+			$this->objForum->save();
+
+			// Update the record and store the user
+			$this->User->bb_posts = $this->User->bb_posts + 1;
+			$this->User->bb_lastPostTime = $time;
+			$this->User->save();
+
 
 			$this->redirect($this->generateTopicLink($objTopic));
 		}
@@ -307,6 +332,7 @@ class NewTopicParser extends BulletinBoard
 
 		return preg_replace(array_keys($arrReplace), array_values($arrReplace), $strMessage);
 	}
+
 
 	/**
 	 * @param object $objTopic

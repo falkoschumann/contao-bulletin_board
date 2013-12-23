@@ -1,24 +1,22 @@
-
 <div class="form new_topic">
-  <h2><?php echo $this->forum; ?></h2>
-  <h3><?php echo $this->newTopic; ?></h3>
-  <form<?php if ($this->action): ?> action="<?php echo $this->action; ?>"<?php endif; ?> id="<?php echo $this->formId; ?>" method="post">
-    <div class="formbody">
-    <input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formId; ?>">
-      <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+	<h2><?php echo $this->forum; ?></h2>
 
-      <div class="widget">
-        <?php echo $this->fields['subject']->generateWithError(); ?> <?php echo $this->fields['subject']->generateLabel(); ?>
-      </div>
+	<h3><?php echo $this->newTopic; ?></h3>
 
-      <div class="widget">
-        <?php echo $this->fields['message']->generateWithError(); ?> <label for="ctrl_<?php echo $this->fields['message']->id; ?>" class="invisible"><?php echo $this->fields['message']->label; ?></label>
-      </div>
+	<form<?php if ($this->action): ?> action="<?php echo $this->action; ?>"<?php endif; ?> id="<?php echo $this->formId; ?>" method="post">
+		<div class="formbody">
+			<input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formId; ?>">
+			<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 
-      <div class="submit_container">
-        <input type="submit" class="submit" value="<?php echo $this->submit; ?>">
-      </div>
-
-    </div>
-  </form>
+			<div class="widget">
+				<?php echo $this->fields['subject']->generateWithError(); ?> <?php echo $this->fields['subject']->generateLabel(); ?>
+			</div>
+			<div class="widget">
+				<?php echo $this->fields['message']->generateWithError(); ?> <?php echo $this->fields['message']->generateLabel(); ?>
+			</div>
+			<div class="submit_container">
+				<input type="submit" class="submit" value="<?php echo $this->submit; ?>">
+			</div>
+		</div>
+	</form>
 </div>

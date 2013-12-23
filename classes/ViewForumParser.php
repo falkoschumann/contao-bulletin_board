@@ -87,95 +87,19 @@ class ViewForumParser extends BulletinBoard
 		{
 			$objTemplate->newTopic = '<p class="new_topic"><a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] . '</a></p>';
 		}
-		$objTemplate->topics = array();
-		return $objTemplate->parse();
-	}
 
-
-	/**
-	 * @return string
-	 */
-	public function parseForumOld()
-	{
-		$objTemplate = new \FrontendTemplate('bb_forum');
-		$objTemplate->title = $this->objForum->title;
-		$objTemplate->subforums = $this->parseSubforums(ForumModel::findPublishedForumsByPids(array($this->objForum->id)));
-		$objTemplate->topics = $this->parseTopics(TopicModel::findTopicsByForumId($this->objForum->id));
-		if ($this->objForum->type == 'forum' && (BE_USER_LOGGED_IN || FE_USER_LOGGED_IN))
-		{
-			$objTemplate->newTopic = '<p><a href="' . $this->generateNewTopicLink() . '">' . $GLOBALS['TL_LANG']['MSC']['bb_new_topic'] . '</a></p>';
-		}
-		else
-		{
-			$objTemplate->newTopic = '';
-		}
-
-		$objTemplate->labelNoTopics = $GLOBALS['TL_LANG']['MSC']['bb_no_topics'];
-		return $objTemplate->parse();
-	}
-
-
-	/**
-	 * @param Collection $objForums collection of ForumModel
-	 * @return array array of string
-	 */
-	public function parseSubforums($objForums)
-	{
-		$limit = $objForums != null ? $objForums->count() : 0;
-		$count = 0;
-		$arrForums = array();
-		while ($limit && $objForums->next())
-		{
-			$arrForums[] = $this->parseSubforum($objForums, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
-		}
-		return $arrForums;
-	}
-
-
-	/**
-	 * @param BbForumModel $objForum
-	 * @return string
-	 */
-	public function parseSubforum($objForum, $strClass = '')
-	{
-		$objTemplate = new \FrontendTemplate('bb_forum_subforum');
-		$objTemplate->setData($objForum->row());
-		$objTemplate->class = $strClass;
-		$objTemplate->title = $objForum->title;
-		$objTemplate->link = static::generateForumLink($objForum);
-		$objTemplate->description = $objForum->description;
-		return $objTemplate->parse();
-	}
-
-
-	/**
-	 * @param Collection $objTopic collection of TopicModel
-	 * @return array array of string
-	 */
-	public function parseTopics($objTopics)
-	{
-		$limit = $objTopics != null ? $objTopics->count() : 0;
-		$count = 0;
 		$arrTopics = array();
-		while ($limit && $objTopics->next())
+		$objTopics = TopicModel::findTopicsByForumId($this->objForum->id);
+		while ($objTopics->next())
 		{
-			$arrTopics[] = $this->parseTopic($objTopics, ((++$count == 1) ? ' first' : '') . (($count == $limit) ? ' last' : '') . ((($count % 2) == 0) ? ' odd' : ' even'));
+			$arrTopic = $objTopics->row();
+			$arrTopic['author'] = $objTopics->getRelated('firstPoster')->username;
+			$arrTopic['url'] = $this->generateTopicLink($objTopics);
+			$arrTopic['lastPost'] = $this->generateLastPost($objTopics);
+			$arrTopics[] = $arrTopic;
 		}
-		return $arrTopics;
-	}
+		$objTemplate->topics = $arrTopics;
 
-
-	/**
-	 * @param BbTopicModel $objTopic
-	 * @return string
-	 */
-	public function parseTopic($objTopic, $strClass = '')
-	{
-		$objTemplate = new \FrontendTemplate('bb_forum_topic');
-		$objTemplate->setData($objTopic->row());
-		$objTemplate->class = $strClass;
-		$objTemplate->title = $objTopic->subject;
-		$objTemplate->link = $this->generateTopicLink($objTopic);
 		return $objTemplate->parse();
 	}
 

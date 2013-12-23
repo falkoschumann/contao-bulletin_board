@@ -43,11 +43,13 @@
 }
 
 .mod_bulletin_board th.category,
-.mod_bulletin_board td.forum {
+.mod_bulletin_board td.forum,
+.mod_bulletin_board td.topic {
     text-align: left;
 }
 
-.mod_bulletin_board td.forum {
+.mod_bulletin_board td.forum,
+.mod_bulletin_board td.topic {
     width: 100%;
 }
 

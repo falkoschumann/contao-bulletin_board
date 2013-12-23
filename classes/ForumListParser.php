@@ -136,24 +136,7 @@ class ForumListParser extends BulletinBoard
 	{
 		$arrForum = $objForum->row();
 		$arrForum['url'] = static::generateForumLink($objForum);
-		if ($objForum->lastPost)
-		{
-			global $objPage;
-			$lastPostTime = \Date::parse($objPage->datimFormat, $objForum->lastPost);
-			if ($objForum->lastPoster)
-			{
-				$lastPoster = sprintf($GLOBALS['TL_LANG']['MSC']['bb_poster'], $objForum->lastPoster->username);
-			}
-			else
-			{
-				$lastPoster = $objForum->lastPosterName;
-			}
-			$arrForum['lastPost'] = '<a href="' . $this->generatePostLink($objForum->lastPost) . '">' . $lastPostTime . '<br>' . $lastPoster . '</a>';
-		}
-		else
-		{
-			$arrForum['lastPost'] = $GLOBALS['TL_LANG']['MSC']['bb_no_post'];
-		}
+		$arrForum['lastPost'] = $this->generateLastPost($objForum);
 		return $arrForum;
 	}
 

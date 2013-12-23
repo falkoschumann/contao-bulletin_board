@@ -8,7 +8,7 @@ if ($this->type === 'forum') :
 <table class="topiclist">
 	<thead>
 	<tr>
-		<th class="topics"><?php echo $this->labelTopics; ?></th>
+		<th class="topic"><?php echo $this->labelTopics; ?></th>
 		<th class="author"><?php echo $this->labelAuthor; ?></th>
 		<th class="replies"><?php echo $this->labelReplies; ?></th>
 		<th class="views"><?php echo $this->labelViews; ?></th>
@@ -20,9 +20,9 @@ if ($this->type === 'forum') :
 	if (!empty($this->topics)):
 		foreach ($this->topics as $topic) :
 ?>
-	<tr class="topic">
-		<td class="topics">
-			<h5><a href="<?php echo $topic['url']; ?>"><?php echo $topic['title']; ?></a></h5>
+	<tr>
+		<td class="topic">
+			<h3><a href="<?php echo $topic['url']; ?>"><?php echo $topic['title']; ?></a></h3>
 		</td>
 		<td class="author"><?php echo $topic['author']; ?></td>
 		<td class="replies"><?php echo $topic['replies']; ?></td>
@@ -33,7 +33,7 @@ if ($this->type === 'forum') :
 		endforeach;
 else:
 ?>
-	<tr class="topic">
+	<tr>
 		<td class="no_topics" colspan="5"><?php echo $this->labelNoTopics; ?></td>
 	</tr>
 <?php

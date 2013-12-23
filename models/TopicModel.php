@@ -64,7 +64,7 @@ class TopicModel extends \Model
 	public static function findTopicsByForumId($forumId, array $arrOptions = array())
 	{
 		$t = static::$strTable;
-		$arrColumns = array("$t.forum=$forumId");
+		$arrColumns = array("$t.pid=$forumId");
 
 		if (!isset($arrOptions['order']))
 		{

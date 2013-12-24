@@ -43,6 +43,18 @@ namespace Muspellheim\BulletinBoard;
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
+ * @property int    id
+ * @property int    pid             reference ForumModel
+ * @property int    tstamp
+ * @property string title
+ * @property int    views
+ * @property int    replies
+ * @property int    firstPost       reference PostModel
+ * @property int    firstPoster     reference MemberModel
+ * @property string firstPosterName empty if <code>firstPoster</code> is set
+ * @property int    lastPost        reference PostModel
+ * @property int    lastPoster      reference MemberModel
+ * @property string lastPosterName  empty if <code>lastPoster</code> is set
  */
 class TopicModel extends \Model
 {
@@ -54,10 +66,11 @@ class TopicModel extends \Model
 	 */
 	protected static $strTable = 'tl_bb_topic';
 
+
 	/**
 	 * Find all topics by forum ID
 	 *
-	 * @param int $forumId forum ID
+	 * @param int   $forumId    forum ID
 	 * @param array $arrOptions An optional options array
 	 * @return Collection|null A collection of models or null if there are no topics
 	 */

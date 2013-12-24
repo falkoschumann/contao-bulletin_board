@@ -43,6 +43,14 @@ namespace Muspellheim\BulletinBoard;
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
+ * @property int         id
+ * @property int         pid        reference TopicModel
+ * @property int         tstamp
+ * @property int         poster     reference MemberModel
+ * @property string      posterIp
+ * @property string      posterName empty if <code>poster</code> is set
+ * @property string      subject
+ * @property string      text
  */
 class PostModel extends \Model
 {
@@ -58,7 +66,7 @@ class PostModel extends \Model
 	/**
 	 * Find all posts by topic ID
 	 *
-	 * @param int $topicId topic ID
+	 * @param int   $topicId    topic ID
 	 * @param array $arrOptions An optional options array
 	 * @return Collection|null A collection of models or null if there are no posts
 	 */

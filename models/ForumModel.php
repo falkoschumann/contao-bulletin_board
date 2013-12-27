@@ -36,6 +36,8 @@
 
 namespace Muspellheim\BulletinBoard;
 
+use Contao\ModuleEventReader;
+
 
 /**
  * Class ForumModel manages access to forums and forum categories.
@@ -43,22 +45,26 @@ namespace Muspellheim\BulletinBoard;
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
- * @property int     id
- * @property int     pid             reference ForumModel
- * @property int     tstamp
- * @property int     sorting
- * @property string  type            the value <em>category</em>, <em>forum</em> or <em>link</em>
- * @property int     jumpTo          reference PageModel
- * @property string  url             link URL if type is <em>link</em>
- * @property string  name
- * @property string  description
- * @property string  alias
- * @property boolean published
- * @property int     topics
- * @property int     posts
- * @property int     lastPost        reference PostModel
- * @property int     lastPoster      reference MemberModel
- * @property string  lastPosterName  empty if <code>lastPoster</code> is set
+ * @property int              id
+ * @property int              pid             reference the parent ForumModel
+ * @property int              tstamp
+ * @property int              sorting
+ * @property string           type            the value <em>category</em>, <em>forum</em> or <em>link</em>
+ * @property int              jumpTo          reference PageModel
+ * @property string           url             link URL if type is <em>link</em>
+ * @property string           name
+ * @property string           description
+ * @property string           alias
+ * @property boolean          published
+ * @property int              topics
+ * @property int              posts
+ * @property int              lastPost        reference PostModel
+ * @property int              lastPoster      reference MemberModel
+ * @property string           lastPosterName  empty if <code>lastPoster</code> is set
+ * @property-read ForumModel  relatedParentForum
+ * @property-read PageModel   relatedJumpTo
+ * @property-read PostModel   relatedLastPost
+ * @property-read MemberModel relatedLastPoster
  */
 class ForumModel extends \Model
 {
@@ -69,6 +75,30 @@ class ForumModel extends \Model
 	 * @var string
 	 */
 	protected static $strTable = 'tl_bb_forum';
+
+
+	/**
+	 * Return an object property
+	 *
+	 * @param string $strKey The property key
+	 *
+	 * @return mixed|null The property value or null
+	 */
+	public function __get($strKey)
+	{
+		switch ($strKey)
+		{
+			case 'relatedParentForum':
+				return $this->getRelated('pid');
+			case 'relatedJumpTo':
+				return $this->getRelated('jumpTo');
+			case 'relatedLastPost':
+				return $this->getRelated('lastPost');
+			case 'relatedLastPoster':
+				return $this->getRelated('lastPoster');
+		}
+		return parent::__get($strKey);
+	}
 
 
 	/**

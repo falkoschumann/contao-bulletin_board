@@ -75,8 +75,8 @@ class BulletinBoard extends \Frontend
 	 */
 	public static function generatePostLink($objPost)
 	{
-		$objTopic = $objPost->getRelated('pid');
-		$objForum = $objTopic->getRelated('pid');
+		$objTopic = $objPost->relatedTopic;
+		$objForum = $objTopic->relatedForum;
 		$itemPrefix = $GLOBALS['TL_CONFIG']['useAutoItem'] ? '/' : '/items/';
 		$item = static::isAliasSetAndEnabled($objForum) ? $objForum->alias : $objForum->id;
 		return static::generateFrontendUrl($GLOBALS['objPage']->row(), $itemPrefix . $item . '/post/' . $objPost->id);
@@ -87,22 +87,22 @@ class BulletinBoard extends \Frontend
 	 * @param ForumModel|TopicModel $objItem
 	 * @return string
 	 */
-	public  function generateLastPost($objItem)
+	public function generateLastPost($objItem)
 	{
 		if ($objItem->lastPost)
 		{
 			global $objPage;
-			$lastPostTime = \Date::parse($objPage->datimFormat, $objItem->getRelated('lastPost')->tstamp);
+			$lastPostTime = \Date::parse($objPage->datimFormat, $objItem->relatedLastPost->tstamp);
 			if ($objItem->lastPoster)
 			{
-				$lastPoster = $objItem->getRelated('lastPoster');
+				$lastPoster = $objItem->relatedLastPoster;
 				$lastPoster = sprintf($GLOBALS['TL_LANG']['MSC']['bb_poster'], $lastPoster->username);
 			}
 			else
 			{
 				$lastPoster = $objItem->lastPosterName;
 			}
-			$url = static::generatePostLink($objItem->getRelated('lastPost'));
+			$url = static::generatePostLink($objItem->relatedLastPost);
 			return '<a href="' . $url . '">' . $lastPostTime . '<br>' . $lastPoster . '</a>';
 		}
 		else

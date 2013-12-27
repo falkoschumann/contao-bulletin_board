@@ -43,18 +43,23 @@ namespace Muspellheim\BulletinBoard;
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
- * @property int    id
- * @property int    pid             reference ForumModel
- * @property int    tstamp
- * @property string title
- * @property int    views
- * @property int    replies
- * @property int    firstPost       reference PostModel
- * @property int    firstPoster     reference MemberModel
- * @property string firstPosterName empty if <code>firstPoster</code> is set
- * @property int    lastPost        reference PostModel
- * @property int    lastPoster      reference MemberModel
- * @property string lastPosterName  empty if <code>lastPoster</code> is set
+ * @property int               id
+ * @property int               pid             reference ForumModel
+ * @property int               tstamp
+ * @property string            title
+ * @property int               views
+ * @property int               replies
+ * @property int               firstPost       reference PostModel
+ * @property int               firstPoster     reference MemberModel
+ * @property string            firstPosterName empty if <code>firstPoster</code> is set
+ * @property int               lastPost        reference PostModel
+ * @property int               lastPoster      reference MemberModel
+ * @property string            lastPosterName  empty if <code>lastPoster</code> is set
+ * @property-read ForumModel   relatedForum
+ * @property-read PostModel    relatedFirstPost
+ * @property-read MemberModel  relatedFirstPoster
+ * @property-read PostModel    relatedLastPost
+ * @property-read MemberModel  relatedLastPoster
  */
 class TopicModel extends \Model
 {
@@ -65,6 +70,32 @@ class TopicModel extends \Model
 	 * @var string
 	 */
 	protected static $strTable = 'tl_bb_topic';
+
+
+	/**
+	 * Return an object property
+	 *
+	 * @param string $strKey The property key
+	 *
+	 * @return mixed|null The property value or null
+	 */
+	public function __get($strKey)
+	{
+		switch ($strKey)
+		{
+			case 'relatedForum':
+				return $this->getRelated('pid');
+			case 'relatedFirstPost':
+				return $this->getRelated('firstPost');
+			case 'relatedFirstPoster':
+				return $this->getRelated('firstPoster');
+			case 'relatedLastPost':
+				return $this->getRelated('lastPost');
+			case 'relatedLastPoster':
+				return $this->getRelated('lastPoster');
+		}
+		return parent::__get($strKey);
+	}
 
 
 	/**

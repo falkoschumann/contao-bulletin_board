@@ -43,14 +43,16 @@ namespace Muspellheim\BulletinBoard;
  * @copyright  Falko Schumann 2013
  * @author     Falko Schumann
  * @package    BulletinBoard
- * @property int         id
- * @property int         pid        reference TopicModel
- * @property int         tstamp
- * @property int         poster     reference MemberModel
- * @property string      posterIp
- * @property string      posterName empty if <code>poster</code> is set
- * @property string      subject
- * @property string      text
+ * @property int               id
+ * @property int               pid        reference TopicModel
+ * @property int               tstamp
+ * @property int               poster     reference MemberModel
+ * @property string            posterIp
+ * @property string            posterName empty if <code>poster</code> is set
+ * @property string            subject
+ * @property string            text
+ * @property-read TopicModel   relatedTopic
+ * @property-read MemberModel  relatedPoster
  */
 class PostModel extends \Model
 {
@@ -64,6 +66,28 @@ class PostModel extends \Model
 
 
 	/**
+	 * Return an object property
+	 *
+	 * @param string $strKey The property key
+	 *
+	 * @return mixed|null The property value or null
+	 */
+	public function __get($strKey)
+	{
+		switch ($strKey)
+		{
+			case 'relatedParentForum':
+				return $this->getRelated('pid');
+			case 'relatedLastPost':
+				return $this->getRelated('lastPost');
+			case 'relatedLastPoster':
+				return $this->getRelated('lastPoster');
+		}
+		return parent::__get($strKey);
+	}
+
+
+	/**
 	 * Find all posts by topic ID
 	 *
 	 * @param int   $topicId    topic ID
@@ -73,7 +97,7 @@ class PostModel extends \Model
 	public static function findPostsByTopicId($topicId, array $arrOptions = array())
 	{
 		$t = static::$strTable;
-		$arrColumns = array("$t.topic=$topicId");
+		$arrColumns = array("$t.pid=$topicId");
 
 		if (!isset($arrOptions['order']))
 		{

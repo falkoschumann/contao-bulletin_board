@@ -93,7 +93,7 @@ class ViewForumParser extends BulletinBoard
 		while ($objTopics->next())
 		{
 			$arrTopic = $objTopics->row();
-			$arrTopic['author'] = $objTopics->getRelated('firstPoster')->username;
+			$arrTopic['author'] = $objTopics->relatedfirstPoster->username;
 			$arrTopic['url'] = $this->generateTopicLink($objTopics);
 			$arrTopic['lastPost'] = $this->generateLastPost($objTopics);
 			$arrTopics[] = $arrTopic;

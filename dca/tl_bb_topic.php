@@ -44,7 +44,7 @@ $GLOBALS['TL_DCA']['tl_bb_topic'] = array
 	'config' => array
 	(
 		'ptable' => 'tl_bb_forum',
-		'ctable' => 'tl_bb_post',
+		'ctable' => array('tl_bb_post'),
 		'sql'    => array
 		(
 			'keys' => array

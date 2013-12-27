@@ -35,6 +35,7 @@
 
 
 namespace Muspellheim\BulletinBoard;
+
 use Contao\UserModel;
 
 
@@ -251,6 +252,7 @@ class NewTopicParser extends BulletinBoard
 	 * - [url=http://][/url]
 	 * - [email][/email]
 	 * - [email=name@example.com][/email]
+	 *
 	 * @param string
 	 * @return string
 	 */
@@ -304,6 +306,7 @@ class NewTopicParser extends BulletinBoard
 
 	/**
 	 * Convert line feeds to <br /> tags
+	 *
 	 * @param string
 	 * @return string
 	 */

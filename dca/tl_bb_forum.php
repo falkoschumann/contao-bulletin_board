@@ -401,7 +401,7 @@ class tl_bb_forum extends Backend
 	/**
 	 * Return the "toggle visibility" button.
 	 *
-	 * @param array $row
+	 * @param array  $row
 	 * @param string $href
 	 * @param string $label
 	 * @param string $title
@@ -484,6 +484,7 @@ class tl_bb_forum extends Backend
 
 	/**
 	 * Return the link picker wizard
+	 *
 	 * @param \DataContainer
 	 * @return string
 	 */

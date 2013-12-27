@@ -90,13 +90,16 @@ class ViewForumParser extends BulletinBoard
 
 		$arrTopics = array();
 		$objTopics = TopicModel::findTopicsByForumId($this->objForum->id);
-		while ($objTopics->next())
+		if ($objTopics)
 		{
-			$arrTopic = $objTopics->row();
-			$arrTopic['author'] = $objTopics->relatedfirstPoster->username;
-			$arrTopic['url'] = $this->generateTopicLink($objTopics);
-			$arrTopic['lastPost'] = $this->generateLastPost($objTopics);
-			$arrTopics[] = $arrTopic;
+			while ($objTopics->next())
+			{
+				$arrTopic = $objTopics->row();
+				$arrTopic['author'] = $objTopics->relatedfirstPoster->username;
+				$arrTopic['url'] = $this->generateTopicLink($objTopics);
+				$arrTopic['lastPost'] = $this->generateLastPost($objTopics);
+				$arrTopics[] = $arrTopic;
+			}
 		}
 		$objTemplate->topics = $arrTopics;
 
